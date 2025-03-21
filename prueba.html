@@ -1,0 +1,26 @@
+     <tr>
+                <td>Recuento Eritrocitos</td>
+                <td>
+                    <input type="text" id="eritrocitos" list="rangoEritrocitos" oninput="calcularTodos()" onblur="decimales('eritrocitos', 2)" onkeydown="moverFoco(event, 'hemoglobina')">
+                    <datalist id="rangoEritrocitos"></datalist>
+                </td>
+                <td>5,61 - 7,47</td>
+                <td>x 10⁶/µl</td>
+            </tr>
+                <script type="module">
+                    import { valoresEritrocitos } from './numeros.js';
+                    
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const datalist = document.getElementById('rangoEritrocitos');
+                        valoresEritrocitos.forEach(valor => {
+                            const option = document.createElement('option');
+                            option.value = parseFloat(valor.replace(',', '.')).toFixed(2).replace('.', ',');
+                            datalist.appendChild(option);
+                        });
+                    });
+        function decimales(id, decimales = 2) {
+        var input = document.getElementById(id);
+        if (input.value === '') return;
+        var valor = parseFloat(input.value.replace(',', '.')) || 0;
+        input.value = valor.toFixed(decimales).replace('.', ',');
+    }
