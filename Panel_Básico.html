@@ -191,9 +191,9 @@
                         event.preventDefault();
                         document.getElementById(abajoId).focus();
                         break;
-                    case 'Enter':
+                    case ' ': 
                         event.preventDefault();
-                        document.getElementById(derechaId).focus();
+                        document.getElementById(derechaId).focus(); 
                         break;
                 }
             }
@@ -1095,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <input type="text" id="alb/glo" list="rangoalb/glo" onblur="formatearDecimal('alb/glo')" onkeydown="moverFoco(event, 'alb/glo')">
                         <datalist id="rangoalb/glo"></datalist>
                     </td>
-                    <td id="refalb/glo"> 0,6 - 1,1 </td>
+                    <td id="refalb_glo">0,6 - 1,1</td>
                     <td>mg/dl</td>
                     <script type="module">
                         import {  recuentoalb_glo  } from './numeros.js';
@@ -1126,7 +1126,7 @@ function calculateValues() {
     document.getElementById('alb/glo').value = relacionAlbGlo.toFixed(1).replace('.', ',');
     
     actualizarColor('Globulinas', 'refglobulinas');
-    actualizarColor('alb/glo', 'refalb_glo');
+    actualizarColor('alb/glo', 'refalb/glo'); // Corregido: usar el ID exacto que aparece en el HTML
 }
 
 // Asegurarse que los event listeners estén correctamente asignados
@@ -1174,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                 </tr>
                 <tr>
-                    <td>SUERTO ICTERICO</td>
+                    <td>SUERO ICTERICO</td>
                     <td>
                         <select id="suero_icterico2">
                             <option value="No se observa">No se observa</option>
@@ -1193,7 +1193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="controls">
         <button id="pdfButton" onclick="generatePDF()">Generar PDF</button>
-        <button id="menuButton" onclick="window.location.href='index.html'">Volver al Menú</button>
+        <button id="menuButton" onclick="window.location.href='../menu.html'">Volver al Menú</button>
         <div id="loadingPdf" class="loading-indicator">
             <div class="spinner"></div>
             <span>Generando PDF...</span>
