@@ -88,9 +88,7 @@
                     <datalist id="edades">
                     <option value="1 año"><option value="2 años"><option value="3 años"><option value="4 años">
                     <option value="5 años"><option value="6 años"><option value="7 años"><option value="8 años"><option value="9 años">
-                    <option value="10 años"><option value="11 años"><option value="12 años"><option value="13 años"><option value="14 años">
-                    <option value="15 años"><option value="16 años"><option value="17 años"><option value="18 años"><option value="19 años">
-                    <option value="20 años">
+                    <option value="10 años"><option value="11 años"><option value="12 años">
                     </datalist>
                     <td>Médico</td>
                     <td>
@@ -105,7 +103,6 @@
                         <option value="Dra. Daniela Sancho">
                         <option value="Dra. Sofia Carrillo">
                         <option value="Dra. Franciny Nuñez">
-                        <option value="Dra. Maria Lourdes">
                         <option value="Dra. Alejandra León">
                         <option value="Dra. Kharen Moreno">
                         <option value="Dra. Karina Madrigal">
@@ -212,7 +209,8 @@
     "Galgo Inglés-español", "Golden Retriever", "Gran Danés", "Greyhound", 
     "Husky Siberiano", "Jack Russell Terrier", "Labrador Retriever", "Maltés", 
     "Pastor Alemán", "Pequinés", "Pomerania", "Pug", "Rottweiler", "Samoyedo", 
-    "San Bernardo", "Schnauzer", "Shih Tzu", "SRD", "Yorkshire Terrier"
+    "San Bernardo", "Schnauzer Gigante", "Schnauzer Mediano", "Schnauzer Miniatura", 
+    "Shih Tzu", "SRD", "Yorkshire Terrier"
 ];
 
 const razasFelinas = [
@@ -442,14 +440,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             Eosinofilos_numero:	"0,0 - 1,7",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje:	"2,0 - 9,0",
-                            Recuentoeritrocitos: "5,61 - 7,46",
-                            Hemoglobina: "14,2 - 18,9",
-                            Hematocrito: "40,4 - 55,3",
-                            vcm: "65,0 - 80,0",
+                            Recuentoeritrocitos: "5,87 - 7,59",
+                            Hemoglobina: "14,5 - 19,2",
+                            Hematocrito: "39,0 - 50,3",
+                            vcm: "66,0 - 79,0",
                             hcm: "20,0 - 25,0",
                             chcm: "30,0 - 38,0",
                             rdw: "11,0 - 15,5",
-                            Recuentoplaquetario: "117 - 440",
+                            Recuentoplaquetario: "117 - 460",
                             mpv: "7,0 - 12,9",
                         },
                     "De 6 meses a 1 año": {
@@ -510,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     Hembra: {
                         "De 1 año a 12 años": {
                             Recuentoleucocitos: "6,8 - 13,9",
-                            Linfocitos_numero: "1,3 - 3,3",		
+                            Linfocitos_numero: "1,1 - 3,3",		
                             Monocitos_numero:	"0,0 - 1,8",
                             Neutrofilos_numero: "4,1 - 10,3",
                             Eosinofilos_numero:	"0,0 - 1,7",
@@ -523,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             hcm: "20,0 - 25,0",
                             chcm: "30,0 - 38,0",
                             rdw: "11,0 - 15,5",
-                            Recuentoplaquetario: "117 - 440",
+                            Recuentoplaquetario: "117 - 460",
                             mpv: "7,0 - 12,9",
                         },
                         "De 6 meses a 1 año": {
@@ -794,6 +792,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (especie !== "Seleccionar" && sexo !== "Seleccionar" && edad !== "Seleccionar") {
         const refValores = valoresReferencia[especie][sexo][edad];
+        
+        // Actualizar todos los valores de referencia 
         document.getElementById('refLeucocitos').innerText = refValores.Recuentoleucocitos || '';
         document.getElementById('reflinfocitos').innerText = refValores.Linfocitos_numero || '';
         document.getElementById('refMonocitos').innerText = refValores.Monocitos_numero || '';
@@ -812,28 +812,54 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('refrdw').innerText = refValores.rdw || '';
         document.getElementById('refplaquetario').innerText = refValores.Recuentoplaquetario || '';
         document.getElementById('refmpv').innerText = refValores.mpv || '';
-    } else {
-        document.getElementById('refLeucocitos').innerText = "";
-        document.getElementById('reflinfocitos').innerText = "";
-        document.getElementById('refMonocitos').innerText = "";
-        document.getElementById('refneutrofilos').innerText = "";
-        document.getElementById('refeosinofilos').innerText = "";
-        document.getElementById('reflinfocitos2').innerText = "";
-        document.getElementById('refmonocitos').innerText = "";
-        document.getElementById('refNeutrofilosPorcentaje').innerText = "";
-        document.getElementById('refEosinofilosPorcentaje').innerText = "";
-        document.getElementById('referitrocitos').innerText = "";
-        document.getElementById('refhemoglobina').innerText = "";
-        document.getElementById('refhematocrito').innerText = "";
-        document.getElementById('refvcm').innerText = "";
-        document.getElementById('refhcm').innerText = "";
-        document.getElementById('refchcm').innerText = "";
-        document.getElementById('refrdw').innerText = "";
-        document.getElementById('refplaquetario').innerText = "";
-        document.getElementById('refmpv').innerText = "";
+        
+        // Después de actualizar los valores de referencia, recalcular los colores
+        // para los campos que ya tienen valores
+        setTimeout(() => {
+            // Series blanca
+            if (document.getElementById('leucocitos').value) 
+                actualizarColor('leucocitos', 'refLeucocitos');
+            if (document.getElementById('linfocitos').value)
+                actualizarColor('linfocitos', 'reflinfocitos');
+            if (document.getElementById('monocitos').value)
+                actualizarColor('monocitos', 'refMonocitos');
+            if (document.getElementById('neutrofilos').value)
+                actualizarColor('neutrofilos', 'refneutrofilos');
+            if (document.getElementById('eosinofilos').value)
+                actualizarColor('eosinofilos', 'refeosinofilos');
+            if (document.getElementById('linfocitos_porcentaje').value)
+                actualizarColor('linfocitos_porcentaje', 'reflinfocitos2');
+            if (document.getElementById('monocitos_porcentaje').value)
+                actualizarColor('monocitos_porcentaje', 'refmonocitos');
+            if (document.getElementById('neutrofilos_porcentaje').value)
+                actualizarColor('neutrofilos_porcentaje', 'refNeutrofilosPorcentaje');
+            if (document.getElementById('eosinofilos_porcentaje').value)
+                actualizarColor('eosinofilos_porcentaje', 'refEosinofilosPorcentaje');
+            
+            // Series roja
+            if (document.getElementById('eritrocitos').value)
+                actualizarColor('eritrocitos', 'referitrocitos');
+            if (document.getElementById('hemoglobina').value)
+                actualizarColor('hemoglobina', 'refhemoglobina');
+            if (document.getElementById('hematocrito').value)
+                actualizarColor('hematocrito', 'refhematocrito');
+            if (document.getElementById('vcm').value)
+                actualizarColor('vcm', 'refvcm');
+            if (document.getElementById('hcm').value)
+                actualizarColor('hcm', 'refhcm');
+            if (document.getElementById('chcm').value)
+                actualizarColor('chcm', 'refchcm');
+            if (document.getElementById('rdw').value)
+                actualizarColor('rdw', 'refrdw');
+            
+            // Plaquetas
+            if (document.getElementById('plaquetas').value)
+                actualizarColor('plaquetas', 'refplaquetario');
+            if (document.getElementById('mpv').value)
+                actualizarColor('mpv', 'refmpv');
+        }, 100); // Un pequeño retardo para asegurar que los valores de referencia se han actualizado
     }
 }
-
 function actualizarColor(inputId, refId) {
     const inputElement = document.getElementById(inputId);
     const refElement = document.getElementById(refId);
