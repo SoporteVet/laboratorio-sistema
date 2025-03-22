@@ -101,7 +101,6 @@
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
-                            <option value="Dra. Maria Lourdes">
                             <option value="Dra. Alejandra León">
                             <option value="Dra. Kharen Moreno">
                             <option value="Dra. Karina Madrigal">
@@ -175,29 +174,25 @@
             }
        
             function moverFocoConFlechas(event, derechaId, izquierdaId, arribaId, abajoId) {
-                switch (event.key) {
-                    case 'ArrowRight':
-                        event.preventDefault();
-                        document.getElementById(derechaId).focus();
-                        break;
-                    case 'ArrowLeft':
-                        event.preventDefault();
-                        document.getElementById(izquierdaId).focus();
-                        break;
-                    case 'ArrowUp':
-                        event.preventDefault();
-                        document.getElementById(arribaId).focus();
-                        break;
-                    case 'ArrowDown':
-                        event.preventDefault();
-                        document.getElementById(abajoId).focus();
-                        break;
-                    case 'Enter': 
-                        event.preventDefault();
-                        document.getElementById(derechaId).focus(); 
-                        break;
+                    switch (event.key) {
+                        case 'ArrowRight':
+                            event.preventDefault();
+                            document.getElementById(derechaId).focus();
+                            break;
+                        case 'ArrowLeft':
+                            event.preventDefault();
+                            document.getElementById(izquierdaId).focus();
+                            break;
+                        case 'ArrowUp':
+                            event.preventDefault();
+                            document.getElementById(arribaId).focus();
+                            break;
+                        case 'ArrowDown':
+                            event.preventDefault();
+                            document.getElementById(abajoId).focus();
+                            break;
+                    }
                 }
-            }
             const razasCaninas = [
     "Ainu", "Airedale terrier", "Akita", "Akita Inu", "Alaskan Malamute",
     "American Black and Tan Coonhound", "American Bull Terrier", "American Pit Bull Terrier",
@@ -212,7 +207,8 @@
     "Galgo Inglés-español", "Golden Retriever", "Gran Danés", "Greyhound", 
     "Husky Siberiano", "Jack Russell Terrier", "Labrador Retriever", "Maltés", 
     "Pastor Alemán", "Pequinés", "Pomerania", "Pug", "Rottweiler", "Samoyedo", 
-    "San Bernardo", "Schnauzer", "Shih Tzu", "SRD", "Yorkshire Terrier"
+    "San Bernardo", "Schnauzer Gigante", "Schnauzer Mediano", "Schnauzer Miniatura", 
+    "Shih Tzu", "SRD", "Yorkshire Terrier"
 ];
 
 const razasFelinas = [
@@ -295,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(datalist);
     }
 });
+
             
                     </script>
                 </tbody>
@@ -720,7 +717,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { input: 'calcio', ref: 'refcalcio' },
         { input: 'ALT', ref: 'refALT' },
         { input: 'Fosfatasa_Alcalina', ref: 'refFosfatasa_Alcalina' },
-        { input: 'billirrubina', ref: 'refbillirrubina' },
+        { input: 'billirrubina_total', ref: 'refbillirrubina' },
         { input: 'Albumina', ref: 'refalbumina' },
         { input: 'proteinas_totales', ref: 'refproteinas_totales' },
         { input: 'Globulinas', ref: 'refglobulinas' },
@@ -740,6 +737,63 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+    
+function actualizarColor(inputId, refId) {
+    const inputElement = document.getElementById(inputId);
+    const refElement = document.getElementById(refId);
+    
+    if (!inputElement || !refElement) return;
+    
+    // Asegurarse de que el input esté dentro de un contenedor
+    let container = inputElement.parentElement;
+    if (!container.classList.contains('input-container')) {
+        // Si el input no está en un contenedor, envolverlo en uno
+        const wrapper = document.createElement('div');
+        wrapper.className = 'input-container';
+        inputElement.parentNode.insertBefore(wrapper, inputElement);
+        wrapper.appendChild(inputElement);
+        container = wrapper;
+    }
+    
+    // Limpiar clases anteriores primero (importante!)
+    container.classList.remove('valor-bajo', 'valor-alto');
+    
+    // Obtener el valor actual sin ninguna flecha
+    const valorTexto = inputElement.value.trim().replace(/[↑↓]\s*$/, '').replace(',', '.');
+    
+    // Si no hay valor, no agregar ninguna clase y salir
+    if (!valorTexto) {
+        inputElement.style.color = 'black';
+        return;
+    }
+    
+    const valor = parseFloat(valorTexto);
+    
+    // Si no es un número, salir
+    if (isNaN(valor)) return;
+    
+    // Establecer negrita siempre
+    inputElement.style.fontWeight = 'bold';
+    
+    // Obtener rango de referencia
+    const rangoTexto = refElement.textContent;
+    const coincidencia = rangoTexto.match(/([\d,.]+)\s*-\s*([\d,.]+)/);
+    
+    if (coincidencia) {
+        const min = parseFloat(coincidencia[1].replace(',', '.'));
+        const max = parseFloat(coincidencia[2].replace(',', '.'));
+        
+        if (valor < min) {
+            inputElement.style.color = '#0096d2'; // Azul
+            container.classList.add('valor-bajo');
+        } else if (valor > max) {
+            inputElement.style.color = 'red';
+            container.classList.add('valor-alto');
+        } else {
+            inputElement.style.color = 'black';
+        }
+    }
+}
 });
 
     </script>
@@ -748,7 +802,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <tr>
                 <td>GLUCOSA</td>
                 <td>
-                <input type="text" id="Glucosa" list="rangoglucosa" onkeydown="moverFoco(event, 'Glucosa')">                </td>
+                    <input type="text" id="Glucosa" list="rangoglucosa" onkeydown="moverFoco(event, 'Glucosa')">
+                    <datalist id="rangoglucosa"></datalist>
+                </td>
                 <td id="refglucosa">77 - 126</td>
                 <td>mg/dl</td>
                 <script type="module">
@@ -756,11 +812,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
                     document.addEventListener('DOMContentLoaded', () => {
                         const datalist = document.getElementById('rangoglucosa');
-                        Recuentolglucosa.forEach(valor => {
-                            const option = document.createElement('option');
-                            option.value = parseInt(valor.replace(',', '.'));
-                            datalist.appendChild(option);
-                        });
+                        if (datalist) { // Verificar que existe
+                            Recuentolglucosa.forEach(valor => {
+                                const option = document.createElement('option');
+                                option.value = parseInt(valor.replace(',', '.'));
+                                datalist.appendChild(option);
+                            });
+                        } else {
+                            console.error('No se encontró el elemento datalist con id rangoglucosa');
+                        }
                     });
                 </script>
                 </tr>
@@ -1210,11 +1270,11 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <script>
-        function moverFoco(event, actualId) {
-    if (event.key === 'Enter') { // Si la tecla presionada es espacio
-        event.preventDefault(); // Prevenir que se inserte el espacio
+function moverFoco(event, siguienteId) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
         
-        // Definir el orden de navegación entre campos
+        // Lista completa de campos en orden de navegación
         const camposParametros = [
             'Glucosa', 
             'Colesterol_total', 
@@ -1234,60 +1294,102 @@ document.addEventListener('DOMContentLoaded', function() {
             'alb/glo'
         ];
         
-        // Encontrar la posición actual
-        const indiceActual = camposParametros.indexOf(actualId);
+        // Encontrar el índice del campo actual
+        const indiceActual = camposParametros.indexOf(event.target.id);
         
-        // Si encontramos el campo actual y no es el último
         if (indiceActual !== -1 && indiceActual < camposParametros.length - 1) {
-            // Mover al siguiente campo
+            // Mover al siguiente campo en la secuencia
             const siguienteId = camposParametros[indiceActual + 1];
-            const siguienteCampo = document.getElementById(siguienteId);
-            
-            if (siguienteCampo) {
-                siguienteCampo.focus();
-                // Seleccionar todo el texto si existe
-                if (siguienteCampo.value) {
-                    siguienteCampo.select();
-                }
-            }
+            document.getElementById(siguienteId).focus();
+        } else {
+            // Si no está en la lista o es el último, usar el siguienteId proporcionado
+            document.getElementById(siguienteId).focus();
+}
+    } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        
+        // Los mismos campos para navegación hacia arriba
+        const camposParametros = [
+        'Glucosa', 
+            'Colesterol_total', 
+            'amilasa', 
+            'CK', 
+            'nitrogeno_ureico', 
+            'creatinina', 
+            'bun_crea', 
+            'fosforo', 
+            'calcio', 
+            'ALT', 
+            'Fosfatasa_Alcalina', 
+            'billirrubina_total', 
+            'Albumina', 
+            'proteinas_totales', 
+            'Globulinas', 
+            'alb/glo'
+        ];
+        
+        // Encontrar el índice del campo actual
+        const indiceActual = camposParametros.indexOf(event.target.id);
+        
+        if (indiceActual > 0) {
+            // Mover al campo anterior
+            const anteriorId = camposParametros[indiceActual - 1];
+            document.getElementById(anteriorId).focus();
         }
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
     cargarListaDeParametros();
+    console.log("Cargando lista de parámetros..."); // Para debugear
 });
 
 function cargarListaDeParametros() {
     const selector = document.getElementById('parameterSelector');
+    if (!selector) {
+        console.error("No se encontró el selector de parámetros");
+        return;
+    }
+    
     selector.innerHTML = '<option value="" selected disabled>-- Seleccionar parámetro --</option>';
     
-    // Obtener todas las filas de parámetros de las tablas
-    const tablas = document.querySelectorAll('.container table tbody');
+    // Lista de parámetros específicos que queremos mostrar
+    const parametrosEspecificos = [
+        "GLUCOSA", "COLESTEROL TOTAL", "AMILASA", "CK",
+        "NITROGENO UREICO", "CREATININA", "RELACIÓN BUN/CREA", "FOSFORO", "CALCIO",
+        "ALT", "FOSFATASA ALCALINA", "BILLIRRUBINA TOTAL",
+        "ALBUMINA", "PROTEINAS TOTALES", "GLOBULINAS TOTALES", "RELACIÓN ALBUMINA/GLOBULINAS"
+    ];
+    
+    const tablas = document.querySelectorAll('#template1 table');
+    console.log(`Encontradas ${tablas.length} tablas`); // Para debugear
     
     tablas.forEach((tabla, tablaIndex) => {
-        const filas = tabla.querySelectorAll('tr');
+        const filas = tabla.querySelectorAll('tbody tr');
+        console.log(`Tabla ${tablaIndex}: ${filas.length} filas`); // Para debugear
         
         filas.forEach((fila, filaIndex) => {
+            if (!fila.cells || fila.cells.length === 0) return;
+            
             // Obtener el nombre del parámetro (primera celda)
             const paramName = fila.cells[0]?.textContent.trim();
-            if (!paramName || paramName === "Nombre" || paramName === "Raza" || 
-                paramName === "Sexo" || paramName === "Especie" || paramName === "Edad" ||
-                paramName === "Peso" || paramName === "SUERO HEMOLITICO" || 
-                paramName === "SUERO LIPEMICO" || paramName === "SUERTO ICTERICO") {
-                return; // Ignorar filas de datos de mascota y propietario
+            console.log(`Fila ${filaIndex}: "${paramName}"`); // Para debugear
+            
+            // Solo agregar los parámetros específicos que queremos
+            if (parametrosEspecificos.includes(paramName)) {
+                // Crear un ID único para la fila
+                const filaId = `fila-${tablaIndex}-${filaIndex}`;
+                fila.id = filaId;
+                
+                // Añadir opción al selector
+                const option = document.createElement('option');
+                option.value = filaId;
+                option.textContent = paramName;
+                selector.appendChild(option);
             }
-            
-            // Crear un ID único para la fila
-            const filaId = `fila-${tablaIndex}-${filaIndex}`;
-            fila.id = filaId;
-            
-            // Añadir opción al selector
-            const option = document.createElement('option');
-            option.value = filaId;
-            option.textContent = paramName;
-            selector.appendChild(option);
         });
     });
+    
+    console.log(`Total de opciones cargadas: ${selector.options.length - 1}`); // Para debugear
 }
 
 function eliminarParametroSeleccionado() {
@@ -1443,10 +1545,15 @@ function eliminarParametroSeleccionado() {
             return;
         }
 
-        // Obtener el nombre de la mascota y el apellido del propietario
+        // Obtener el nombre de la mascota y el primer apellido del propietario
         const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
         const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
-        const propietarioApellido = propietarioNombre.split(' ').pop(); // Obtener el último nombre como apellido
+        
+        // Extraer el primer apellido (segundo elemento después de dividir por espacios)
+        const nombreArray = propietarioNombre.split(' ');
+        // Si hay al menos dos palabras, tomar la segunda como primer apellido
+        // Si no, usar el valor completo o el default
+        const propietarioApellido = nombreArray.length > 1 ? nombreArray[1] : nombreArray[0];
 
         // Espera a que todas las imágenes dentro del elemento se carguen
         const images = selectedTemplate.getElementsByTagName('img');
@@ -1467,7 +1574,7 @@ function eliminarParametroSeleccionado() {
         const canvas = await html2canvas(selectedTemplate, {
             scale: 2,
             useCORS: true,
-            logging: true,
+            logging: false,
             allowTaint: true,
             backgroundColor: '#ffffff'
         });
@@ -1486,10 +1593,40 @@ function eliminarParametroSeleccionado() {
         pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
 
         // Genera el nombre del archivo según la plantilla actual y datos
-        const fileName = `Panel General Básico ${mascotaNombre} ${propietarioApellido}.pdf`;
-
-        // Guarda el PDF
-        pdf.save(fileName);
+        const fileName = `Hemograma ${mascotaNombre} ${propietarioApellido}.pdf`;
+        
+        // Generar el blob del PDF
+        const pdfBlob = pdf.output('blob');
+        
+        // Intentar usar la API File System Access para guardar el archivo
+        if ('showSaveFilePicker' in window) {
+            try {
+                const fileHandle = await window.showSaveFilePicker({
+                    suggestedName: fileName,
+                    types: [{
+                        description: 'Archivo PDF',
+                        accept: { 'application/pdf': ['.pdf'] }
+                    }]
+                });
+                
+                const writable = await fileHandle.createWritable();
+                await writable.write(pdfBlob);
+                await writable.close();
+                
+                console.log('Archivo guardado con éxito usando File System Access API');
+            } catch (err) {
+                // Si el usuario cancela el guardado o hay un error
+                if (err.name !== 'AbortError') {
+                    console.error('Error al usar File System Access API:', err);
+                    // Caer en el método tradicional
+                    pdf.save(fileName);
+                }
+            }
+        } else {
+            // Navegador no soporta File System Access API, usar método tradicional
+            pdf.save(fileName);
+        }
+        
     } catch (error) {
         console.error('Error al generar el PDF:', error);
         alert('Ocurrió un error al generar el PDF: ' + error.message);

@@ -25,6 +25,9 @@ input[type="text"]:focus {
     outline: none;
     box-shadow: 0 0 3px rgba(0, 150, 210, 0.5); /* Reducir la sombra */
 }
+input[type="text"] {
+    font-weight: bold;
+}
 input, textarea {
     width: 100%;
     padding: 8px;
@@ -38,6 +41,33 @@ input, textarea {
 input[type="text"]:focus {
     border-color: #0096d2;
     outline: none;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.valor-bajo::after {
+    content: "↓";
+    position: absolute;
+    right: 210px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0096d2;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.valor-alto::after {
+    content: "↑";
+    position: absolute;
+    right: 220px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: red;
+    font-size: 12px;
+    font-weight: bold;
 }
 button {
     margin: 0;

@@ -103,7 +103,6 @@
                         <option value="Dra. Daniela Sancho">
                         <option value="Dra. Sofia Carrillo">
                         <option value="Dra. Franciny Nuñez">
-                        <option value="Dra. Maria Lourdes">  
                         <option value="Dra. Alejandra León">
                         <option value="Dra. Kharen Moreno">
                         <option value="Dra. Karina Madrigal">
@@ -210,7 +209,8 @@
     "Galgo Inglés-español", "Golden Retriever", "Gran Danés", "Greyhound", 
     "Husky Siberiano", "Jack Russell Terrier", "Labrador Retriever", "Maltés", 
     "Pastor Alemán", "Pequinés", "Pomerania", "Pug", "Rottweiler", "Samoyedo", 
-    "San Bernardo", "Schnauzer", "Shih Tzu", "SRD", "Yorkshire Terrier"
+    "San Bernardo", "Schnauzer Gigante", "Schnauzer Mediano", "Schnauzer Miniatura", 
+    "Shih Tzu", "SRD", "Yorkshire Terrier"
 ];
 
 const razasFelinas = [
@@ -833,75 +833,113 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 function actualizarColor(inputId, refId) {
-    const input = document.getElementById(inputId);
-    const ref = document.getElementById(refId).innerText;
-    const valor = parseFloat(input.value.replace(',', '.'));
-    const [min, max] = ref.split(' - ').map(v => parseFloat(v.replace(',', '.')));
-
-    if (valor < min) {
-        input.style.color = '#0096d2';
-        input.style.fontWeight = 'bold'; 
-    } else if (valor > max) {
-        input.style.color = 'red';
-        input.style.fontWeight = 'bold'; 
-    } else {
-        input.style.color = 'black';
-        input.style.fontWeight = 'bold'; 
+    const inputElement = document.getElementById(inputId);
+    const refElement = document.getElementById(refId);
+    
+    if (!inputElement || !refElement) return;
+    
+    // Asegurarse de que el input esté dentro de un contenedor
+    let container = inputElement.parentElement;
+    if (!container.classList.contains('input-container')) {
+        // Si el input no está en un contenedor, envolverlo en uno
+        const wrapper = document.createElement('div');
+        wrapper.className = 'input-container';
+        inputElement.parentNode.insertBefore(wrapper, inputElement);
+        wrapper.appendChild(inputElement);
+        container = wrapper;
+    }
+    
+    // Limpiar clases anteriores primero (importante!)
+    container.classList.remove('valor-bajo', 'valor-alto');
+    
+    // Obtener el valor actual sin ninguna flecha
+    const valorTexto = inputElement.value.trim().replace(/[↑↓]\s*$/, '').replace(',', '.');
+    
+    // Si no hay valor, no agregar ninguna clase y salir
+    if (!valorTexto) {
+        inputElement.style.color = 'black';
+        return;
+    }
+    
+    const valor = parseFloat(valorTexto);
+    
+    // Si no es un número, salir
+    if (isNaN(valor)) return;
+    
+    // Establecer negrita siempre
+    inputElement.style.fontWeight = 'bold';
+    
+    // Obtener rango de referencia
+    const rangoTexto = refElement.textContent;
+    const coincidencia = rangoTexto.match(/([\d,.]+)\s*-\s*([\d,.]+)/);
+    
+    if (coincidencia) {
+        const min = parseFloat(coincidencia[1].replace(',', '.'));
+        const max = parseFloat(coincidencia[2].replace(',', '.'));
+        
+        if (valor < min) {
+            inputElement.style.color = '#0096d2'; // Azul
+            container.classList.add('valor-bajo');
+        } else if (valor > max) {
+            inputElement.style.color = 'red';
+            container.classList.add('valor-alto');
+        } else {
+            inputElement.style.color = 'black';
+        }
     }
 }
-
-            document.getElementById('leucocitos').addEventListener('input', () => {
+            document.getElementById('leucocitos').addEventListener('blur', () => {
                 actualizarColor('leucocitos', 'refLeucocitos');
             });
-            document.getElementById('linfocitos').addEventListener('input', () => {
+            document.getElementById('linfocitos').addEventListener('blur', () => {
                 actualizarColor('linfocitos', 'reflinfocitos');
             });
-            document.getElementById('monocitos').addEventListener('input', () => {
+            document.getElementById('monocitos').addEventListener('blur', () => {
                 actualizarColor('monocitos', 'refMonocitos');
             });
-            document.getElementById('neutrofilos').addEventListener('input', () => {
+            document.getElementById('neutrofilos').addEventListener('blur', () => {
                 actualizarColor('neutrofilos', 'refneutrofilos');
             });
-            document.getElementById('eosinofilos').addEventListener('input', () => {
+            document.getElementById('eosinofilos').addEventListener('blur', () => {
                 actualizarColor('eosinofilos', 'refeosinofilos');
             });
-            document.getElementById('linfocitos_porcentaje').addEventListener('input', () => {
+            document.getElementById('linfocitos_porcentaje').addEventListener('blur', () => {
                 actualizarColor('linfocitos_porcentaje', 'reflinfocitos2');
             });
-            document.getElementById('monocitos_porcentaje').addEventListener('input', () => {
+            document.getElementById('monocitos_porcentaje').addEventListener('blur', () => {
                 actualizarColor('monocitos_porcentaje', 'refmonocitos');
             });
-            document.getElementById('neutrofilos_porcentaje').addEventListener('input', () => {
+            document.getElementById('neutrofilos_porcentaje').addEventListener('blur', () => {
                 actualizarColor('neutrofilos_porcentaje', 'refNeutrofilosPorcentaje');
             });
-            document.getElementById('eosinofilos_porcentaje').addEventListener('input', () => {
+            document.getElementById('eosinofilos_porcentaje').addEventListener('blur', () => {
                 actualizarColor('eosinofilos_porcentaje', 'refEosinofilosPorcentaje');
             });
-            document.getElementById('eritrocitos').addEventListener('input', () => {
+            document.getElementById('eritrocitos').addEventListener('blur', () => {
                 actualizarColor('eritrocitos', 'referitrocitos');
             });
-            document.getElementById('hemoglobina').addEventListener('input', () => {
+            document.getElementById('hemoglobina').addEventListener('blur', () => {
                 actualizarColor('hemoglobina', 'refhemoglobina');
             });
-            document.getElementById('hematocrito').addEventListener('input', () => {
+            document.getElementById('hematocrito').addEventListener('blur', () => {
                 actualizarColor('hematocrito', 'refhematocrito');
             });
-            document.getElementById('vcm').addEventListener('input', () => {
+            document.getElementById('vcm').addEventListener('blur', () => {
                 actualizarColor('vcm', 'refvcm');
             });
-            document.getElementById('hcm').addEventListener('input', () => {
+            document.getElementById('hcm').addEventListener('blur', () => {
                 actualizarColor('hcm', 'refhcm');
             });
-            document.getElementById('chcm').addEventListener('input', () => {
+            document.getElementById('chcm').addEventListener('blur', () => {
                 actualizarColor('chcm', 'refchcm');
             });
-            document.getElementById('rdw').addEventListener('input', () => {
+            document.getElementById('rdw').addEventListener('blur', () => {
                 actualizarColor('rdw', 'refrdw');
             });
-            document.getElementById('plaquetario').addEventListener('input', () => {
+            document.getElementById('plaquetario').addEventListener('blur', () => {
                 actualizarColor('plaquetario', 'refplaquetario');
             });
-            document.getElementById('mpv').addEventListener('input', () => {
+            document.getElementById('mpv').addEventListener('blur', () => {
                 actualizarColor('mpv', 'refmpv');
             });
 
@@ -961,19 +999,43 @@ function actualizarColor(inputId, refId) {
                 }
                 
                 function cambiarColor(valor, id, min, max) {
-                    var input = document.getElementById(id);
-                    if (id === 'neutrofilos_porcentaje' || id === 'eosinofilos_porcentaje') {
-                        input.style.color = 'black';
-                        return;
-                    }
+                var input = document.getElementById(id);
+                if (!input) return;
+                
+                // Asegurarse de que el input esté dentro de un contenedor
+                let container = input.parentElement;
+                if (!container.classList.contains('input-container')) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'input-container';
+                    input.parentNode.insertBefore(wrapper, input);
+                    wrapper.appendChild(input);
+                    container = wrapper;
+                }
+                
+                // Siempre establecer negrita
+                input.style.fontWeight = 'bold';
+                
+                // Limpiar clases anteriores
+                container.classList.remove('valor-bajo', 'valor-alto');
+                
+                if (id === 'neutrofilos_porcentaje' || id === 'eosinofilos_porcentaje') {
+                    input.style.color = 'black';
+                    return;
+                }
+                
+                // Solo agregar clases si hay un valor válido
+                if (!isNaN(valor) && input.value.trim()) {
                     if (valor < min) {
-                        input.style.color = '#0096d2';
+                        input.style.color = '#0096d2'; // Azul
+                        container.classList.add('valor-bajo');
                     } else if (valor > max) {
                         input.style.color = 'red';
+                        container.classList.add('valor-alto');
                     } else {
                         input.style.color = 'black';
                     }
                 }
+            }
                 function formatearDecimal(id) {
                     var input = document.getElementById(id);
                     if (input.value === '') return;
@@ -1278,7 +1340,9 @@ function actualizarColor(inputId, refId) {
                <td id="refplaquetario">117 - 460</td>
                <td>x 10³/µl</td>
            </tr>
+           
            <tr>
+
                <td>MPV</td>
                <td><input type="text" id="mpv" list="rangoMPV" oninput="calcularTodosPlaquetas()" onblur="formatearDecimal('mpv')" onkeydown="moverFoco(event, 'pdw')"></td>
                <datalist id="rangoMPV"></datalist>
@@ -1312,6 +1376,7 @@ function actualizarColor(inputId, refId) {
    </table>
    
    <script>
+    
    function calcularTodosPlaquetas() {
        calcularPlaquetas();
        calcularMPV();
@@ -1320,9 +1385,9 @@ function actualizarColor(inputId, refId) {
    }
    
    function calcularPlaquetas() {
-       var plaquetas = parseFloat(document.getElementById('plaquetas').value.replace(',', '.')) || 0;
-       cambiarColor(plaquetas, 'plaquetas', 117, 460);
-   }
+    var plaquetas = parseFloat(document.getElementById('plaquetas').value.replace(',', '.')) || 0;
+    actualizarColor('plaquetas', 'refplaquetario');
+}
    
    function calcularMPV() {
        var mpv = parseFloat(document.getElementById('mpv').value.replace(',', '.')) || 0;
@@ -1354,9 +1419,9 @@ function actualizarColor(inputId, refId) {
        }
    }
    
-   document.getElementById('plaquetas').addEventListener('blur', function() {
-       calcularTodosPlaquetas();
-   });
+   document.getElementById('plaquetas').addEventListener('input', () => {
+    actualizarColor('plaquetas', 'refplaquetario');
+});
    document.getElementById('mpv').addEventListener('blur', function() {
        formatearDecimal('mpv');
        calcularTodosPlaquetas();
@@ -1386,6 +1451,50 @@ function actualizarColor(inputId, refId) {
     </div>
 </div>
   <script>
+function moverFoco(event, siguienteId) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        
+        // Lista completa de campos en orden de navegación
+        const camposParametros = [
+            'leucocitos', 'linfocitos', 'monocitos', 'neutrofilos', 'eosinofilos',
+            'linfocitos_porcentaje', 'monocitos_porcentaje', 'neutrofilos_porcentaje', 'eosinofilos_porcentaje',
+            'eritrocitos', 'hemoglobina', 'hematocrito', 'vcm', 'hcm', 'chcm', 'rdw',
+            'plaquetas', 'mpv', 'pdw', 'pct'
+        ];
+        
+        // Encontrar el índice del campo actual
+        const indiceActual = camposParametros.indexOf(event.target.id);
+        
+        if (indiceActual !== -1 && indiceActual < camposParametros.length - 1) {
+            // Mover al siguiente campo en la secuencia
+            const siguienteId = camposParametros[indiceActual + 1];
+            document.getElementById(siguienteId).focus();
+        } else {
+            // Si no está en la lista o es el último, usar el siguienteId proporcionado
+            document.getElementById(siguienteId).focus();
+}
+    } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        
+        // Los mismos campos para navegación hacia arriba
+        const camposParametros = [
+            'leucocitos', 'linfocitos', 'monocitos', 'neutrofilos', 'eosinofilos',
+            'linfocitos_porcentaje', 'monocitos_porcentaje', 'neutrofilos_porcentaje', 'eosinofilos_porcentaje',
+            'eritrocitos', 'hemoglobina', 'hematocrito', 'vcm', 'hcm', 'chcm', 'rdw',
+            'plaquetas', 'mpv', 'pdw', 'pct'
+        ];
+        
+        // Encontrar el índice del campo actual
+        const indiceActual = camposParametros.indexOf(event.target.id);
+        
+        if (indiceActual > 0) {
+            // Mover al campo anterior
+            const anteriorId = camposParametros[indiceActual - 1];
+            document.getElementById(anteriorId).focus();
+        }
+    }
+}
     document.addEventListener('DOMContentLoaded', () => {
         const templates = document.querySelectorAll('.container');
         const templateSelector = document.getElementById('templateSelector');
@@ -1518,6 +1627,112 @@ function actualizarColor(inputId, refId) {
 
         // Guarda el PDF
         pdf.save(fileName);
+    } catch (error) {
+        console.error('Error al generar el PDF:', error);
+        alert('Ocurrió un error al generar el PDF: ' + error.message);
+    } finally {
+        // Ocultar el indicador de carga y habilitar el botón nuevamente
+        loadingIndicator.style.display = 'none';
+        pdfButton.disabled = false;
+    }
+}
+async function generatePDF() {
+    // Mostrar el indicador de carga
+    const loadingIndicator = document.getElementById('loadingPdf');
+    const pdfButton = document.getElementById('pdfButton');
+    
+    loadingIndicator.style.display = 'flex';
+    pdfButton.disabled = true;
+    
+    try {
+        const { jsPDF } = window.jspdf;
+        const selectedTemplate = document.getElementById('template1');
+
+        if (!selectedTemplate) {
+            alert('No se encontró la plantilla.');
+            return;
+        }
+
+        // Obtener el nombre de la mascota y el primer apellido del propietario
+        const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
+        const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
+        
+        // Extraer el primer apellido (segundo elemento después de dividir por espacios)
+        const nombreArray = propietarioNombre.split(' ');
+        // Si hay al menos dos palabras, tomar la segunda como primer apellido
+        // Si no, usar el valor completo o el default
+        const propietarioApellido = nombreArray.length > 1 ? nombreArray[1] : nombreArray[0];
+
+        // Resto del código sin cambios...
+        const images = selectedTemplate.getElementsByTagName('img');
+        const loadImages = Array.from(images).map(img => {
+            return new Promise((resolve, reject) => {
+                if (img.complete) {
+                    resolve();
+                } else {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                }
+            });
+        });
+
+        await Promise.all(loadImages);
+
+        // Genera el canvas
+        const canvas = await html2canvas(selectedTemplate, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        });
+
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 150; 
+        const pageHeight = 297;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        // Calcular la posición para centrar la imagen con márgenes
+        const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+        const y = 5;
+
+        // Agrega la imagen de la plantilla escalada y centrada
+        pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
+
+        // Genera el nombre del archivo según la plantilla actual y datos
+        const fileName = `Hemograma ${mascotaNombre} ${propietarioApellido}.pdf`;
+        
+        // Generar el blob del PDF
+        const pdfBlob = pdf.output('blob');
+        
+        // Intentar usar la API File System Access para guardar el archivo
+        if ('showSaveFilePicker' in window) {
+            try {
+                const fileHandle = await window.showSaveFilePicker({
+                    suggestedName: fileName,
+                    types: [{
+                        description: 'Archivo PDF',
+                        accept: { 'application/pdf': ['.pdf'] }
+                    }]
+                });
+                
+                const writable = await fileHandle.createWritable();
+                await writable.write(pdfBlob);
+                await writable.close();
+                
+                console.log('Archivo guardado con éxito usando File System Access API');
+            } catch (err) {
+                // Si el usuario cancela el guardado o hay un error
+                if (err.name !== 'AbortError') {
+                    console.error('Error al usar File System Access API:', err);
+                    // Caer en el método tradicional
+                    pdf.save(fileName);
+                }
+            }
+        } else {
+            pdf.save(fileName);
+        }
     } catch (error) {
         console.error('Error al generar el PDF:', error);
         alert('Ocurrió un error al generar el PDF: ' + error.message);
