@@ -34,16 +34,16 @@
                 <option value="De 1 año a 12 años">De 1 año a 12 años</option>
                 <option value="De 6 meses a 1 año">De 6 meses a 1 año</option>
                 <option value="De 3 meses a 6 meses">De 3 meses a 6 meses</option>
+                <option value="De 3 meses a 6 meses">De mes y medio a 3 meses</option>
                 <option value="Todas las edades">Todas las edades</option>
             </select>
-
         </div>
         <div class="container" id="template1" style="display: block;">
         <div class="header">
             <img src="img/empresa.jpg" alt="Logo de la Empresa" class="small-image">
             <h1>Laboratorio Clínico Veterinario</h1>
         </div>
-        <h3 class="subheader">PANEL GENERAL BÁSICO</h3>
+        <h3 class="subheader">PANEL PLUS</h3>
             <table>
                 <thead>
                     <tr>
@@ -84,10 +84,15 @@
                         <td><input type="text" id="mascotaEdad" list="edades"  onkeydown="moverFocoConFlechas(event, 'nombreMedico', 'mascotaEspecie', 'mascotaEspecie', 'mascotaPeso')"></td>
     
                         <datalist id="edades">
+                        <option value="1 mes"><option value="2 meses"><option value="3 meses"><option value="4 meses">
+                        <option value="5 meses"><option value="6 meses"><option value="7 meses"><option value="8 meses"><option value="9 meses">
+                        <option value="10 meses"><option value="11 meses"><option value="12 meses">
                         <option value="1 año"><option value="2 años"><option value="3 años"><option value="4 años">
                         <option value="5 años"><option value="6 años"><option value="7 años"><option value="8 años"><option value="9 años">
-                        <option value="10 años"><option value="11 años"><option value="12 años">
-                        </datalist>
+                        <option value="10 años"><option value="11 años"><option value="12 años"><option value="13 años"></option><option value="14 años"></option>
+                        <option value="15 años"><option value="16 años"><option value="17 años"><option value="18 años"></option>
+                        <option value="19 años"><option value="20 años"></option>    
+                    </datalist>
                         <td>Médico</td>
                         <td>
                             <input type="text" id="nombreMedico" list="medicos" 
@@ -101,6 +106,7 @@
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
+                            <option value="Dra. Maria Chacón">
                             <option value="Dra. Alejandra León">
                             <option value="Dra. Kharen Moreno">
                             <option value="Dra. Karina Madrigal">
@@ -126,6 +132,7 @@
                                     mensaje.style.display = 'block';
                                 }
                             }
+                            
                             </script>
                     </tr>
                     <tr>
@@ -174,30 +181,26 @@
             }
        
             function moverFocoConFlechas(event, derechaId, izquierdaId, arribaId, abajoId) {
-                switch (event.key) {
-                    case 'ArrowRight':
-                        event.preventDefault();
-                        document.getElementById(derechaId).focus();
-                        break;
-                    case 'ArrowLeft':
-                        event.preventDefault();
-                        document.getElementById(izquierdaId).focus();
-                        break;
-                    case 'ArrowUp':
-                        event.preventDefault();
-                        document.getElementById(arribaId).focus();
-                        break;
-                    case 'ArrowDown':
-                        event.preventDefault();
-                        document.getElementById(abajoId).focus();
-                        break;
-                    case ' ': 
-                        event.preventDefault();
-                        document.getElementById(derechaId).focus(); 
-                        break;
+                    switch (event.key) {
+                        case 'ArrowRight':
+                            event.preventDefault();
+                            document.getElementById(derechaId).focus();
+                            break;
+                        case 'ArrowLeft':
+                            event.preventDefault();
+                            document.getElementById(izquierdaId).focus();
+                            break;
+                        case 'ArrowUp':
+                            event.preventDefault();
+                            document.getElementById(arribaId).focus();
+                            break;
+                        case 'ArrowDown':
+                            event.preventDefault();
+                            document.getElementById(abajoId).focus();
+                            break;
+                    }
                 }
-            }
-            const razasCaninas = [
+                const razasCaninas = [
     "Ainu", "Airedale terrier", "Akita", "Akita Inu", "Alaskan Malamute",
     "American Black and Tan Coonhound", "American Bull Terrier", "American Pit Bull Terrier",
     "American Staffordshire terrier", "American Water Spaniel", "Apso Tibetano", "Barzoi", 
@@ -212,7 +215,7 @@
     "Husky Siberiano", "Jack Russell Terrier", "Labrador Retriever", "Maltés", 
     "Pastor Alemán", "Pequinés", "Pomerania", "Pug", "Rottweiler", "Samoyedo", 
     "San Bernardo", "Schnauzer Gigante", "Schnauzer Mediano", "Schnauzer Miniatura", 
-    "Shih Tzu", "SRD", "Yorkshire Terrier"
+    "Shih Tzu", "SRD", "Yorkshire Terrier", "Weimaraner", "Fila Brasileiro",
 ];
 
 const razasFelinas = [
@@ -222,7 +225,64 @@ const razasFelinas = [
     "Oriental", "Persa", "Sagrado de Birmania", "Siamés", "Siberiano", 
     "Silvestre", "SRD"
 ];
+// Reemplazar la función de reemplazo de punto por coma
+function reemplazarPuntoPorComa() {
+    // Obtener todos los campos numéricos
+    const camposNumericos = [
+        'Glucosa', 'Colesterol_total', 'amilasa', 'CK', 
+        'nitrogeno_ureico', 'creatinina', 'bun_crea', 'fosforo', 'calcio',
+        'ALT', 'Fosfatasa_Alcalina', 'billirrubina_total', 'Albumina',
+        'proteinas_totales', 'Globulinas', 'alb/glo'
+    ];
+    
+    // Aplicar la funcionalidad a cada campo
+    camposNumericos.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Usar keydown en lugar de input
+            campo.addEventListener('keydown', function(event) {
+                // Solo actuar cuando se presiona la tecla punto
+                if (event.key === '.') {
+                    event.preventDefault(); // Prevenir la acción por defecto
+                    
+                    // Obtener la posición actual del cursor
+                    const cursorPos = this.selectionStart;
+                    
+                    // Obtener el valor actual e insertar una coma en lugar del punto
+                    const valorActual = this.value;
+                    const nuevoValor = valorActual.slice(0, cursorPos) + ',' + valorActual.slice(cursorPos);
+                    
+                    // Establecer el nuevo valor
+                    this.value = nuevoValor;
+                    
+                    // Restaurar la posición del cursor justo después de la coma
+                    setTimeout(() => {
+                        this.setSelectionRange(cursorPos + 1, cursorPos + 1);
+                    }, 0);
+                }
+            });
+            
+            // Mover las actualizaciones de color y cálculos al evento blur
+            campo.addEventListener('blur', function() {
+                actualizarColor(id, 'ref' + id.toLowerCase());
+                if (id === 'Albumina' || id === 'proteinas_totales') {
+                    calculateValues();
+                }
+            });
+            
+            // Eliminar cualquier evento input que pueda interferir
+            const oldInputListeners = campo._inputListeners || [];
+            oldInputListeners.forEach(listener => {
+                campo.removeEventListener('input', listener);
+            });
+        }
+    });
+}
 
+// Ejecutar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    reemplazarPuntoPorComa();
+});
 // Función para actualizar el datalist de razas según la especie seleccionada
 function actualizarRazasPorEspecie() {
     const especie = document.getElementById('especieSelector').value;
@@ -295,6 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(datalist);
     }
 });
+
             
                     </script>
                 </tbody>
@@ -319,12 +380,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "77 - 126",
                                 Colesterol_total: "129 - 331",		
                                 Amilasa: "400 - 2500",
-                                CK: "32 - 157",
                                 Nitrógeno_Ureico:	"7 - 23",
                                 Creatinina: "0,6 - 1,2",
+                                Urea: "20 - 50",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
                                 Calcio: "9,0 - 11,4",
                                 Fosforo: "3,3 - 6,4",
+                                Sodio: "139 - 164",
+                                Potasio: "4,4 - 6,1",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
                                 ALT: "15 - 52",
                                 Fosfatasa_Alcalina: "20 - 70",
                                 Bilirrubina_Total: "0,2- 0,8",
@@ -337,12 +402,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "76 - 129",
                                 Colesterol_total: "129 - 271",		
                                 Amilasa: "363 - 916",
-                                CK: "42 - 525",
                                 Nitrógeno_Ureico:	"7,3 - 23,5",
+                                Urea: "20 - 50",
                                 Creatinina: "0,7 - 1,4",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
                                 Calcio: "9,2 - 13,0",
                                 Fosforo: "4,8 - 9,0",
+                                Sodio: "137 - 163",
+                                Potasio: "4,2 - 5,7",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
                                 ALT: "19 - 47",
                                 Fosfatasa_Alcalina: "32 - 97",
                                 Bilirrubina_Total: "0,2- 0,9",
@@ -355,12 +424,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "89 - 133",
                                 Colesterol_Total: "115 - 255",
                                 Amilasa: "262 - 621",
-                                CK: "53 - 241",
                                 Nitrógeno_Ureico: "7 - 19",
                                 Creatinina: "0,3 - 0,9",
+                                Urea: "20 - 50",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "7,2 - 10,1",
                                 Calcio: "9,8 - 12,4",
+                                Sodio: "144 - 160",
+                                Potasio: "4,8 - 6,2",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
                                 ALT: "13 - 30",
                                 Fosfatasa_Alcalina: "85 - 199",
                                 Bilirrubina_Total: "0,2 - 0,9",
@@ -369,18 +442,44 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Globulinas_Totales: "3,0 - 4,7",
                                 Relación_Albumina_Globulina: "0,6 - 1,1"
                             },
+                            "De mes y medio a 3 meses": {
+                                Glucosa: "97 - 150",
+                                Colesterol_Total: "113 - 332",
+                                Amilasa: "281 - 636",
+                                Nitrógeno_Ureico: "5,9 - 15,2",
+                                Urea: "20 - 50",
+                                Creatinina: "0,3 - 0,8",
+                                Relación_BUN_Crea: "4,2 - 32,8",
+                                Fosforo: "7,5 - 10,1",
+                                Calcio: "9,8 - 12,4",
+                                Sodio: "142 - 157",
+                                Potasio: "4,8 - 5,8",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
+                                ALT: "10,0 - 28,0",
+                                Fosfatasa_Alcalina: "78 - 293",
+                                Bilirrubina_Total: "0,1 - 0,6",
+                                Albumina: "2,3 - 2,6",
+                                Proteínas_Totales: "4,0 - 5,2",
+                                Globulinas_Totales: "3,0 - 4,1",
+                                Relación_Albumina_Globulina: "0,6 - 1,1"
+                            },
                         },
                         Hembra: {
                             "De 1 año a 12 años": {
                                 Glucosa: "77 - 126",
                                 Colesterol_total: "129 - 331",		
                                 Amilasa: "400 - 2500",
-                                CK: "36 - 211",
                                 Nitrógeno_Ureico:	"7 - 23",
                                 Creatinina: "0,6 - 1,2",
+                                Urea: '20 - 50',
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
                                 Calcio: "9,0 - 11,4",
                                 Fosforo: "3,3 - 6,4",
+                                Sodio: "139 - 164",
+                                Potasio: "4,4 - 6,1",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
                                 ALT: "15 - 52",
                                 Fosfatasa_Alcalina: "20 - 70",
                                 Bilirrubina_Total: "0,2- 0,8",
@@ -393,12 +492,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "89 - 127",
                                 Colesterol_Total: "127 - 247",
                                 Amilasa: "255 - 832",
-                                CK: "45 - 531",
                                 Nitrógeno_Ureico: "10 - 27",
+                                Urea: "20 - 50",
                                 Creatinina: "0.7 - 1.4",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "4,4 - 9,2",
                                 Calcio: "9,4 - 11,7",
+                                Sodio: "139 - 163",
+                                Potasio: "4,3 - 5,5",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
                                 ALT: "16 - 49",
                                 Fosfatasa_Alcalina: "29 - 97",
                                 Bilirrubina_Total: "0,2 - 1,1",
@@ -411,12 +514,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "82 - 130",
                                 Colesterol_Total: "105 - 241",
                                 Amilasa: "281 - 636",
-                                CK: "34 - 272",
                                 Nitrógeno_Ureico: "7 - 19",
+                                Urea: "20 - 50",
                                 Creatinina: "0,4 - 0,9",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "7,5 - 10,0",
                                 Calcio: "10,1 - 12,3",
+                                Sodio: "138 - 156",
+                                Potasio: "4,3 - 5,9",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
                                 ALT: "9 - 27",
                                 Fosfatasa_Alcalina: "77 - 180",
                                 Bilirrubina_Total: "0,2 - 0,9",
@@ -425,7 +532,29 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Globulinas_Totales: "3,0 - 4,7",
                                 Relación_Albumina_Globulina: "0,6 - 1,1"
                             },
-                        }
+                        },
+                        "De mes y medio a 3 meses": {
+                                Glucosa: "108 - 151",
+                                Colesterol_Total: "110 - 273",
+                                Amilasa: "281 - 636",
+                                Nitrógeno_Ureico: "6,2 - 15,2",
+                                Urea: "20 - 50",
+                                Creatinina: "0,3 - 0,8",
+                                Relación_BUN_Crea: "4,2 - 32,8",
+                                Fosforo: "7,5 - 10,7",
+                                Calcio: "9,9 - 12,0",
+                                Sodio: "144 - 159",
+                                Potasio: "4,7 - 6,0",
+                                Cloro: "105 - 125",
+                                Na_K: "27 - 38",
+                                ALT: "9 - 30",
+                                Fosfatasa_Alcalina: "85 - 273",
+                                Bilirrubina_Total: "0,1 - 0,6",
+                                Albumina: "2,2 - 2,9",
+                                Proteínas_Totales: "4,0 - 5,1",
+                                Globulinas_Totales: "3,0 - 4,7",
+                                Relación_Albumina_Globulina: "0,6 - 1,1"
+                            },
                     },
                     Felino: {
                         Macho: {
@@ -433,12 +562,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "65 - 111",
                                 Colesterol_Total: "76 - 146",
                                 Amilasa: "400 - 2500",
-                                CK: "150 - 798",
                                 Nitrógeno_Ureico: "20 - 42",
+                                Urea: "30 - 60",
                                 Creatinina: "0,5 - 1,8",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "4,1 - 6,4",
                                 Calcio: "8,3 - 10,4",
+                                Sodio: "149 - 163",
+                                Potasio: "4,1 - 5,4",
+                                Na_K: "32 - 41",
                                 ALT: "20 - 67",
                                 Fosfatasa_Alcalina: "13 - 47",
                                 Bilirrubina_Total: "0,2 - 0,7",
@@ -451,8 +583,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "67 - 101",
                                 Colesterol_Total: "68 - 128",
                                 Amilasa: "396 - 754",
-                                CK: "184 - 885",
                                 Nitrógeno_Ureico: "14 - 36",
+                                Urea: "30 - 60",
                                 Creatinina: "0,4 - 1,2",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "6,2 - 9,1",
@@ -469,12 +601,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "61 - 102",
                                 Colesterol_Total: "66 - 132",
                                 Amilasa: "403 - 752",
-                                CK: "185 - 814",
                                 Nitrógeno_Ureico: "19 - 34",
+                                Urea: "30 - 60",
                                 Creatinina: "0,4 - 0,9",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "7,1 - 9,5",
                                 Calcio: "9,1 - 10,9",
+                                Sodio: "143 - 159",
+                                Potasio: "4,4 - 5,9",
+                                Cloro: "114 - 126",
                                 ALT: "18 - 55",
                                 Fosfatasa_Alcalina: "43 - 124",
                                 Bilirrubina_Total: "0,2 - 0,8",
@@ -489,12 +624,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "65 - 112",
                                 Colesterol_Total: "51 - 112",
                                 Amilasa: "400 - 2500",
-                                CK: "164 - 930",
                                 Nitrógeno_Ureico: "19 - 30",
                                 Creatinina: "0,6 - 1,7",
+                                Urea: "30 - 60",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "3,2 - 6,6",
                                 Calcio: "7,8 - 9,2",
+                                Sodio: "147 - 163",
+                                Potasio: "4,0 - 5,0",
+                                Na_K: "32 - 41",
                                 ALT: "22 - 79",
                                 Fosfatasa_Alcalina: "12 - 55",
                                 Bilirrubina_Total: "0,3 - 1,1",
@@ -507,12 +645,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "67 - 102",
                                 Colesterol_Total: "56 - 114",
                                 Amilasa: "352 - 833",
-                                CK: "172 - 875",
                                 Nitrógeno_Ureico: "19 - 37",
                                 Creatinina: "0,3 - 1,2",
+                                Urea: "30 - 60",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "4,9 - 8,3",
                                 Calcio: "8,5 - 10,3",
+                                Sodio: "147 - 163",
+                                Potasio: "4,1 - 5,6",
+                                Cloro: "114 - 126",
+                                Na_K: "32 - 41",
                                 ALT: "25 - 77",
                                 Fosfatasa_Alcalina: "22 - 100",
                                 Bilirrubina_Total: "0,2 - 0,9",
@@ -525,12 +667,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             Glucosa: "59 - 99",
                             Colesterol_Total: "63 - 113",
                             Amilasa: "464 - 988",
-                            CK: "188 - 894",
                             Nitrógeno_Ureico: "19 - 33",
+                            Urea: "30 - 60",
                             Creatinina: "0,4 - 0,9",
                             Relación_BUN_Crea: "4,2 - 32,8",
                             Fosforo: "6,9 - 9,5",
                             Calcio: "8,9 - 10,9",
+                            Sodio: "144 - 162",
+                            Potasio: "4,1 - 5,5",
+                            Cloro: "114 - 126",
                             ALT: "19 - 58",
                             Fosfatasa_Alcalina: "39 - 114",
                             Bilirrubina_Total: "0,1 - 0,6",
@@ -547,7 +692,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "60,0 - 125,0",
                                 Colesterol_Total: "20,0 - 43,0",
                                 Amilasa: "",
-                                CK: "",
                                 Nitrógeno_Ureico: "9,0 - 32,0",
                                 Creatinina: "0,6 - 2,2",
                                 Relación_BUN_Crea: "",
@@ -567,7 +711,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "77 - 126",
                                 Colesterol_total: "129 - 331",		
                                 Amilasa: "400 - 2500",
-                                CK: "32 - 157",
                                 Nitrógeno_Ureico:	"7 - 23",
                                 Creatinina: "0,6 - 1,2",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
@@ -589,7 +732,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "60 - 125",
                                 Colesterol_Total: "20 - 43",
                                 Amilasa: "",
-                                CK: "",
                                 Nitrógeno_Ureico: "9,0 - 32,0",
                                 Creatinina: "0,6 - 2,2",
                                 Relación_BUN_Crea: "",
@@ -609,7 +751,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Glucosa: "60 - 125",
                                 Colesterol_Total: "20 - 43",
                                 Amilasa: "",
-                                CK: "",
                                 Nitrógeno_Ureico: "9,0 - 32,0",
                                 Creatinina: "0,6 - 2,2",
                                 Relación_BUN_Crea: "",
@@ -636,14 +777,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if (especie !== "Seleccionar" && sexo !== "Seleccionar" && edad !== "Seleccionar") {
         const refValores = valoresReferencia2[especie][sexo][edad];
         document.getElementById('refglucosa').innerText = refValores.Glucosa || '';
-        document.getElementById('refcolesterolT').innerText = refValores.Colesterol_total || '';
+        document.getElementById('refcolesterolT').innerText = refValores.Colesterol_total || refValores.Colesterol_Total || '';
         document.getElementById('refamilasa').innerText = refValores.Amilasa || '';
-        document.getElementById('refCK').innerText = refValores.CK || '';
+        document.getElementById('refurea').innerText = refValores.Urea || '';
         document.getElementById('refnitrogeno_ureico').innerText = refValores.Nitrógeno_Ureico || '';
         document.getElementById('refcreatinina').innerText = refValores.Creatinina || '';
         document.getElementById('refbun_crea').innerText = refValores.Relación_BUN_Crea || '';
         document.getElementById('reffosforo').innerText = refValores.Fosforo || '';
         document.getElementById('refcalcio').innerText = refValores.Calcio || '';
+        document.getElementById('refsodio').innerText = refValores.Sodio || '';
+        document.getElementById('refpotasio').innerText = refValores.Potasio|| '';
+        document.getElementById('refcloro').innerText = refValores.Cloro || '';
+        document.getElementById('refNa_K').innerText = refValores.Na_K || '';
         document.getElementById('refALT').innerText = refValores.ALT || '';
         document.getElementById('refFosfatasa_Alcalina').innerText = refValores.Fosfatasa_Alcalina || '';
         document.getElementById('refbillirrubina').innerText = refValores.Bilirrubina_Total || '';
@@ -655,12 +800,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('refglucosa').innerText = "";
         document.getElementById('refcolesterolT').innerText = "";
         document.getElementById('refamilasa').innerText = "";
-        document.getElementById('refCK').innerText = "";
+        document.getElementById('refurea').innerText = "";
         document.getElementById('refnitrogeno_ureico').innerText = "";
         document.getElementById('refcreatinina').innerText = "";
         document.getElementById('refbun_crea').innerText = "";
         document.getElementById('reffosforo').innerText = "";
         document.getElementById('refcalcio').innerText = "";
+        document.getElementById('refpotasio').innerText = "";
+        document.getElementById('refcloro').innerText = "";
+        document.getElementById('refNa_K').innerText = "";
         document.getElementById('refALT').innerText = "";
         document.getElementById('refFosfatasa_Alcalina').innerText = "";
         document.getElementById('refbillirrubina').innerText = "";
@@ -670,119 +818,127 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('refalb_glo').innerText = "";
     }
 }
+// Reemplazar la función actualizarColor con esta versión simplificada
+// Reemplazar la función actualizarColor existente con esta versión mejorada
 function actualizarColor(inputId, refId) {
-    const input = document.getElementById(inputId);
+    const inputElement = document.getElementById(inputId);
     const refElement = document.getElementById(refId);
     
-    if (!input || !refElement || !refElement.innerText) {
-        console.error(`No se pudo encontrar el elemento con ID ${inputId} o ${refId}`);
+    if (!inputElement || !refElement || !refElement.textContent) {
+        console.log(`No se encontró: ${inputId} o ${refId}`);
         return;
     }
     
-    const ref = refElement.innerText;
-    const valor = parseFloat(input.value.replace(',', '.'));
+    // Obtener el valor del input y convertirlo a número
+    let valorTexto = inputElement.value.trim();
     
-    // Si el valor no es un número válido, salir
+    // Eliminar cualquier flecha existente
+    valorTexto = valorTexto.replace(/\s*[↑↓]$/, '');
+    
+    if (!valorTexto) {
+        inputElement.style.color = 'black';
+        return;
+    }
+    
+    const valor = parseFloat(valorTexto.replace(',', '.'));
     if (isNaN(valor)) return;
     
-    // Extraer los valores mínimo y máximo del rango de referencia
-    const rangeParts = ref.split(' - ').map(v => parseFloat(v.replace(',', '.')));
-    if (rangeParts.length !== 2 || isNaN(rangeParts[0]) || isNaN(rangeParts[1])) {
-        console.error(`Formato de rango inválido: ${ref}`);
-        return;
-    }
+    // Extraer el rango de referencia
+    const rangoTexto = refElement.textContent;
+    const coincidencia = rangoTexto.match(/([\d,.]+)\s*-\s*([\d,.]+)/);
     
-    const [min, max] = rangeParts;
-    
-    if (valor < min) {
-        input.style.color = '#0096d2'; 
-        input.style.fontWeight = 'bold'; 
-    } else if (valor > max) {
-        input.style.color = 'red';  
-        input.style.fontWeight = 'bold'; 
-    } else {
-        input.style.color = 'black';  
-        input.style.fontWeight = 'bold'; 
+    if (coincidencia) {
+        const min = parseFloat(coincidencia[1].replace(',', '.'));
+        const max = parseFloat(coincidencia[2].replace(',', '.'));
+        
+        // Aplicar color según el valor
+        if (valor < min) {
+            inputElement.style.color = '#0096d2'; // Azul/celeste para valores bajos
+            
+            // Solo agregar flecha si es evento blur o enter, no durante la escritura
+            if (event && (event.type === 'blur' || (event.type === 'keydown' && event.key === 'Enter'))) {
+                inputElement.value = valorTexto + ' ↓';
+            }
+        } else if (valor > max) {
+            inputElement.style.color = 'red'; // Rojo para valores altos
+            
+            if (event && (event.type === 'blur' || (event.type === 'keydown' && event.key === 'Enter'))) {
+                inputElement.value = valorTexto + ' ↑';
+            }
+        } else {
+            inputElement.style.color = 'black'; // Negro para valores normales
+            inputElement.value = valorTexto; // Sin flechas
+        }
     }
 }
 
-// Corregir los event listeners con IDs correctos
+// Modificar los listeners para pasar el evento a la función actualizarColor
 document.addEventListener('DOMContentLoaded', function() {
     const parametros = [
-        { input: 'Glucosa', ref: 'refglucosa' },
-        { input: 'Colesterol_total', ref: 'refcolesterolT' },
-        { input: 'amilasa', ref: 'refamilasa' },
-        { input: 'CK', ref: 'refCK' },
-        { input: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
-        { input: 'creatinina', ref: 'refcreatinina' },
-        { input: 'bun_crea', ref: 'refbun_crea' },
-        { input: 'fosforo', ref: 'reffosforo' },
-        { input: 'calcio', ref: 'refcalcio' },
-        { input: 'ALT', ref: 'refALT' },
-        { input: 'Fosfatasa_Alcalina', ref: 'refFosfatasa_Alcalina' },
-        { input: 'billirrubina', ref: 'refbillirrubina' },
-        { input: 'Albumina', ref: 'refalbumina' },
-        { input: 'proteinas_totales', ref: 'refproteinas_totales' },
-        { input: 'Globulinas', ref: 'refglobulinas' },
-        { input: 'alb/glo', ref: 'refalb_glo' } 
+        { campo: 'Glucosa', ref: 'refglucosa' },
+        { campo: 'Colesterol_total', ref: 'refcolesterolT' },
+        { campo: 'amilasa', ref: 'refamilasa' },
+        { campo: 'urea', ref: 'refurea' },
+        { campo: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
+        { campo: 'creatinina', ref: 'refcreatinina' },
+        { campo: 'bun_crea', ref: 'refbun_crea' },
+        { campo: 'fosforo', ref: 'reffosforo' },
+        { campo: 'calcio', ref: 'refcalcio' },
+        { campo: 'sodio', ref: 'refsodio' },
+        { campo: 'potasio', ref: 'refpotasio' },
+        { campo: 'cloro', ref: 'refcloro' },
+        { campo: 'Na_K', ref: 'refNa_K' },
+        { campo: 'ALT', ref: 'refALT' },
+        { campo: 'Fosfatasa_Alcalina', ref: 'refFosfatasa_Alcalina' },
+        { campo: 'billirrubina_total', ref: 'refbillirrubina' },
+        { campo: 'Albumina', ref: 'refalbumina' },
+        { campo: 'proteinas_totales', ref: 'refproteinas_totales' },
+        { campo: 'Globulinas', ref: 'refglobulinas' },
+        { campo: 'alb/glo', ref: 'refalb_glo' }
     ];
     
-    // Asignar event listeners a cada campo
     parametros.forEach(param => {
-        const inputElement = document.getElementById(param.input);
-        if (inputElement) {
-            inputElement.addEventListener('input', () => {
-                actualizarColor(param.input, param.ref);
+        const input = document.getElementById(param.campo);
+        if (input) {
+            // No actualizar el color durante la escritura, solo al perder el foco
+            input.removeEventListener('input', function() {
+                actualizarColor(param.campo, param.ref);
             });
             
-            inputElement.addEventListener('blur', () => {
-                actualizarColor(param.input, param.ref);
+            // Actualizar solo al perder el foco o presionar Enter
+            input.addEventListener('blur', function(event) {
+                actualizarColor(param.campo, param.ref, event);
+            });
+            
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    actualizarColor(param.campo, param.ref, event);
+                }
             });
         }
     });
 });
-
     </script>
     </script>
             </script>
             <tr>
                 <td>GLUCOSA</td>
                 <td>
-                <input type="text" id="Glucosa" list="rangoglucosa" onkeydown="moverFoco(event, 'Glucosa')">                </td>
+                    <input type="text" id="Glucosa" list="rangoglucosa" onkeydown="moverFoco(event, 'Glucosa')">
+                    <datalist id="rangoglucosa"></datalist>
+                </td>
                 <td id="refglucosa">77 - 126</td>
                 <td>mg/dl</td>
-                <script type="module">
-                    import { Recuentolglucosa } from './numeros.js';
-            
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const datalist = document.getElementById('rangoglucosa');
-                        Recuentolglucosa.forEach(valor => {
-                            const option = document.createElement('option');
-                            option.value = parseInt(valor.replace(',', '.'));
-                            datalist.appendChild(option);
-                        });
-                    });
                 </script>
                 </tr>
                 <tr>
                     <td>COLESTEROL TOTAL</td>
                     <td>
-                        <input type="text" id="Colesterol_total" list="rangocolesterolT" onkeydown="moverFoco(event, 'Colesterol_total')">                        <datalist id="rangocolesterolT"></datalist>
+                        <input type="text" id="Colesterol_total" list="rangocolesterolT" onkeydown="moverFoco(event, 'Colesterol_total')">  
+                 <datalist id="rangocolesterolT"></datalist>
                     </td>
-                    <td id="refcolesterolT">129 - 331</td>
-                    <td>mg/dl</td>
-                    <script type="module">
-                        import { recuentocolesterol_total } from './numeros.js';
-       
-                           document.addEventListener('DOMContentLoaded', () => {
-                               const datalist = document.getElementById('rangocolesterolT');
-                               recuentocolesterol_total.forEach(valor => {
-                                   const option = document.createElement('option');
-                                   option.value = parseInt(valor.replace(',', '.'))
-                                   datalist.appendChild(option);
-                               });
-                           });
-                           </script>
+                <td id="refcolesterolT">129 - 331</td>
+                <td>mg/dl</td>  
                 </tr>
                 <tr>
                     <td>AMILASA</td>
@@ -793,27 +949,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td id="refamilasa">400 - 2500</td>
                     <td>U/L</td>
                 </tr>
-                <tr>
-                    <td>CK</td>
-                    <td>
-                        <input type="text" id="CK" list="rangock" onkeydown="moverFoco(event, 'CK')">
-                        <datalist id="rangock"></datalist>
-                    </td>
-                    <td id="refCK">32 - 157</td>
-                    <td>U/L</td>
-                    <script type="module">
-                        import { recuentock } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangock');
-                            recuentock.forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseInt(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
-                    </tr>
             </tbody>
         </table>
     
@@ -836,18 +971,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refnitrogeno_ureico">7 - 23</td>
                     <td>mg/dl</td>
-                    <script type="module">
-                        import { recuentoNitrogenoUreico } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangonitrogeno_ureico');
-                            recuentoNitrogenoUreico.forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseInt(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <tr>
                     <td>CREATININA</td>
@@ -857,19 +980,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refcreatinina">0,6 - 1,2</td>
                     <td>mg/dl</td>
-                    <script type="module">
-                        import { recuentoCreatinina } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangocreatinina');
-                            recuentoCreatinina.forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
+                <tr>
+                    <td>UREA</td>
+                    <td>
+                        <input type="text" id="urea" list="rangourea" onkeydown="moverFoco(event, 'Urea')">
+                        <datalist id="rangourea"></datalist>
+                    </td>
+                    <td id="refurea">20 - 50</td>
+                    <td>mg/dl</td>
+                    </tr>
                 <tr>
                     <td>RELACIÓN BUN/CREA</td>
                     <td>
@@ -878,18 +998,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refbun_crea"> 4,2 - 32,8 </td>
                     <td>mg/dl</td>
-                    <script type="module">
-                        import { recuentobuncrea } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangobun_crea');
-                            recuentobuncrea.forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <tr>
                     <td>FOSFORO</td>
@@ -899,18 +1007,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="reffosforo">3,3 - 6,4</td>
                     <td>mg/dl</td>
-                    <script type="module">
-                        import { recuentofosforo } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangofosforo');
-                            recuentofosforo.forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <tr>
                     <td>CALCIO</td>
@@ -920,18 +1016,42 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refcalcio">9,0 - 11,4</td>
                     <td>mg/dl</td>
-                    <script type="module">
-                        import {  recuentocalcio  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangocalcio');
-                            recuentocalcio .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
+                </tr>
+                <tr>
+                    <td>SODIO</td>
+                    <td>
+                        <input type="text" id="sodio" list="rangosodio" onblur="formatearDecimal('sodio')" onkeydown="moverFoco(event, 'sodios')">
+                        <datalist id="rangosodio"></datalist>
+                    </td>
+                    <td id="refsodio">139 - 164</td>
+                    <td>mmol/l</td>
+                </tr>
+                <tr>
+                    <td>POTASIO</td>
+                    <td>
+                        <input type="text" id="potasio" list="rangopotasio" onblur="formatearDecimal('potasio')" onkeydown="moverFoco(event, 'potasio')">
+                        <datalist id="rangopotasio"></datalist>
+                    </td>
+                    <td id="refpotasio">4,4 - 6,1</td>
+                    <td>mmol/l</td>
+                </tr>
+                <tr>
+                    <td>CLORO</td>
+                    <td>
+                        <input type="text" id="cloro" list="rangocloro" onblur="formatearDecimal('cloro')" onkeydown="moverFoco(event, 'cloro')">
+                        <datalist id="rangocloro"></datalist>
+                    </td>
+                    <td id="refcloro">105 - 125</td>
+                    <td>mmol/l</td>
+                </tr>
+                <tr>
+                    <td>NA+/K+</td>
+                    <td>
+                        <input type="text" id="Na_K" list="rangoNa_K" onblur="formatearDecimal('Na_K')" onkeydown="moverFoco(event, 'Na_K')">
+                        <datalist id="rangoNa_K"></datalist>
+                    </td>
+                    <td id="refNa_K">27 - 38</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
@@ -955,18 +1075,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refALT">15 - 52</td>
                     <td>U/L</td>
-                    <script type="module">
-                        import {  recuentoalt  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoALT');
-                            recuentoalt .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseInt(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <tr>
                     <td>FOSFATASA ALCALINA</td>
@@ -976,18 +1084,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refFosfatasa_Alcalina">20 - 70</td>
                     <td>U/L</td>
-                    <script type="module">
-                        import {  recuentofosfatasa  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoFosfatasa_Alcalina');
-                            recuentofosfatasa .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseInt(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <tr>
                     <td>BILLIRRUBINA TOTAL</td>
@@ -997,19 +1093,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refbillirrubina"> 0,2 - 0,8 </td>
                     <td>mg/dl</td>
-                    <script type="module">
-                        import {  recuentobillirrubina  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangobillirrubina');
-                            recuentobillirrubina .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                            
-                        });
-                    </script>
                 </tr>
             </tbody>
         </table>
@@ -1035,17 +1118,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>g/dl</td>
                     <script type="module">
                         import {  recuentoalbumina  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoalbumina');
-                            recuentoalbumina .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
             document.getElementById('Albumina').addEventListener('input', calculateValues);
             document.getElementById('proteinas_totales').addEventListener('input', calculateValues);
-        });
                     </script>
                 </tr>
                     <td>PROTEINAS TOTALES</td>
@@ -1055,18 +1129,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refproteinas_totales">5,4 - 7,2</td>
                     <td>g/dl</td>
-                    <script type="module">
-                        import {  recuentoproteinas  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoproteinas');
-                            recuentoproteinas .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <tr>
                     <td>GLOBULINAS TOTALES</td>
@@ -1076,18 +1138,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td id="refglobulinas">3,0 - 4,7</td>
                     <td>g/dl</td>
-                    <script type="module">
-                        import {  recuentoglobulinas  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoglobulinas');
-                            recuentoglobulinas .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <tr>
                     <td>RELACIÓN ALBUMINA/GLOBULINAS</td>
@@ -1095,20 +1145,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <input type="text" id="alb/glo" list="rangoalb/glo" onblur="formatearDecimal('alb/glo')" onkeydown="moverFoco(event, 'alb/glo')">
                         <datalist id="rangoalb/glo"></datalist>
                     </td>
-                    <td id="refalb/glo"> 0,6 - 1,1 </td>
+                    <td id="refalb_glo">0,6 - 1,1</td>
                     <td>mg/dl</td>
-                    <script type="module">
-                        import {  recuentoalb_glo  } from './numeros.js';
-                    
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoalb/glo');
-                            recuentoalb_glo .forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.'));
-                                datalist.appendChild(option);
-                            });
-                        });
-                    </script>
                 </tr>
                 <script>
 function calculateValues() {
@@ -1126,7 +1164,7 @@ function calculateValues() {
     document.getElementById('alb/glo').value = relacionAlbGlo.toFixed(1).replace('.', ',');
     
     actualizarColor('Globulinas', 'refglobulinas');
-    actualizarColor('alb/glo', 'refalb_glo');
+    actualizarColor('alb/glo', 'refalb/glo'); // Corregido: usar el ID exacto que aparece en el HTML
 }
 
 // Asegurarse que los event listeners estén correctamente asignados
@@ -1174,7 +1212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                 </tr>
                 <tr>
-                    <td>SUERTO ICTERICO</td>
+                    <td>SUERO ICTERICO</td>
                     <td>
                         <select id="suero_icterico2">
                             <option value="No se observa">No se observa</option>
@@ -1193,7 +1231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="controls">
         <button id="pdfButton" onclick="generatePDF()">Generar PDF</button>
-        <button id="menuButton" onclick="window.location.href='../menu.html'">Volver al Menú</button>
+        <button id="menuButton" onclick="window.location.href='index.html'">Volver al Menú</button>
         <div id="loadingPdf" class="loading-indicator">
             <div class="spinner"></div>
             <span>Generando PDF...</span>
@@ -1210,24 +1248,330 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <script>
-        function moverFoco(event, actualId) {
-    if (event.key === 'Enter') { // Si la tecla presionada es espacio
-        event.preventDefault(); // Prevenir que se inserte el espacio
+        // Implementación de historial para Panel_Plus.html
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar el historial de análisis
+            setupHistorial();
+            
+            // Añadir evento para guardar los datos al generar el PDF
+            const pdfButton = document.getElementById('pdfButton');
+            if (pdfButton) {
+                const originalHandler = pdfButton.onclick;
+                pdfButton.onclick = async function() {
+                    // Guardar los datos antes de generar el PDF
+                    guardarAnalisisActual();
+                    
+                    // Llamar al manejador original
+                    if (originalHandler) {
+                        return originalHandler.apply(this, arguments);
+                    }
+                };
+            }
+        });
         
-        // Definir el orden de navegación entre campos
+        // Función para configurar el selector de historial
+        function setupHistorial() {
+            // Crear el selector de historial
+            const controlsDiv = document.querySelector('.controls');
+            
+            if (controlsDiv) {
+                // Crear el contenedor para el historial
+                const historialContainer = document.createElement('div');
+                historialContainer.className = 'historial-container';
+                historialContainer.style.marginTop = '10px';
+                
+                // Crear etiqueta
+                const label = document.createElement('label');
+                label.htmlFor = 'historialSelector';
+                label.textContent = 'Historial de análisis:';
+                label.style.marginRight = '10px';
+                
+                // Crear selector
+                const select = document.createElement('select');
+                select.id = 'historialSelector';
+                select.style.padding = '5px';
+                select.style.marginRight = '10px';
+                
+                // Opción por defecto
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '-- Seleccionar análisis anterior --';
+                defaultOption.selected = true;
+                select.appendChild(defaultOption);
+                
+                // Cargar opciones del historial
+                cargarOpcionesHistorial(select);
+                
+                // Evento de cambio
+                select.addEventListener('change', function() {
+                    if (this.value) {
+                        cargarAnalisisDesdeHistorial(this.value);
+                    }
+                });
+                
+                // Agregar botón para borrar historial
+                const borrarHistorialBtn = document.createElement('button');
+                borrarHistorialBtn.textContent = 'Borrar Historial';
+                borrarHistorialBtn.style.marginLeft = '10px';
+                borrarHistorialBtn.onclick = function() {
+                    if (confirm('¿Estás seguro de que quieres borrar todo el historial de análisis?')) {
+                        localStorage.removeItem('panelPlusHistorial');
+                        cargarOpcionesHistorial(select);
+                        alert('Historial borrado correctamente');
+                    }
+                };
+                
+                // Agregar elementos al DOM
+                historialContainer.appendChild(label);
+                historialContainer.appendChild(select);
+                historialContainer.appendChild(borrarHistorialBtn);
+                
+                // Agregar después de los selectores existentes
+                controlsDiv.appendChild(historialContainer);
+            }
+        }
+        
+        // Función para cargar las opciones del historial
+        function cargarOpcionesHistorial(selectElement) {
+            // Limpiar opciones existentes excepto la primera
+            while (selectElement.options.length > 1) {
+                selectElement.remove(1);
+            }
+            
+            // Obtener historial del localStorage
+            const historial = JSON.parse(localStorage.getItem('panelPlusHistorial') || '[]');
+            
+            // Agregar cada análisis como opción
+            historial.forEach((analisis, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                
+                // Crear descripción con nombre, fecha y hora
+                const fecha = new Date(analisis.timestamp);
+                const fechaStr = fecha.toLocaleDateString();
+                const horaStr = fecha.toLocaleTimeString();
+                
+                option.textContent = `${analisis.mascotaNombre} - ${analisis.propietarioNombre} (${fechaStr} ${horaStr})`;
+                
+                selectElement.appendChild(option);
+            });
+        }
+        
+        // Función para guardar el análisis actual
+        function guardarAnalisisActual() {
+            // Recopilación de todos los datos del formulario
+            const formData = {
+                // Datos de la mascota y propietario
+                mascotaNombre: document.getElementById('mascotaNombre').value,
+                mascotaRaza: document.getElementById('mascotaRaza').value,
+                mascotaEspecie: document.getElementById('especieEnPlantilla').value,
+                mascotaSexo: document.getElementById('sexoEnPlantilla').value,
+                mascotaEdad: document.getElementById('mascotaEdad').value,
+                mascotaPeso: document.getElementById('mascotaPeso').value,
+                
+                propietarioNombre: document.getElementById('propietarioNombre').value,
+                propietarioCedula: document.getElementById('propietarioCedula').value,
+                propietarioTelefono: document.getElementById('propietarioTelefono').value,
+                propietarioEmail: document.getElementById('propietarioEmail').value,
+                propietarioFecha: document.getElementById('propietarioFecha').value,
+                nombreMedico: document.getElementById('nombreMedico').value,
+                
+                // Datos de química clínica
+                Glucosa: document.getElementById('Glucosa').value,
+                Colesterol_total: document.getElementById('Colesterol_total').value,
+                amilasa: document.getElementById('amilasa').value,
+                
+                // Datos de funcionamiento renal
+                nitrogeno_ureico: document.getElementById('nitrogeno_ureico').value,
+                creatinina: document.getElementById('creatinina').value,
+                urea: document.getElementById('urea').value,
+                bun_crea: document.getElementById('bun_crea').value,
+                fosforo: document.getElementById('fosforo').value,
+                calcio: document.getElementById('calcio').value,
+                sodio: document.getElementById('sodio').value,
+                potasio: document.getElementById('potasio').value,
+                cloro: document.getElementById('cloro').value,
+                Na_K: document.getElementById('Na_K').value,
+                
+                // Datos de funcionamiento hepático
+                ALT: document.getElementById('ALT').value,
+                Fosfatasa_Alcalina: document.getElementById('Fosfatasa_Alcalina').value,
+                billirrubina_total: document.getElementById('billirrubina_total').value,
+                
+                // Datos de funcionamiento sanguíneo
+                Albumina: document.getElementById('Albumina').value,
+                proteinas_totales: document.getElementById('proteinas_totales').value,
+                Globulinas: document.getElementById('Globulinas').value,
+                alb_glo: document.getElementById('alb/glo').value,
+                
+                // Índices de interferencia
+                suero_hemolitico: document.getElementById('suero_hemolitico2').value,
+                suero_lipemico: document.getElementById('suero_lipemico2').value,
+                suero_icterico: document.getElementById('suero_icterico2').value,
+                
+                // Selectores principales
+                especieSelector: document.getElementById('especieSelector').value,
+                sexoSelector: document.getElementById('sexoSelector').value,
+                edadSelector: document.getElementById('edadSelector').value,
+                
+                // Añadir timestamp para ordenación
+                timestamp: new Date().getTime()
+            };
+            
+            // Verificar si hay datos significativos para guardar
+            if (!formData.mascotaNombre && !formData.propietarioNombre) return;
+            
+            // Obtener historial existente
+            let historial = JSON.parse(localStorage.getItem('panelPlusHistorial') || '[]');
+            
+            // Añadir el nuevo análisis al principio
+            historial.unshift(formData);
+            
+            // Limitar a los 10 últimos
+            historial = historial.slice(0, 10);
+            
+            // Guardar en localStorage
+            localStorage.setItem('panelPlusHistorial', JSON.stringify(historial));
+            
+            // Actualizar opciones en el selector
+            const selector = document.getElementById('historialSelector');
+            if (selector) {
+                cargarOpcionesHistorial(selector);
+            }
+        }
+        
+        // Función para cargar un análisis desde el historial
+        function cargarAnalisisDesdeHistorial(index) {
+            // Obtener historial
+            const historial = JSON.parse(localStorage.getItem('panelPlusHistorial') || '[]');
+            
+            if (!historial[index]) return;
+            
+            const analisis = historial[index];
+            
+            // Cargar todos los campos con los datos guardados
+            // Datos de la mascota y propietario
+            document.getElementById('mascotaNombre').value = analisis.mascotaNombre || '';
+            document.getElementById('mascotaRaza').value = analisis.mascotaRaza || '';
+            document.getElementById('especieEnPlantilla').value = analisis.mascotaEspecie || '';
+            document.getElementById('sexoEnPlantilla').value = analisis.mascotaSexo || '';
+            document.getElementById('mascotaEdad').value = analisis.mascotaEdad || '';
+            document.getElementById('mascotaPeso').value = analisis.mascotaPeso || '';
+            
+            document.getElementById('propietarioNombre').value = analisis.propietarioNombre || '';
+            document.getElementById('propietarioCedula').value = analisis.propietarioCedula || '';
+            document.getElementById('propietarioTelefono').value = analisis.propietarioTelefono || '';
+            document.getElementById('propietarioEmail').value = analisis.propietarioEmail || '';
+            document.getElementById('propietarioFecha').value = analisis.propietarioFecha || '';
+            document.getElementById('nombreMedico').value = analisis.nombreMedico || '';
+            
+            // Datos de química clínica
+            document.getElementById('Glucosa').value = analisis.Glucosa || '';
+            document.getElementById('Colesterol_total').value = analisis.Colesterol_total || '';
+            document.getElementById('amilasa').value = analisis.amilasa || '';
+            
+            // Datos de funcionamiento renal
+            document.getElementById('nitrogeno_ureico').value = analisis.nitrogeno_ureico || '';
+            document.getElementById('creatinina').value = analisis.creatinina || '';
+            document.getElementById('urea').value = analisis.urea || '';
+            document.getElementById('bun_crea').value = analisis.bun_crea || '';
+            document.getElementById('fosforo').value = analisis.fosforo || '';
+            document.getElementById('calcio').value = analisis.calcio || '';
+            document.getElementById('sodio').value = analisis.sodio || '';
+            document.getElementById('potasio').value = analisis.potasio || '';
+            document.getElementById('cloro').value = analisis.cloro || '';
+            document.getElementById('Na_K').value = analisis.Na_K || '';
+            
+            // Datos de funcionamiento hepático
+            document.getElementById('ALT').value = analisis.ALT || '';
+            document.getElementById('Fosfatasa_Alcalina').value = analisis.Fosfatasa_Alcalina || '';
+            document.getElementById('billirrubina_total').value = analisis.billirrubina_total || '';
+            
+            // Datos de funcionamiento sanguíneo
+            document.getElementById('Albumina').value = analisis.Albumina || '';
+            document.getElementById('proteinas_totales').value = analisis.proteinas_totales || '';
+            document.getElementById('Globulinas').value = analisis.Globulinas || '';
+            document.getElementById('alb/glo').value = analisis.alb_glo || '';
+            
+            // Índices de interferencia
+            document.getElementById('suero_hemolitico2').value = analisis.suero_hemolitico || 'No se observa';
+            document.getElementById('suero_lipemico2').value = analisis.suero_lipemico || 'No se observa';
+            document.getElementById('suero_icterico2').value = analisis.suero_icterico || 'No se observa';
+            
+            // Selectores principales
+            if (analisis.especieSelector) {
+                document.getElementById('especieSelector').value = analisis.especieSelector;
+                // Disparar el evento change manualmente
+                const event = new Event('change');
+                document.getElementById('especieSelector').dispatchEvent(event);
+            }
+            
+            if (analisis.sexoSelector) {
+                document.getElementById('sexoSelector').value = analisis.sexoSelector;
+                const event = new Event('change');
+                document.getElementById('sexoSelector').dispatchEvent(event);
+            }
+            
+            if (analisis.edadSelector) {
+                document.getElementById('edadSelector').value = analisis.edadSelector;
+                const event = new Event('change');
+                document.getElementById('edadSelector').dispatchEvent(event);
+            }
+            
+            // Actualizar colores y valores calculados
+            calculateValues(); // Para actualizar globulinas y alb/glo
+            
+            // Actualizar colores para todos los campos
+            const parametros = [
+                { campo: 'Glucosa', ref: 'refglucosa' },
+                { campo: 'Colesterol_total', ref: 'refcolesterolT' },
+                { campo: 'amilasa', ref: 'refamilasa' },
+                { campo: 'urea', ref: 'refurea' },
+                { campo: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
+                { campo: 'creatinina', ref: 'refcreatinina' },
+                { campo: 'bun_crea', ref: 'refbun_crea' },
+                { campo: 'fosforo', ref: 'reffosforo' },
+                { campo: 'calcio', ref: 'refcalcio' },
+                { campo: 'sodio', ref: 'refsodio' },
+                { campo: 'potasio', ref: 'refpotasio' },
+                { campo: 'cloro', ref: 'refcloro' },
+                { campo: 'Na_K', ref: 'refNa_K' },
+                { campo: 'ALT', ref: 'refALT' },
+                { campo: 'Fosfatasa_Alcalina', ref: 'refFosfatasa_Alcalina' },
+                { campo: 'billirrubina_total', ref: 'refbillirrubina' },
+                { campo: 'Albumina', ref: 'refalbumina' },
+                { campo: 'proteinas_totales', ref: 'refproteinas_totales' },
+                { campo: 'Globulinas', ref: 'refglobulinas' },
+                { campo: 'alb/glo', ref: 'refalb_glo' }
+            ];
+            
+            parametros.forEach(param => {
+                actualizarColor(param.campo, param.ref, {type: 'blur'});
+            });
+            
+            // Mostrar mensaje de éxito
+            alert(`Datos de ${analisis.mascotaNombre} cargados correctamente`);
+        }
+
+function moverFoco(event, siguienteId) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        
+        // Lista completa de campos en orden de navegación
         const camposParametros = [
             'Glucosa', 
             'Colesterol_total', 
-            'nitrogeno_ureico', 
-            'urea',
-            'creatinina',
+            'amilasa',
+            'nitrogeno_ureico',  
+            'creatinina', 
+            'urea', 
             'bun_crea', 
             'fosforo', 
             'calcio', 
-            'sodio',	
-            'potasio',		
-            'cloro',		
-            'NA+/K+',		
+            'sodio', 
+            'potasio', 
+            'cloro', 
+            'Na_K', 
             'ALT', 
             'Fosfatasa_Alcalina', 
             'billirrubina_total', 
@@ -1237,60 +1581,105 @@ document.addEventListener('DOMContentLoaded', function() {
             'alb/glo'
         ];
         
-        // Encontrar la posición actual
-        const indiceActual = camposParametros.indexOf(actualId);
+        // Encontrar el índice del campo actual
+        const indiceActual = camposParametros.indexOf(event.target.id);
         
-        // Si encontramos el campo actual y no es el último
         if (indiceActual !== -1 && indiceActual < camposParametros.length - 1) {
-            // Mover al siguiente campo
+            // Mover al siguiente campo en la secuencia
             const siguienteId = camposParametros[indiceActual + 1];
-            const siguienteCampo = document.getElementById(siguienteId);
-            
-            if (siguienteCampo) {
-                siguienteCampo.focus();
-                // Seleccionar todo el texto si existe
-                if (siguienteCampo.value) {
-                    siguienteCampo.select();
-                }
-            }
+            document.getElementById(siguienteId).focus();
+        } else {
+            // Si no está en la lista o es el último, usar el siguienteId proporcionado
+            document.getElementById(siguienteId).focus();
+}
+    } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        
+        // Los mismos campos para navegación hacia arriba
+        const camposParametros = [
+            'Glucosa', 
+            'Colesterol_total', 
+            'amilasa',
+            'nitrogeno_ureico',  
+            'creatinina', 
+            'urea', 
+            'bun_crea', 
+            'fosforo', 
+            'calcio', 
+            'sodio', 
+            'potasio', 
+            'cloro', 
+            'Na_K', 
+            'ALT', 
+            'Fosfatasa_Alcalina', 
+            'billirrubina_total', 
+            'Albumina', 
+            'proteinas_totales', 
+            'Globulinas', 
+            'alb/glo'
+        ];
+        // Encontrar el índice del campo actual
+        const indiceActual = camposParametros.indexOf(event.target.id);
+        
+        if (indiceActual > 0) {
+            // Mover al campo anterior
+            const anteriorId = camposParametros[indiceActual - 1];
+            document.getElementById(anteriorId).focus();
         }
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
     cargarListaDeParametros();
+    console.log("Cargando lista de parámetros..."); // Para debugear
 });
 
 function cargarListaDeParametros() {
     const selector = document.getElementById('parameterSelector');
+    if (!selector) {
+        console.error("No se encontró el selector de parámetros");
+        return;
+    }
+    
     selector.innerHTML = '<option value="" selected disabled>-- Seleccionar parámetro --</option>';
     
-    // Obtener todas las filas de parámetros de las tablas
-    const tablas = document.querySelectorAll('.container table tbody');
+    // Lista de parámetros específicos que queremos mostrar
+    const parametrosEspecificos = [
+        "GLUCOSA", "COLESTEROL TOTAL", "AMILASA", "UREA",
+        "NITROGENO UREICO", "CREATININA", "RELACIÓN BUN/CREA", "FOSFORO", "CALCIO", "SODIO", "POTASIO", "CLORO", "NA+/K+",
+        "ALT", "FOSFATASA ALCALINA", "BILLIRRUBINA TOTAL",
+        "ALBUMINA", "PROTEINAS TOTALES", "GLOBULINAS TOTALES", "RELACIÓN ALBUMINA/GLOBULINAS"
+    ];
+    
+    const tablas = document.querySelectorAll('#template1 table');
+    console.log(`Encontradas ${tablas.length} tablas`); // Para debugear
     
     tablas.forEach((tabla, tablaIndex) => {
-        const filas = tabla.querySelectorAll('tr');
+        const filas = tabla.querySelectorAll('tbody tr');
+        console.log(`Tabla ${tablaIndex}: ${filas.length} filas`); // Para debugear
         
         filas.forEach((fila, filaIndex) => {
+            if (!fila.cells || fila.cells.length === 0) return;
+            
             // Obtener el nombre del parámetro (primera celda)
             const paramName = fila.cells[0]?.textContent.trim();
-            if (!paramName || paramName === "Nombre" || paramName === "Raza" || 
-                paramName === "Sexo" || paramName === "Especie" || paramName === "Edad" ||
-                paramName === "Peso" || paramName === "SUERO HEMOLITICO" || 
-                paramName === "SUERO LIPEMICO" || paramName === "SUERTO ICTERICO") {
-                return; // Ignorar filas de datos de mascota y propietario
+            console.log(`Fila ${filaIndex}: "${paramName}"`); // Para debugear
+            
+            // Solo agregar los parámetros específicos que queremos
+            if (parametrosEspecificos.includes(paramName)) {
+                // Crear un ID único para la fila
+                const filaId = `fila-${tablaIndex}-${filaIndex}`;
+                fila.id = filaId;
+                
+                // Añadir opción al selector
+                const option = document.createElement('option');
+                option.value = filaId;
+                option.textContent = paramName;
+                selector.appendChild(option);
             }
-            
-            // Crear un ID único para la fila
-            const filaId = `fila-${tablaIndex}-${filaIndex}`;
-            fila.id = filaId;
-            
-            // Añadir opción al selector
-            const option = document.createElement('option');
-            option.value = filaId;
-            option.textContent = paramName;
-            selector.appendChild(option);
         });
     });
+    
+    console.log(`Total de opciones cargadas: ${selector.options.length - 1}`); // Para debugear
 }
 
 function eliminarParametroSeleccionado() {
@@ -1327,99 +1716,11 @@ function eliminarParametroSeleccionado() {
             mensaje.style.display = 'block';
         }
     }
-    </script>
-        <script>
-            function toggleTemplate() {
-                const templates = document.querySelectorAll('.container');
-                const selectedTemplate = document.getElementById(document.getElementById('templateSelector').value);
-                templates.forEach(template => template.style.display = 'none');
-                if (selectedTemplate) selectedTemplate.style.display = 'block';
-            }
-    
-            function actualizarSexoEnPlantilla() {
-                const sexo = document.getElementById('sexoSelector').value;
-                document.querySelectorAll('.container').forEach(template => {
-                    const input = template.querySelector('#sexoEnPlantilla, #sexoEnPlantilla2');
-                    if (input) input.value = sexo;
-                });
-            }
-    
-            function actualizarEspecieEnPlantilla() {
-                const especie = document.getElementById('especieSelector').value;
-                document.querySelectorAll('.container').forEach(template => {
-                    const input = template.querySelector('#especieEnPlantilla, #especieEnPlantilla2');
-                    if (input) input.value = especie;
-                });
-            }
-    
-            function actualizarValoresReferencia() {
-                const especie = document.getElementById('especieSelector').value;
-                const sexo = document.getElementById('sexoSelector').value;
-                const edad = document.getElementById('edadSelector').value;
-                // Lógica para actualizar los valores de referencia en todas las plantillas
-            }
     
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const templates = document.querySelectorAll('.container');
-            const templateSelector = document.getElementById('templateSelector');
         
-            templateSelector.addEventListener('change', () => {
-                templates.forEach(template => template.style.display = 'none');
-                const selectedTemplate = document.getElementById(templateSelector.value);
-                if (selectedTemplate) selectedTemplate.style.display = 'block';
-            });
-        });
-        
-        function printTemplate() {
-            const templateSelector = document.getElementById('templateSelector');
-            const selectedTemplate = document.getElementById(templateSelector.value);
-        
-            if (!selectedTemplate) {
-                alert('Selecciona una plantilla antes de imprimir.');
-                return;
-            }
-        
-            // Crear un contenedor temporal para la impresión
-            const printContainer = document.createElement('div');
-            printContainer.id = 'printContainer';
-            printContainer.style.display = 'none';
-            document.body.appendChild(printContainer);
-        
-            // Clonar la plantilla seleccionada y agregarla al contenedor de impresión
-            const clone = selectedTemplate.cloneNode(true);
-            printContainer.appendChild(clone);
-        
-            // Ocultar todas las plantillas excepto la seleccionada
-            const templates = document.querySelectorAll('.container');
-            templates.forEach(template => {
-                if (template !== selectedTemplate) {
-                    template.style.display = 'none';
-                }
-            });
-        
-            // Mostrar el contenedor de impresión y ocultar el resto del contenido
-            printContainer.style.display = 'block';
-            document.querySelector('.controls').style.display = 'none';
-        
-            // Imprimir el contenido del contenedor de impresión
-            window.print();
-        
-            // Restaurar la visibilidad de todas las plantillas y controles
-            printContainer.style.display = 'none';
-            document.querySelector('.controls').style.display = 'block';
-            templates.forEach(template => {
-                template.style.display = 'none';
-            });
-            selectedTemplate.style.display = 'block';
-        
-            // Eliminar el contenedor de impresión
-            document.body.removeChild(printContainer);
-        }
-        </script>
-    <script>
-   document.addEventListener('DOMContentLoaded', () => {
+       document.addEventListener('DOMContentLoaded', () => {
         const templates = document.querySelectorAll('.container');
         const templateSelector = document.getElementById('templateSelector');
     
@@ -1446,10 +1747,15 @@ function eliminarParametroSeleccionado() {
             return;
         }
 
-        // Obtener el nombre de la mascota y el apellido del propietario
+        // Obtener el nombre de la mascota y el primer apellido del propietario
         const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
         const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
-        const propietarioApellido = propietarioNombre.split(' ').pop(); // Obtener el último nombre como apellido
+        
+        // Extraer el primer apellido (segundo elemento después de dividir por espacios)
+        const nombreArray = propietarioNombre.split(' ');
+        // Si hay al menos dos palabras, tomar la segunda como primer apellido
+        // Si no, usar el valor completo o el default
+        const propietarioApellido = nombreArray.length > 1 ? nombreArray[1] : nombreArray[0];
 
         // Espera a que todas las imágenes dentro del elemento se carguen
         const images = selectedTemplate.getElementsByTagName('img');
@@ -1470,14 +1776,14 @@ function eliminarParametroSeleccionado() {
         const canvas = await html2canvas(selectedTemplate, {
             scale: 2,
             useCORS: true,
-            logging: true,
+            logging: false,
             allowTaint: true,
             backgroundColor: '#ffffff'
         });
 
         const imgData = canvas.toDataURL('image/jpeg', 1.0);
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 150; 
+        const imgWidth = 140; 
         const pageHeight = 297;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
@@ -1489,10 +1795,40 @@ function eliminarParametroSeleccionado() {
         pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
 
         // Genera el nombre del archivo según la plantilla actual y datos
-        const fileName = `Panel General Básico ${mascotaNombre} ${propietarioApellido}.pdf`;
-
-        // Guarda el PDF
-        pdf.save(fileName);
+        const fileName = `Panel Plus ${mascotaNombre} ${propietarioApellido}.pdf`;
+        
+        // Generar el blob del PDF
+        const pdfBlob = pdf.output('blob');
+        
+        // Intentar usar la API File System Access para guardar el archivo
+        if ('showSaveFilePicker' in window) {
+            try {
+                const fileHandle = await window.showSaveFilePicker({
+                    suggestedName: fileName,
+                    types: [{
+                        description: 'Archivo PDF',
+                        accept: { 'application/pdf': ['.pdf'] }
+                    }]
+                });
+                
+                const writable = await fileHandle.createWritable();
+                await writable.write(pdfBlob);
+                await writable.close();
+                
+                console.log('Archivo guardado con éxito usando File System Access API');
+            } catch (err) {
+                // Si el usuario cancela el guardado o hay un error
+                if (err.name !== 'AbortError') {
+                    console.error('Error al usar File System Access API:', err);
+                    // Caer en el método tradicional
+                    pdf.save(fileName);
+                }
+            }
+        } else {
+            // Navegador no soporta File System Access API, usar método tradicional
+            pdf.save(fileName);
+        }
+        
     } catch (error) {
         console.error('Error al generar el PDF:', error);
         alert('Ocurrió un error al generar el PDF: ' + error.message);
@@ -1502,6 +1838,8 @@ function eliminarParametroSeleccionado() {
         pdfButton.disabled = false;
     }
 }
+
+
 </script>
         <script type="module" src="numeros.js"></script>
     </body>

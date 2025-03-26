@@ -62,7 +62,7 @@ input[type="text"]:focus {
 .valor-alto::after {
     content: "↑";
     position: absolute;
-    right: 210px;
+    right: 220px;
     top: 50%;
     transform: translateY(-50%);
     color: red;

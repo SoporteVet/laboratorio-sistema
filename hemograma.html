@@ -84,11 +84,16 @@
                 <tr>
                     <td>Edad</td>
                     <td><input type="text" id="mascotaEdad" list="edades"  onkeydown="moverFocoConFlechas(event, 'nombreMedico', 'mascotaEspecie', 'mascotaEspecie', 'mascotaPeso')"></td>
-
                     <datalist id="edades">
-                    <option value="1 año"><option value="2 años"><option value="3 años"><option value="4 años">
-                    <option value="5 años"><option value="6 años"><option value="7 años"><option value="8 años"><option value="9 años">
-                    <option value="10 años"><option value="11 años"><option value="12 años">
+                        <option value="1 mes"><option value="2 meses"><option value="3 meses"><option value="4 meses">
+                        <option value="5 meses"><option value="6 meses"><option value="7 meses"><option value="8 meses"><option value="9 meses">
+                        <option value="10 meses"><option value="11 meses"><option value="12 meses">
+                        <option value="1 año"><option value="2 años"><option value="3 años"><option value="4 años">
+                        <option value="5 años"><option value="6 años"><option value="7 años"><option value="8 años"><option value="9 años">
+                        <option value="10 años"><option value="11 años"><option value="12 años"><option value="13 años"></option><option value="14 años"></option>
+                        <option value="15 años"><option value="16 años"><option value="17 años"><option value="18 años"></option>
+                        <option value="19 años"><option value="20 años"></option>    
+                    </datalist>
                     </datalist>
                     <td>Médico</td>
                     <td>
@@ -197,7 +202,7 @@
                             break;
                     }
                 }
-               const razasCaninas = [
+                const razasCaninas = [
     "Ainu", "Airedale terrier", "Akita", "Akita Inu", "Alaskan Malamute",
     "American Black and Tan Coonhound", "American Bull Terrier", "American Pit Bull Terrier",
     "American Staffordshire terrier", "American Water Spaniel", "Apso Tibetano", "Barzoi", 
@@ -214,7 +219,6 @@
     "San Bernardo", "Schnauzer Gigante", "Schnauzer Mediano", "Schnauzer Miniatura", 
     "Shih Tzu", "SRD", "Yorkshire Terrier", "Weimaraner", "Fila Brasileiro",
 ];
-
 
 const razasFelinas = [
     "Abisinio", "American Bobtail", "Angora Turco", "Azul Ruso", "Balinés", 
@@ -332,102 +336,63 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     });
                     </script>
-              <tr>
                 <td>LINFOCITOS #</td>
                 <td><input type="text" id="linfocitos" list="rangoLinfocitos" oninput="calcularTodos()" onblur="formatearDecimal('linfocitos')" onkeydown="moverFoco(event, 'monocitos')"></td>
-                <datalist id="rangoLinfocitos"></datalist>
                 <td id="reflinfocitos">1,1 - 3,3</td>
                 <td>x 10³/µl</td>
             </tr>
-                <script type="module">
-                  import { linfocitos_Numero } from './numeros.js';
-
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoLinfocitos');
-                            linfocitos_Numero.forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                                datalist.appendChild(option);
-                            });
-                        });
-                       </script>
                 <tr>
                     <td>MONOCITOS #</td>
                     <td><input type="text" id="monocitos" list="rangoMonocitos" oninput="calcularTodos()" onblur="formatearDecimal('monocitos')" onkeydown="moverFoco(event, 'eosinofilos')"></td>
-                    <datalist id="rangoMonocitos"></datalist>
                     <td id="refMonocitos">0,0 - 1,8</td>
                     <td>x 10³/µl</td>
                 </tr>
-                <script type="module">
-                    import { monocitos_numero } from './numeros.js';
-  
-                          document.addEventListener('DOMContentLoaded', () => {
-                              const datalist = document.getElementById('rangoMonocitos');
-                              monocitos_numero.forEach(valor => {
-                                  const option = document.createElement('option');
-                                  option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                                  datalist.appendChild(option);
-                              });
-                          });
-                         </script>
                 <tr>
                     <td>NEUTROFILOS #</td>
-                    <td><input type="text" id="neutrofilos" readonly onkeydown="moverFoco(event, 'eosinofilos')"></td>
+                    <td><input type="text" id="neutrofilos" list="rangoNeutrofilos" oninput="calcularTodos()" onblur="formatearDecimal('neutrofilos')" onkeydown="moverFoco(event, 'eosinofilos')"></td>
                     <td id="refneutrofilos">4,1 - 10,3</td>
                     <td>x 10³/µl</td>
                 </tr>
                 <tr>
                     <td>EOSINOFILOS #</td>
-                    <td><input type="text" id="eosinofilos" readonly onkeydown="moverFoco(event, 'linfocitos_porcentaje')"></td>
+                    <td><input type="text" id="eosinofilos" list="rangoEosinofilos" oninput="calcularTodos()" onblur="formatearDecimal('eosinofilos')" onkeydown="moverFoco(event, 'basofilos')"></td>
                     <td id="refeosinofilos">0,0 - 1,7</td>
+                    <td>x 10³/µl</td>
+                </tr>
+                <tr>
+                    <td>BASOFILOS #</td>
+                    <td><input type="text" id="basofilos" list="rangoBasofilos" oninput="calcularTodos()"  onblur="formatearDecimales('basofilos', 2)"  onkeydown="moverFoco(event, 'linfocitos_porcentaje')"></td>
+                    <td id="refbasofilos">0,00 - 0,12</td>
                     <td>x 10³/µl</td>
                 </tr>
                 <tr>
                     <td>LINFOCITOS %</td>
                     <td><input type="text" id="linfocitos_porcentaje" list="rangoLinfocitosPorcentaje" oninput="calcularTodos()" onblur="formatearDecimal('linfocitos_porcentaje')" onkeydown="moverFoco(event, 'monocitos_porcentaje')"></td>
-                    <datalist id="rangoLinfocitosPorcentaje"></datalist>
                     <td id="reflinfocitos2">12,0 - 30,0</td>
                     <td>%</td>
                 </tr>
-                <script type="module">
-                import { linfocitos_porcentaje } from './numeros.js';
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const datalist = document.getElementById('rangoLinfocitosPorcentaje');
-                        linfocitos_porcentaje.forEach(valor => {
-                            const option = document.createElement('option');
-                            option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                            datalist.appendChild(option);
-                        });
-                    });
-            </script>
                 <tr>
                     <td>MONOCITOS %</td>
                     <td><input type="text" id="monocitos_porcentaje" list= "rangoMonocitosPorcentaje" oninput="calcularTodos()" onblur="formatearDecimal('monocitos_porcentaje')" onkeydown="moverFoco(event, 'neutrofilos_porcentaje')"></td>
-                    <datalist id="rangoMonocitosPorcentaje"></datalist>
                     <td id="refmonocitos">2,0 - 9,0</td>
                     <td>%</td>
                 </tr>
-                <script type="module">
-                    import { monocitos_porcentaje } from './numeros.js';
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const datalist = document.getElementById('rangoMonocitosPorcentaje');
-                            monocitos_porcentaje.forEach(valor => {
-                                const option = document.createElement('option');
-                                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                                datalist.appendChild(option);
-                            });
-                        });
-                </script>
                 <tr>
                     <td>NEUTROFILOS %</td>
-                    <td><input type="text" id="neutrofilos_porcentaje" readonly onkeydown="moverFoco(event, 'eosinofilos_porcentaje')"></td>
-                    <td id="refNeutrofilosPorcentaje"></td>
+                    <td><input type="text" id="neutrofilos_porcentaje" list="rangoNeutrofilosPorcentaje" oninput="calcularTodos()" onblur="formatearDecimal('neutrofilos_porcentaje')" onkeydown="moverFoco(event, 'eosinofilos_porcentaje')"></td>
+                    <td id="refNeutrofilosPorcentaje">43,0 - 81,0</td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>EOSINOFILOS %</td>
                     <td><input type="text" id="eosinofilos_porcentaje" oninput="calcularTodos()" onblur="formatearDecimal('eosinofilos_porcentaje')" onkeydown="moverFoco(event, 'leucocitos')"></td>
-                    <td id="refEosinofilosPorcentaje"></td>
+                    <td id="refEosinofilosPorcentaje">0,5 - 10,0</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td>BASOFILOS %</td>
+                    <td><input type="text" id="basofilos_porcentaje" list="rangoBasofilosPorcentaje" oninput="calcularTodos()" onblur="formatearDecimal('basofilos_porcentaje')" onkeydown="moverFoco(event, 'leucocitos')"></td>
+                    <td id="refBasofilosPorcentaje">0,0 - 1,3</td>
                     <td>%</td>
                 </tr>
                 
@@ -441,8 +406,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero:	"0,0 - 1,8",
                             Neutrofilos_numero: "4,1 - 10,3",
                             Eosinofilos_numero:	"0,0 - 1,7",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje:	"2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "5,87 - 7,59",
                             Hemoglobina: "14,5 - 19,2",
                             Hematocrito: "39,0 - 50,3",
@@ -459,8 +428,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero:	"0,0 - 3,3",
                             Neutrofilos_numero: "5,0 - 13,4",
                             Eosinofilos_numero:	"0,0 - 1,8",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje:	"2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "5,74 - 7,14",
                             Hemoglobina: "14,0 - 18,0",
                             Hematocrito: "39,0 - 50,3",
@@ -477,8 +450,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 4,4",
                             Neutrofilos_numero: "4,5 - 11,2",
                             Eosinofilos_numero: "0,0 - 1,0",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "4,71 - 6,03",
                             Hemoglobina: "11,1 - 14,9",
                             Hematocrito: "30,9 - 42,0",
@@ -495,8 +472,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 3,6",
                             Neutrofilos_numero: "4,7 - 12,5",
                             Eosinofilos_numero: "0,1 - 0,6",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "3,33 - 4,49",
                             Hemoglobina: "7,4 - 10,2",
                             Hematocrito: "22,2 - 32,6",
@@ -515,8 +496,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero:	"0,0 - 1,8",
                             Neutrofilos_numero: "4,1 - 10,3",
                             Eosinofilos_numero:	"0,0 - 1,7",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje:	"2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "5,61 - 7,46",
                             Hemoglobina: "14,2 - 18,9",
                             Hematocrito: "40,4 - 55,3",
@@ -533,8 +518,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero:	"0,0 - 3,0",
                             Neutrofilos_numero: "4,1 - 10,4",
                             Eosinofilos_numero:	"0,0 - 1,8",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje:	"2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "5,67 - 7,23",
                             Hemoglobina: "14,8 - 18,3",
                             Hematocrito: "39,5 - 52,0",
@@ -551,8 +540,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 4,4",
                             Neutrofilos_numero: "4,3 - 12,4",
                             Eosinofilos_numero: "0,0 - 0,9",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "4,72 - 6,32",
                             Hemoglobina: "11,0 - 15,0",
                             Hematocrito: "31,1 - 42,7",
@@ -569,8 +562,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 3,3",
                             Neutrofilos_numero: "4,7 - 13,5",
                             Eosinofilos_numero: "0,1 - 0,6",
+                            Basofilos_numero: "0,00 - 0,12",
                             Linfocitos_porcentaje: "12,0 - 30,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "43,0 - 81,0",
+                            Eosinofilos_porcentaje: "0,5 - 10,0",
+                            Basofilos_porcentaje: "0,0 - 1,3",
                             Recuentoeritrocitos: "3,40 - 4,56",
                             Hemoglobina: "7,7 - 10,3",
                             Hematocrito: "23,2 - 33,9",
@@ -591,8 +588,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 2,08",
                             Neutrofilos_numero: "3,6 - 13,4",
                             Eosinofilos_numero: "0,2 - 1,2",
+                            Basofilos_numero: "0,00 - 0,15",
                             Linfocitos_porcentaje: "12,0 - 45,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "30,0 - 80,0",
+                            Eosinofilos_porcentaje: "0,5 - 11,0",
+                            Basofilos_porcentaje: "0,0 - 1,5",
                             Recuentoeritrocitos: "5,71 - 9,67",
                             Hemoglobina: "8,7 - 14,4",
                             Hematocrito: "26,2 - 46,3",
@@ -609,8 +610,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 4,48",
                             Neutrofilos_numero: "5,5 - 22,5",
                             Eosinofilos_numero: "0,2 - 1,8",
+                            Basofilos_numero: "0,00 - 0,15",
                             Linfocitos_porcentaje: "12,0 - 45,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "30,0 - 80,0",
+                            Eosinofilos_porcentaje: "0,5 - 11,0",
+                            Basofilos_porcentaje: "0,0 - 1,5",
                             Recuentoeritrocitos: "6,00 - 8,90",
                             Hemoglobina: "9,2 - 13,2",
                             Hematocrito: "28,5 - 42,8",
@@ -627,8 +632,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 2,9",
                             Neutrofilos_numero: "6,3 - 19,8",
                             Eosinofilos_numero: "0,3 - 1,7",
+                            Basofilos_numero: "0,00 - 0,15",
                             Linfocitos_porcentaje: "12,0 - 45,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "30,0 - 80,0",
+                            Eosinofilos_porcentaje: "0,5 - 11,0",
+                            Basofilos_porcentaje: "0,0 - 1,5",
                             Recuentoeritrocitos: "5,64 - 8,11",
                             Hemoglobina: "8,4 - 12,8",
                             Hematocrito: "26,9 - 40,2",
@@ -647,8 +656,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 3,29",
                             Neutrofilos_numero: "3,8 - 12,2",
                             Eosinofilos_numero: "0,2 - 1,4",
+                            Basofilos_numero: "0,00 - 0,15",
                             Linfocitos_porcentaje: "12,0 - 45,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "30,0 - 80,0",
+                            Eosinofilos_porcentaje: "0,5 - 11,0",
+                            Basofilos_porcentaje: "0,0 - 1,5",
                             Recuentoeritrocitos: "5,54 - 8,75",
                             Hemoglobina: "9,0 - 13,5",
                             Hematocrito: "26,9 - 42,5",
@@ -665,8 +678,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 3,13",
                             Neutrofilos_numero: "5,1 - 19,9",
                             Eosinofilos_numero: "0,2 - 1,9",
+                            Basofilos_numero: "0,00 - 0,15",
                             Linfocitos_porcentaje: "12,0 - 45,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "30,0 - 80,0",
+                            Eosinofilos_porcentaje: "0,5 - 11,0",
+                            Basofilos_porcentaje: "0,0 - 1,5",
                             Recuentoeritrocitos: "6,28 - 8,97",
                             Hemoglobina: "9,2 - 13,8",
                             Hematocrito: "30,2 - 45,0",
@@ -683,8 +700,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,0 - 2,86",
                             Neutrofilos_numero: "5,9 - 22,5",
                             Eosinofilos_numero: "0,3 - 1,7",
+                            Basofilos_numero: "0,00 - 0,15",
                             Linfocitos_porcentaje: "12,0 - 45,0",
                             Monocitos_porcentaje: "2,0 - 9,0",
+                            Neutrofilos_porcentaje: "30,0 - 80,0",
+                            Eosinofilos_porcentaje: "0,5 - 11,0",
+                            Basofilos_porcentaje: "0,0 - 1,5",
                             Recuentoeritrocitos: "5,71 - 8,27",
                             Hemoglobina: "8,6 - 12,9",
                             Hematocrito: "27,4 - 39,3",
@@ -705,9 +726,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,1 - 0,6",
                             Neutrofilos_numero: "2,9 - 11,0",
                             Eosinofilos_numero: "25,0 - 60,0",
+                            Basofilos_numero: "0,00 - 0,76",
                             Linfocitos_porcentaje: "2,0 - 10,0",
                             Neutrofilos_porcentaje: "35,0 - 55,0",
                             Eosinofilos_porcentaje: "0,0 - 5,0",
+                            Basofilos_porcentaje: "0,0 - 8,0",
                             Recuentoeritrocitos: "0,0 - 5,0",
                             Hemoglobina: "4,0 - 8,0",
                             Hematocrito: "8,0 - 17,5",
@@ -726,9 +749,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             Monocitos_numero: "0,1 - 0,6",
                             Neutrofilos_numero: "2,9 - 11,0",
                             Eosinofilos_numero: "25,0 - 60,0",
+                            Basofilos_numero: "0,00 - 0,76",
                             Linfocitos_porcentaje: "2,0 - 10,0",
                             Neutrofilos_porcentaje: "35,0 - 55,0",
                             Eosinofilos_porcentaje: "0,0 - 5,0",
+                            Basofilos_porcentaje: "0,0 - 8,0",
                             Recuentoeritrocitos: "0,0 - 5,0",
                             Hemoglobina: "4,0 - 8,0",
                             Hematocrito: "8,0 - 17,5",
@@ -802,10 +827,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('refMonocitos').innerText = refValores.Monocitos_numero || '';
         document.getElementById('refneutrofilos').innerText = refValores.Neutrofilos_numero || '';
         document.getElementById('refeosinofilos').innerText = refValores.Eosinofilos_numero || '';
+        document.getElementById('refbasofilos').innerText = refValores.Basofilos_numero || '0,0 - 0,1';
         document.getElementById('reflinfocitos2').innerText = refValores.Linfocitos_porcentaje || '';
         document.getElementById('refmonocitos').innerText = refValores.Monocitos_porcentaje || '';
         document.getElementById('refNeutrofilosPorcentaje').innerText = refValores.Neutrofilos_porcentaje || '';
         document.getElementById('refEosinofilosPorcentaje').innerText = refValores.Eosinofilos_porcentaje || '';
+        document.getElementById('refBasofilosPorcentaje').innerText = refValores.Basofilos_porcentaje || '0,0 - 1,0';
         document.getElementById('referitrocitos').innerText = refValores.Recuentoeritrocitos || '';
         document.getElementById('refhemoglobina').innerText = refValores.Hemoglobina || '';
         document.getElementById('refhematocrito').innerText = refValores.Hematocrito || '';
@@ -816,10 +843,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('refplaquetario').innerText = refValores.Recuentoplaquetario || '';
         document.getElementById('refmpv').innerText = refValores.mpv || '';
         
-        // Después de actualizar los valores de referencia, recalcular los colores
-        // para los campos que ya tienen valores
-        setTimeout(() => {
-            // Series blanca
             if (document.getElementById('leucocitos').value) 
                 actualizarColor('leucocitos', 'refLeucocitos');
             if (document.getElementById('linfocitos').value)
@@ -830,6 +853,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 actualizarColor('neutrofilos', 'refneutrofilos');
             if (document.getElementById('eosinofilos').value)
                 actualizarColor('eosinofilos', 'refeosinofilos');
+            if (document.getElementById('basofilos').value)
+                actualizarColor('basofilos', 'refbasofilos');
             if (document.getElementById('linfocitos_porcentaje').value)
                 actualizarColor('linfocitos_porcentaje', 'reflinfocitos2');
             if (document.getElementById('monocitos_porcentaje').value)
@@ -838,6 +863,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 actualizarColor('neutrofilos_porcentaje', 'refNeutrofilosPorcentaje');
             if (document.getElementById('eosinofilos_porcentaje').value)
                 actualizarColor('eosinofilos_porcentaje', 'refEosinofilosPorcentaje');
+                if (document.getElementById('basofilos_porcentaje').value)
+                actualizarColor('basofilos_porcentaje', 'refBasofilosPorcentaje');
             
             // Series roja
             if (document.getElementById('eritrocitos').value)
@@ -860,9 +887,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 actualizarColor('plaquetas', 'refplaquetario');
             if (document.getElementById('mpv').value)
                 actualizarColor('mpv', 'refmpv');
-        }, 100); // Un pequeño retardo para asegurar que los valores de referencia se han actualizado
+        }; // Un pequeño retardo para asegurar que los valores de referencia se han actualizado
     }
-}
 function actualizarColor(inputId, refId) {
     const inputElement = document.getElementById(inputId);
     const refElement = document.getElementById(refId);
@@ -934,6 +960,9 @@ function actualizarColor(inputId, refId) {
             document.getElementById('eosinofilos').addEventListener('blur', () => {
                 actualizarColor('eosinofilos', 'refeosinofilos');
             });
+            document.getElementById('basofilos').addEventListener('blur', () => {
+                actualizarColor('basofilos', 'refbasofilos');
+            });
             document.getElementById('linfocitos_porcentaje').addEventListener('blur', () => {
                 actualizarColor('linfocitos_porcentaje', 'reflinfocitos2');
             });
@@ -945,6 +974,9 @@ function actualizarColor(inputId, refId) {
             });
             document.getElementById('eosinofilos_porcentaje').addEventListener('blur', () => {
                 actualizarColor('eosinofilos_porcentaje', 'refEosinofilosPorcentaje');
+            });
+            document.getElementById('basofilos_porcentaje').addEventListener('blur', () => {
+                actualizarColor('basofilos_porcentaje', 'refBasofilosPorcentaje');
             });
             document.getElementById('eritrocitos').addEventListener('blur', () => {
                 actualizarColor('eritrocitos', 'referitrocitos');
@@ -974,19 +1006,12 @@ function actualizarColor(inputId, refId) {
                 actualizarColor('mpv', 'refmpv');
             });
 
-                function calcularTodos() {
-                    calcularNeutrofilos();
-                    calcularEosinofilos();
-                    calcularNeutrofilosPorcentaje();
-                }
                 
                 function calcularNeutrofilos() {
                 var leucocitos = parseFloat(document.getElementById('leucocitos').value.replace(',', '.')) || 0;
                 var linfocitos = parseFloat(document.getElementById('linfocitos').value.replace(',', '.')) || 0;
                 var monocitos = parseFloat(document.getElementById('monocitos').value.replace(',', '.')) || 0;
                 var eosinofilos = parseFloat(document.getElementById('eosinofilos').value.replace(',', '.')) || 0;
-
-                var neutrofilos = leucocitos - linfocitos - monocitos - eosinofilos;
                 var neutrofilosInput = document.getElementById('neutrofilos');
                 neutrofilosInput.value = neutrofilos.toFixed(1).replace('.', ',');
                 
@@ -994,16 +1019,14 @@ function actualizarColor(inputId, refId) {
                 actualizarColor('neutrofilos', 'refneutrofilos');
             }
             function calcularEosinofilos() {
-                var leucocitos = parseFloat(document.getElementById('leucocitos').value.replace(',', '.')) || 0;
-                var eosinofilosPorcentaje = parseFloat(document.getElementById('eosinofilos_porcentaje').value.replace(',', '.')) || 0;
-
-                var eosinofilos = (eosinofilosPorcentaje * leucocitos) / 100;
-                var eosinofilosInput = document.getElementById('eosinofilos');
-                eosinofilosInput.value = eosinofilos.toFixed(1).replace('.', ',');
-                
-                // Actualizar color basado en el rango de referencia
-                actualizarColor('eosinofilos', 'refeosinofilos');
-            }
+            var leucocitos = parseFloat(document.getElementById('leucocitos').value.replace(',', '.')) || 0;
+            var eosinofilosPorcentaje = parseFloat(document.getElementById('eosinofilos_porcentaje').value.replace(',', '.')) || 0;
+            var eosinofilosInput = document.getElementById('eosinofilos');
+            eosinofilosInput.value = eosinofilos.toFixed(1).replace('.', ',');
+            
+            // Añadir esta línea para actualizar el color según el rango de referencia
+            actualizarColor('eosinofilos', 'refeosinofilos');
+        }
                 function calcularLinfocitosPorcentaje() {
                     var linfocitosPorcentaje = parseFloat(document.getElementById('linfocitos_porcentaje').value.replace(',', '.')) || 0;    }
                 function calcularEosinofilos() {
@@ -1020,7 +1043,6 @@ function actualizarColor(inputId, refId) {
                     var monocitosPorcentaje = parseFloat(document.getElementById('monocitos_porcentaje').value.replace(',', '.')) || 0;
                     var eosinofilosPorcentaje = parseFloat(document.getElementById('eosinofilos_porcentaje').value.replace(',', '.')) || 0;
                 
-                    var neutrofilosPorcentaje = 100 - linfocitosPorcentaje - monocitosPorcentaje - eosinofilosPorcentaje;
                     var neutrofilosPorcentajeInput = document.getElementById('neutrofilos_porcentaje');
                     neutrofilosPorcentajeInput.value = neutrofilosPorcentaje.toFixed(1).replace('.', ',');
                 
@@ -1074,46 +1096,7 @@ function actualizarColor(inputId, refId) {
                     input.value = valor.toFixed(1).replace('.', ',');
                 }
                 
-                function moverFoco(event, siguienteId) {
-                    if (event.key === 'Enter') {
-                        event.preventDefault();
-                        document.getElementById(siguienteId).focus();
-                    }
-                }
-                
-                document.getElementById('leucocitos').addEventListener('blur', function() {
-                    formatearDecimal('leucocitos');
-                    calcularTodos();
-                });
-                document.getElementById('linfocitos').addEventListener('blur', function() {
-                    formatearDecimal('linfocitos');
-                    calcularTodos();
-                });
-                document.getElementById('monocitos').addEventListener('blur', function() {
-                    formatearDecimal('monocitos');
-                    calcularTodos();
-                });
-                document.getElementById('eosinofilos').addEventListener('blur', function() {
-                    formatearDecimal('eosinofilos');
-                    calcularTodos();
-                });
-                
-                document.getElementById('linfocitos_porcentaje').addEventListener('blur', function() {
-                    formatearDecimal('linfocitos_porcentaje');
-                    calcularTodos();
-                });
-                document.getElementById('monocitos_porcentaje').addEventListener('blur', function() {
-                    formatearDecimal('monocitos_porcentaje');
-                    calcularTodos();
-                });
-                document.getElementById('neutrofilos_porcentaje').addEventListener('blur', function() {
-                    formatearDecimal('neutrofilos_porcentaje');
-                    calcularTodos();
-                });
-                document.getElementById('eosinofilos_porcentaje').addEventListener('blur', function() {
-                    formatearDecimal('eosinofilos_porcentaje');
-                    calcularTodos();
-                });
+              
                 </script>
             </tbody>
         </table>
@@ -1128,7 +1111,6 @@ function actualizarColor(inputId, refId) {
                 </tr>
             </thead>
             <tbody>
-             <!-- filepath: /C:/Users/Aaron/Documents/Laboratorio sistema/index.html -->
              <tr>
                 <td>RECUENTO ERITROCITOS</td>
                 <td>
@@ -1138,18 +1120,6 @@ function actualizarColor(inputId, refId) {
                 <td id="referitrocitos">5,61 - 7,47</td>
                 <td>x 10⁶/µl</td>
             </tr>
-                <script type="module">
-                    import { eritrocitos } from './numeros.js';
-                    
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const datalist = document.getElementById('rangoEritrocitos');
-                        eritrocitos.forEach(valor => {
-                            const option = document.createElement('option');
-                            option.value = parseFloat(valor.replace(',', '.')).toFixed(2).replace('.', ',');
-                            datalist.appendChild(option);
-                        });
-                    });
-                    </script>
              <tr>
     <td>HEMOGLOBINA</td>
     <td><input type="text" id="hemoglobina" list ="rangoHemoglobina"oninput="calcularTodosRojos()" onblur="formatearDecimal('hemoglobina', 1)" onkeydown="moverFoco(event, 'hematocrito')"></td>
@@ -1157,17 +1127,6 @@ function actualizarColor(inputId, refId) {
     <td id="refhemoglobina">14,2 - 18,9</td>
     <td>g/dl</td>
 </tr>
-<script type="module">
-    import { hemoglobina } from './numeros.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            const datalist = document.getElementById('rangoHemoglobina');
-            hemoglobina.forEach(valor => {
-                const option = document.createElement('option');
-                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                datalist.appendChild(option);
-            });
-        });
-</script>
 <tr>
     <td>HEMATOCRITO</td>
     <td><input type="text" id="hematocrito" list="rangoHematocrito" oninput="calcularTodosRojos()" onblur="formatearDecimal('hematocrito', 1)" onkeydown="moverFoco(event, 'vcm')"></td>
@@ -1175,17 +1134,6 @@ function actualizarColor(inputId, refId) {
     <td id="refhematocrito">40,4 - 55,3</td>
     <td>%</td>
 </tr>
-<script type="module">
-    import { hematocrito } from './numeros.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            const datalist = document.getElementById('rangoHematocrito');
-            hematocrito.forEach(valor => {
-                const option = document.createElement('option');
-                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                datalist.appendChild(option);
-            });
-        });
-</script>
 <tr>
     <td>VCM</td>
     <td><input type="text" id="vcm" list="rangoVcm" oninput="calcularTodosRojos()" onblur="formatearDecimal('vcm', 1)" onkeydown="moverFoco(event, 'hcm')"></td>
@@ -1193,17 +1141,6 @@ function actualizarColor(inputId, refId) {
     <td id="refvcm">65,0 - 80,0</td>
     <td>fl</td>
 </tr>
-<script type="module">
-    import { vcm } from './numeros.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            const datalist = document.getElementById('rangoVcm');
-            vcm.forEach(valor => {
-                const option = document.createElement('option');
-                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                datalist.appendChild(option);
-            });
-        });
-</script>
 <tr>
     <td>HCM</td>
     <td><input type="text" id="hcm" list="rangoHcm" oninput="calcularTodosRojos()" onblur="formatearDecimal('hcm', 1)" onkeydown="moverFoco(event, 'chcm')"></td>
@@ -1211,17 +1148,6 @@ function actualizarColor(inputId, refId) {
     <td id="refhcm">20,0 - 25,0</td>
     <td>pg</td>
 </tr>
-<script type="module">
-    import { hcm } from './numeros.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            const datalist = document.getElementById('rangoHcm');
-            hcm.forEach(valor => {
-                const option = document.createElement('option');
-                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                datalist.appendChild(option);
-            });
-        });
-</script>
 <tr>
     <td>CHCM</td>
     <td><input type="text" id="chcm" list= "rangoChcm" oninput="calcularTodosRojos()" onblur="formatearDecimal('chcm', 1)" onkeydown="moverFoco(event, 'rdw')"></td>
@@ -1229,17 +1155,6 @@ function actualizarColor(inputId, refId) {
     <td id="refchcm">30,0 - 38,0</td>
     <td>g/dl</td>
 </tr>
-<script type="module">
-    import { chcm } from './numeros.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            const datalist = document.getElementById('rangoChcm');
-            chcm.forEach(valor => {
-                const option = document.createElement('option');
-                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                datalist.appendChild(option);
-            });
-        });
-</script>
 <tr>
     <td>RDW</td>
     <td><input type="text" id="rdw" list= "rangoRvw" oninput="calcularTodosRojos()" onblur="formatearDecimal('rdw', 1)" onkeydown="moverFoco(event, 'eritrocitos')"></td>
@@ -1247,17 +1162,6 @@ function actualizarColor(inputId, refId) {
     <td id="refrdw">11,0 - 15,5</td>
     <td>%</td>
 </tr>
-<script type="module">
-    import { rdw } from './numeros.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            const datalist = document.getElementById('rangoRvw');
-            rdw.forEach(valor => {
-                const option = document.createElement('option');
-                option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                datalist.appendChild(option);
-            });
-        });
-</script>
             </tbody>
         </table>
         
@@ -1274,6 +1178,7 @@ function actualizarColor(inputId, refId) {
     var valor = parseFloat(input.value.replace(',', '.')) || 0;
     input.value = valor.toFixed(decimales).replace('.', ',');
     }
+    
         function calcularTodosRojos() {
             calcularEritrocitos();
             calcularHemoglobina();
@@ -1284,10 +1189,8 @@ function actualizarColor(inputId, refId) {
             calcularRDW();
         }
         
-        // Reemplazar todas estas funciones que usan valores fijos
-function calcularEritrocitos() {
+        function calcularEritrocitos() {
     var eritrocitos = parseFloat(document.getElementById('eritrocitos').value.replace(',', '.')) || 0;
-    // cambiarColor(eritrocitos, 'eritrocitos', 5.61, 7.47);
     actualizarColor('eritrocitos', 'referitrocitos');
 }
 
@@ -1372,6 +1275,8 @@ function calcularMPV() {
         calcularPDW();
         calcularPCT();
 }
+
+
     </script>
     <h3 class="titulos">FÓRMULA PLAQUETARIA</h3>
    <table>
@@ -1399,17 +1304,6 @@ function calcularMPV() {
                <td id="refmpv">7,0 - 12,9</td>
                <td>fl</td>
            </tr>
-           <script type="module">
-            import { mpv } from './numeros.js';
-                document.addEventListener('DOMContentLoaded', () => {
-                    const datalist = document.getElementById('rangoMPV');
-                    mpv.forEach(valor => {
-                        const option = document.createElement('option');
-                        option.value = parseFloat(valor.replace(',', '.')).toFixed(1).replace('.', ',');
-                        datalist.appendChild(option);
-                    });
-                });
-        </script>
            <tr>
                <td>PDW</td>
                <td><input type="text" id="pdw" oninput="calcularTodosPlaquetas()" onblur="formatearDecimal('pdw')" onkeydown="moverFoco(event, 'pct')"></td>
@@ -1436,9 +1330,7 @@ function calcularMPV() {
    
    function calcularPlaquetas() {
     var plaquetas = parseFloat(document.getElementById('plaquetas').value.replace(',', '.')) || 0;
-    actualizarColor('plaquetas', 'refplaquetario');
 }
-   
    function calcularMPV() {
        var mpv = parseFloat(document.getElementById('mpv').value.replace(',', '.')) || 0;
        cambiarColor(mpv, 'mpv', 7.0, 12.9);
@@ -1469,7 +1361,7 @@ function calcularMPV() {
        }
    }
    
-   document.getElementById('plaquetas').addEventListener('input', () => {
+   document.getElementById('plaquetas').addEventListener('blur', () => {
     actualizarColor('plaquetas', 'refplaquetario');
 });
    document.getElementById('mpv').addEventListener('blur', function() {
@@ -1492,7 +1384,6 @@ function calcularMPV() {
     mpvElement.addEventListener('blur', function() {
         formatearDecimal('mpv');
         actualizarColor('mpv', 'refmpv');
-        // No llamamos a calcularTodosPlaquetas() directamente para evitar la recursión
     });
 }
    </script>
@@ -1518,11 +1409,11 @@ function moverFoco(event, siguienteId) {
         
         // Lista completa de campos en orden de navegación
         const camposParametros = [
-            'leucocitos', 'linfocitos', 'monocitos', 'neutrofilos', 'eosinofilos',
-            'linfocitos_porcentaje', 'monocitos_porcentaje', 'neutrofilos_porcentaje', 'eosinofilos_porcentaje',
+            'leucocitos', 'linfocitos', 'monocitos', 'neutrofilos', 'eosinofilos', 'basofilos',
+            'linfocitos_porcentaje', 'monocitos_porcentaje', 'neutrofilos_porcentaje', 'eosinofilos_porcentaje', 'basofilos_porcentaje',
             'eritrocitos', 'hemoglobina', 'hematocrito', 'vcm', 'hcm', 'chcm', 'rdw',
             'plaquetas', 'mpv', 'pdw', 'pct'
-        ];
+];
         
         // Encontrar el índice del campo actual
         const indiceActual = camposParametros.indexOf(event.target.id);
@@ -1540,11 +1431,11 @@ function moverFoco(event, siguienteId) {
         
         // Los mismos campos para navegación hacia arriba
         const camposParametros = [
-            'leucocitos', 'linfocitos', 'monocitos', 'neutrofilos', 'eosinofilos',
-            'linfocitos_porcentaje', 'monocitos_porcentaje', 'neutrofilos_porcentaje', 'eosinofilos_porcentaje',
-            'eritrocitos', 'hemoglobina', 'hematocrito', 'vcm', 'hcm', 'chcm', 'rdw',
-            'plaquetas', 'mpv', 'pdw', 'pct'
-        ];
+        'leucocitos', 'linfocitos', 'monocitos', 'neutrofilos', 'eosinofilos', 'basofilos',
+        'linfocitos_porcentaje', 'monocitos_porcentaje', 'neutrofilos_porcentaje', 'eosinofilos_porcentaje', 'basofilos_porcentaje',
+        'eritrocitos', 'hemoglobina', 'hematocrito', 'vcm', 'hcm', 'chcm', 'rdw',
+        'plaquetas', 'mpv', 'pdw', 'pct'
+];
         
         // Encontrar el índice del campo actual
         const indiceActual = camposParametros.indexOf(event.target.id);
@@ -1614,6 +1505,275 @@ function moverFoco(event, siguienteId) {
     }
     </script>
 <script>
+    // Agregar al inicio del archivo después de los scripts existentes
+document.addEventListener('DOMContentLoaded', function() {
+    // Configurar el historial de análisis
+    setupHistorial();
+    
+    // Añadir evento para guardar los datos al generar el PDF
+    const pdfButton = document.getElementById('pdfButton');
+    if (pdfButton) {
+        const originalHandler = pdfButton.onclick;
+        pdfButton.onclick = async function() {
+            // Guardar los datos antes de generar el PDF
+            guardarAnalisisActual();
+            
+            // Llamar al manejador original
+            if (originalHandler) {
+                return originalHandler.apply(this, arguments);
+            }
+        };
+    }
+});
+
+// Función para configurar el selector de historial
+function setupHistorial() {
+    // Crear el selector de historial
+    const controlsDiv = document.querySelector('.controls');
+    
+    if (controlsDiv) {
+        // Crear el contenedor para el historial
+        const historialContainer = document.createElement('div');
+        historialContainer.className = 'historial-container';
+        
+        // Crear etiqueta
+        const label = document.createElement('label');
+        label.htmlFor = 'historialSelector';
+        label.textContent = 'Historial de análisis:';
+        
+        // Crear selector
+        const select = document.createElement('select');
+        select.id = 'historialSelector';
+        
+        // Opción por defecto
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = '-- Seleccionar análisis anterior --';
+        defaultOption.selected = true;
+        select.appendChild(defaultOption);
+        
+        // Cargar opciones del historial
+        cargarOpcionesHistorial(select);
+        
+        // Evento de cambio
+        select.addEventListener('change', function() {
+            if (this.value) {
+                cargarAnalisisDesdeHistorial(this.value);
+            }
+        });
+        
+        // Agregar elementos al DOM
+        historialContainer.appendChild(label);
+        historialContainer.appendChild(select);
+        
+        // Agregar después de los selectores existentes
+        controlsDiv.appendChild(historialContainer);
+    }
+}
+
+// Función para cargar las opciones del historial
+function cargarOpcionesHistorial(selectElement) {
+    // Limpiar opciones existentes excepto la primera
+    while (selectElement.options.length > 1) {
+        selectElement.remove(1);
+    }
+    
+    // Obtener historial del localStorage
+    const historial = JSON.parse(localStorage.getItem('hemogramaHistorial') || '[]');
+    
+    // Agregar cada análisis como opción
+    historial.forEach((analisis, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        
+        // Crear descripción con nombre, fecha y hora
+        const fecha = new Date(analisis.timestamp);
+        const fechaStr = fecha.toLocaleDateString();
+        const horaStr = fecha.toLocaleTimeString();
+        
+        option.textContent = `${analisis.mascotaNombre} - ${analisis.propietarioNombre} (${fechaStr} ${horaStr})`;
+        
+        selectElement.appendChild(option);
+    });
+}
+
+// Función para guardar el análisis actual
+function guardarAnalisisActual() {
+    // Recopilación de todos los datos del formulario
+    const formData = {
+        // Datos de la mascota y propietario
+        mascotaNombre: document.getElementById('mascotaNombre').value,
+        mascotaRaza: document.getElementById('mascotaRaza').value,
+        mascotaEspecie: document.getElementById('especieEnPlantilla').value,
+        mascotaSexo: document.getElementById('sexoEnPlantilla').value,
+        mascotaEdad: document.getElementById('mascotaEdad').value,
+        mascotaPeso: document.getElementById('mascotaPeso').value,
+        
+        propietarioNombre: document.getElementById('propietarioNombre').value,
+        propietarioCedula: document.getElementById('propietarioCedula').value,
+        propietarioTelefono: document.getElementById('propietarioTelefono').value,
+        propietarioEmail: document.getElementById('propietarioEmail').value,
+        propietarioFecha: document.getElementById('propietarioFecha').value,
+        nombreMedico: document.getElementById('nombreMedico').value,
+        
+        // Datos de fórmula blanca
+        leucocitos: document.getElementById('leucocitos').value,
+        linfocitos: document.getElementById('linfocitos').value,
+        monocitos: document.getElementById('monocitos').value,
+        neutrofilos: document.getElementById('neutrofilos').value,
+        eosinofilos: document.getElementById('eosinofilos').value,
+        linfocitos_porcentaje: document.getElementById('linfocitos_porcentaje').value,
+        monocitos_porcentaje: document.getElementById('monocitos_porcentaje').value,
+        neutrofilos_porcentaje: document.getElementById('neutrofilos_porcentaje').value,
+        eosinofilos_porcentaje: document.getElementById('eosinofilos_porcentaje').value,
+        
+        // Datos de fórmula roja
+        eritrocitos: document.getElementById('eritrocitos').value,
+        hemoglobina: document.getElementById('hemoglobina').value,
+        hematocrito: document.getElementById('hematocrito').value,
+        vcm: document.getElementById('vcm').value,
+        hcm: document.getElementById('hcm').value,
+        chcm: document.getElementById('chcm').value,
+        rdw: document.getElementById('rdw').value,
+        
+        // Datos plaquetarios
+        plaquetas: document.getElementById('plaquetas').value,
+        mpv: document.getElementById('mpv').value,
+        pdw: document.getElementById('pdw').value,
+        pct: document.getElementById('pct').value,
+        
+        // Selectores principales
+        especieSelector: document.getElementById('especieSelector').value,
+        sexoSelector: document.getElementById('sexoSelector').value,
+        edadSelector: document.getElementById('edadSelector').value,
+        
+        // Añadir timestamp para ordenación
+        timestamp: new Date().getTime()
+    };
+    
+    // Verificar si hay datos significativos para guardar
+    if (!formData.mascotaNombre && !formData.propietarioNombre) return;
+    
+    // Obtener historial existente
+    let historial = JSON.parse(localStorage.getItem('hemogramaHistorial') || '[]');
+    
+    // Añadir el nuevo análisis al principio
+    historial.unshift(formData);
+    
+    // Limitar a los 10 últimos
+    historial = historial.slice(0, 10);
+    
+    // Guardar en localStorage
+    localStorage.setItem('hemogramaHistorial', JSON.stringify(historial));
+    
+    // Actualizar opciones en el selector
+    const selector = document.getElementById('historialSelector');
+    if (selector) {
+        cargarOpcionesHistorial(selector);
+    }
+}
+
+// Función para cargar un análisis desde el historial
+function cargarAnalisisDesdeHistorial(index) {
+    // Obtener historial
+    const historial = JSON.parse(localStorage.getItem('hemogramaHistorial') || '[]');
+    
+    if (!historial[index]) return;
+    
+    const analisis = historial[index];
+    
+    // Cargar todos los campos con los datos guardados
+    // Datos de la mascota y propietario
+    document.getElementById('mascotaNombre').value = analisis.mascotaNombre || '';
+    document.getElementById('mascotaRaza').value = analisis.mascotaRaza || '';
+    document.getElementById('especieEnPlantilla').value = analisis.mascotaEspecie || '';
+    document.getElementById('sexoEnPlantilla').value = analisis.mascotaSexo || '';
+    document.getElementById('mascotaEdad').value = analisis.mascotaEdad || '';
+    document.getElementById('mascotaPeso').value = analisis.mascotaPeso || '';
+    
+    document.getElementById('propietarioNombre').value = analisis.propietarioNombre || '';
+    document.getElementById('propietarioCedula').value = analisis.propietarioCedula || '';
+    document.getElementById('propietarioTelefono').value = analisis.propietarioTelefono || '';
+    document.getElementById('propietarioEmail').value = analisis.propietarioEmail || '';
+    document.getElementById('propietarioFecha').value = analisis.propietarioFecha || '';
+    document.getElementById('nombreMedico').value = analisis.nombreMedico || '';
+    
+    // Datos de fórmula blanca
+    document.getElementById('leucocitos').value = analisis.leucocitos || '';
+    document.getElementById('linfocitos').value = analisis.linfocitos || '';
+    document.getElementById('monocitos').value = analisis.monocitos || '';
+    document.getElementById('neutrofilos').value = analisis.neutrofilos || '';
+    document.getElementById('eosinofilos').value = analisis.eosinofilos || '';
+    document.getElementById('basofilos').value = analisis.basofilos || '';
+    document.getElementById('linfocitos_porcentaje').value = analisis.linfocitos_porcentaje || '';
+    document.getElementById('monocitos_porcentaje').value = analisis.monocitos_porcentaje || '';
+    document.getElementById('neutrofilos_porcentaje').value = analisis.neutrofilos_porcentaje || '';
+    document.getElementById('eosinofilos_porcentaje').value = analisis.eosinofilos_porcentaje || '';
+    document.getElementById('basofilos_porcentaje').value = analisis.basofilos_porcentaje || '';
+    
+    // Datos de fórmula roja
+    document.getElementById('eritrocitos').value = analisis.eritrocitos || '';
+    document.getElementById('hemoglobina').value = analisis.hemoglobina || '';
+    document.getElementById('hematocrito').value = analisis.hematocrito || '';
+    document.getElementById('vcm').value = analisis.vcm || '';
+    document.getElementById('hcm').value = analisis.hcm || '';
+    document.getElementById('chcm').value = analisis.chcm || '';
+    document.getElementById('rdw').value = analisis.rdw || '';
+    
+    // Datos plaquetarios
+    document.getElementById('plaquetas').value = analisis.plaquetas || '';
+    document.getElementById('mpv').value = analisis.mpv || '';
+    document.getElementById('pdw').value = analisis.pdw || '';
+    document.getElementById('pct').value = analisis.pct || '';
+    
+    // Selectores principales
+    if (analisis.especieSelector) {
+        document.getElementById('especieSelector').value = analisis.especieSelector;
+        // Disparar el evento change manualmente
+        const event = new Event('change');
+        document.getElementById('especieSelector').dispatchEvent(event);
+    }
+    
+    if (analisis.sexoSelector) {
+        document.getElementById('sexoSelector').value = analisis.sexoSelector;
+        const event = new Event('change');
+        document.getElementById('sexoSelector').dispatchEvent(event);
+    }
+    
+    if (analisis.edadSelector) {
+        document.getElementById('edadSelector').value = analisis.edadSelector;
+        const event = new Event('change');
+        document.getElementById('edadSelector').dispatchEvent(event);
+    }
+    
+    // Actualizar colores y valores calculados
+    calcularTodos();
+    calcularTodosRojos();
+    calcularTodosPlaquetas();
+    
+    // Mostrar mensaje de éxito
+    alert(`Datos de ${analisis.mascotaNombre} cargados correctamente`);
+}
+
+// Agregar botón para borrar historial
+document.addEventListener('DOMContentLoaded', function() {
+    const controlsDiv = document.querySelector('.controls');
+    
+    if (controlsDiv) {
+        const borrarHistorialBtn = document.createElement('button');
+        borrarHistorialBtn.id = 'borrarHistorialBtn';
+        borrarHistorialBtn.textContent = 'Borrar Historial';
+        borrarHistorialBtn.onclick = function() {
+            if (confirm('¿Estás seguro de que quieres borrar todo el historial de análisis?')) {
+                localStorage.removeItem('hemogramaHistorial');
+                cargarOpcionesHistorial(document.getElementById('historialSelector'));
+                alert('Historial borrado correctamente');
+            }
+        };
+        
+        controlsDiv.appendChild(borrarHistorialBtn);
+    }
+});
     document.addEventListener('DOMContentLoaded', () => {
         const templates = document.querySelectorAll('.container');
         const templateSelector = document.getElementById('templateSelector');

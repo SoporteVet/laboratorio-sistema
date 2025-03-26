@@ -42,7 +42,7 @@
             <img src="img/empresa.jpg" alt="Logo de la Empresa" class="small-image">
             <h1>Laboratorio Clínico Veterinario</h1>
         </div>
-        <h3 class="subheader">PANEL GENERAL BÁSICO</h3>
+        <h3 class="subheader">PERFIL QUIMICO GENERAL</h3>
             <table>
                 <thead>
                     <tr>
@@ -697,15 +697,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const refValores = valoresReferencia2[especie][sexo][edad];
         document.getElementById('refglucosa').innerText = refValores.Glucosa || '';
         document.getElementById('refcolesterolT').innerText = refValores.Colesterol_total || refValores.Colesterol_Total || '';
-        document.getElementById('refamilasa').innerText = refValores.Amilasa || '';
-        document.getElementById('refCK').innerText = refValores.CK || '';
+        document.getElementById('refTrigliceridos').innerText = refValores.Trigliceridos || '';
         document.getElementById('refnitrogeno_ureico').innerText = refValores.Nitrógeno_Ureico || '';
+        document.getElementById('refurea').innerText = refValores.Urea || '';
         document.getElementById('refcreatinina').innerText = refValores.Creatinina || '';
         document.getElementById('refbun_crea').innerText = refValores.Relación_BUN_Crea || '';
+        document.getElementById('refacido_urico').innerText = refValores.Acido_Urico || '';
         document.getElementById('reffosforo').innerText = refValores.Fosforo || '';
         document.getElementById('refcalcio').innerText = refValores.Calcio || '';
+        document.getElementById('refmagnesio').innerText = refValores.Magnesio || '';
+        document.getElementById('refAST').innerText = refValores.AST || '';
         document.getElementById('refALT').innerText = refValores.ALT || '';
         document.getElementById('refFosfatasa_Alcalina').innerText = refValores.Fosfatasa_Alcalina || '';
+        document.getElementById('refGGT').innerText = refValores.GGT || '';
         document.getElementById('refbillirrubina').innerText = refValores.Bilirrubina_Total || '';
         document.getElementById('refalbumina').innerText = refValores.Albumina || '';
         document.getElementById('refproteinas_totales').innerText = refValores.Proteínas_Totales || '';
@@ -714,15 +718,19 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         document.getElementById('refglucosa').innerText = "";
         document.getElementById('refcolesterolT').innerText = "";
-        document.getElementById('refamilasa').innerText = "";
-        document.getElementById('refCK').innerText = "";
+        document.getElementById('refTrigliceridos').innerText = "";
         document.getElementById('refnitrogeno_ureico').innerText = "";
+        document.getElementById('refurea').innerText = "";
         document.getElementById('refcreatinina').innerText = "";
         document.getElementById('refbun_crea').innerText = "";
+        document.getElementById('refacido_urico').innerText = "";
         document.getElementById('reffosforo').innerText = "";
         document.getElementById('refcalcio').innerText = "";
+        document.getElementById('refmagnesio').innerText = "";
+        document.getElementById('refAST').innerText = "";
         document.getElementById('refALT').innerText = "";
         document.getElementById('refFosfatasa_Alcalina').innerText = "";
+        document.getElementById('refGGT').innerText = "";
         document.getElementById('refbillirrubina').innerText = "";
         document.getElementById('refalbumina').innerText = "";
         document.getElementById('refproteinas_totales').innerText = "";
@@ -789,15 +797,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const parametros = [
         { campo: 'Glucosa', ref: 'refglucosa' },
         { campo: 'Colesterol_total', ref: 'refcolesterolT' },
-        { campo: 'amilasa', ref: 'refamilasa' },
-        { campo: 'CK', ref: 'refCK' },
+        { campo: 'Trigliceridos', ref: 'refTrigliceridos' },
         { campo: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
+        { campo: 'urea', ref: 'refurea' },
         { campo: 'creatinina', ref: 'refcreatinina' },
         { campo: 'bun_crea', ref: 'refbun_crea' },
+        { campo: 'acido_urico', ref: 'refacido_urico' },
         { campo: 'fosforo', ref: 'reffosforo' },
         { campo: 'calcio', ref: 'refcalcio' },
+        { campo: 'magnesio', ref: 'refmagnesio' },
+        { campo: 'AST', ref: 'refAST' },
         { campo: 'ALT', ref: 'refALT' },
         { campo: 'Fosfatasa_Alcalina', ref: 'refFosfatasa_Alcalina' },
+        { campo: 'GGT', ref: 'refGGT' },
         { campo: 'billirrubina_total', ref: 'refbillirrubina' },
         { campo: 'Albumina', ref: 'refalbumina' },
         { campo: 'proteinas_totales', ref: 'refproteinas_totales' },
@@ -849,23 +861,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>mg/dl</td>  
                 </tr>
                 <tr>
-                    <td>AMILASA</td>
-                    <td>
-                        <input type="text" id="amilasa" list="rangoamilasa" onblur="formatearDecimal('amilasa')" onkeydown="moverFoco(event, 'amilasa')">
-                        <datalist id="rangoamilasa"></datalist>
-                    </td>
-                    <td id="refamilasa">400 - 2500</td>
-                    <td>U/L</td>
+                    <tr>
+                        <td>TRIGLICÉRIDOS</td>
+                        <td>
+                            <input type="text" id="Trigliceridos" list="rangoTrigliceridos" onkeydown="moverFoco(event, 'Trigliceridos')">  
+                            <datalist id="rangoTrigliceridos"></datalist>
+                        </td>
+                        <td id="refTrigliceridos">23 - 75</td>
+                        <td>mg/dl</td>  
+                    </tr>
                 </tr>
                 <tr>
-                    <td>CK</td>
-                    <td>
-                        <input type="text" id="CK" list="rangock" onkeydown="moverFoco(event, 'CK')">
-                        <datalist id="rangock"></datalist>
-                    </td>
-                    <td id="refCK">32 - 157</td>
-                    <td>U/L</td>
-                    </tr>
             </tbody>
         </table>
     
@@ -890,6 +896,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>mg/dl</td>
                 </tr>
                 <tr>
+                    <td>UREA</td>
+                    <td>
+                        <input type="text" id="urea" list="rangourea" onblur="formatearDecimal('urea')" onkeydown="moverFoco(event, 'urea')">
+                        <datalist id="rangourea"></datalist>
+                    </td>
+                    <td id="refurea">15 - 48</td>
+                    <td>mg/dl</td>
+                </tr>
+                <tr>
                     <td>CREATININA</td>
                     <td>
                         <input type="text" id="creatinina" list="rangocreatinina" onblur="formatearDecimal('creatinina')" onkeydown="moverFoco(event, 'creatinina')">
@@ -905,6 +920,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <datalist id="rangobun_crea"></datalist>
                     </td>
                     <td id="refbun_crea"> 4,2 - 32,8 </td>
+                    <td>mg/dl</td>
+                </tr>
+                <tr>
+                    <td>ÁCIDO ÚRICO</td>
+                    <td>
+                        <input type="text" id="acido_urico" list="rangoacido_urico" onblur="formatearDecimal('acido_urico')" onkeydown="moverFoco(event, 'acido_urico')">
+                        <datalist id="rangoacido_urico"></datalist>
+                    </td>
+                    <td id="refacido_urico">0.0 - 0.5</td>
                     <td>mg/dl</td>
                 </tr>
                 <tr>
@@ -925,6 +949,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td id="refcalcio">9,0 - 11,4</td>
                     <td>mg/dl</td>
                 </tr>
+                <tr>
+                    <td>MAGNESIO</td>
+                    <td>
+                        <input type="text" id="magnesio" list="rangomagnesio" onblur="formatearDecimal('magnesio')" onkeydown="moverFoco(event, 'magnesio')">
+                        <datalist id="rangomagnesio"></datalist>
+                    </td>
+                    <td id="refmagnesio">1.8 - 2.4</td>
+                    <td>mg/dl</td>
+                </tr>
             </tbody>
         </table>
     
@@ -939,6 +972,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>AST</td>
+                    <td>
+                        <input type="text" id="AST" list="rangoAST" onblur="formatearDecimal('AST')" onkeydown="moverFoco(event, 'AST')">
+                        <datalist id="rangoAST"></datalist>
+                    </td>
+                    <td id="refAST">15 - 66</td>
+                    <td>U/L</td>
+                </tr>
                 <tr>
                     <td>ALT</td>
                     <td>
@@ -958,12 +1000,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>U/L</td>
                 </tr>
                 <tr>
+                    <td>GGT</td>
+                    <td>
+                        <input type="text" id="GGT" list="rangoGGT" onblur="formatearDecimal('GGT')" onkeydown="moverFoco(event, 'GGT')">
+                        <datalist id="rangoGGT"></datalist>
+                    </td>
+                    <td id="refGGT">0 - 6</td>
+                    <td>U/L</td>
+                </tr>
+                <tr>
                     <td>BILLIRRUBINA TOTAL</td>
                     <td>
                         <input type="text" id="billirrubina_total" list="rangobillirrubina" onblur="formatearDecimal('billirrubina_total')" onkeydown="moverFoco(event, 'billirrubina_total')">
                         <datalist id="rangobillirrubina"></datalist>
                     </td>
-                    <td id="refbillirrubina"> 0,2 - 0,8 </td>
+                    <td id="refbillirrubina">0,2 - 0,8</td>
                     <td>mg/dl</td>
                 </tr>
             </tbody>
@@ -1127,16 +1178,20 @@ function moverFoco(event, siguienteId) {
         // Lista completa de campos en orden de navegación
         const camposParametros = [
             'Glucosa', 
-            'Colesterol_total', 
-            'amilasa', 
-            'CK', 
-            'nitrogeno_ureico', 
+            'Colesterol_total',
+            'Trigliceridos',
+            'nitrogeno_ureico',
+            'urea',
             'creatinina', 
-            'bun_crea', 
+            'bun_crea',
+            'acido_urico',
             'fosforo', 
-            'calcio', 
+            'calcio',
+            'magnesio',
+            'AST',
             'ALT', 
-            'Fosfatasa_Alcalina', 
+            'Fosfatasa_Alcalina',
+            'GGT',
             'billirrubina_total', 
             'Albumina', 
             'proteinas_totales', 
@@ -1160,17 +1215,21 @@ function moverFoco(event, siguienteId) {
         
         // Los mismos campos para navegación hacia arriba
         const camposParametros = [
-        'Glucosa', 
-            'Colesterol_total', 
-            'amilasa', 
-            'CK', 
-            'nitrogeno_ureico', 
+            'Glucosa', 
+            'Colesterol_total',
+            'Trigliceridos',
+            'nitrogeno_ureico',
+            'urea',
             'creatinina', 
-            'bun_crea', 
+            'bun_crea',
+            'acido_urico',
             'fosforo', 
-            'calcio', 
+            'calcio',
+            'magnesio',
+            'AST',
             'ALT', 
-            'Fosfatasa_Alcalina', 
+            'Fosfatasa_Alcalina',
+            'GGT',
             'billirrubina_total', 
             'Albumina', 
             'proteinas_totales', 
@@ -1204,11 +1263,11 @@ function cargarListaDeParametros() {
     
     // Lista de parámetros específicos que queremos mostrar
     const parametrosEspecificos = [
-        "GLUCOSA", "COLESTEROL TOTAL", "AMILASA", "CK",
-        "NITROGENO UREICO", "CREATININA", "RELACIÓN BUN/CREA", "FOSFORO", "CALCIO",
-        "ALT", "FOSFATASA ALCALINA", "BILLIRRUBINA TOTAL",
-        "ALBUMINA", "PROTEINAS TOTALES", "GLOBULINAS TOTALES", "RELACIÓN ALBUMINA/GLOBULINAS"
-    ];
+    "GLUCOSA", "COLESTEROL TOTAL", "TRIGLICÉRIDOS", "CK",
+    "NITROGENO UREICO", "UREA", "CREATININA", "RELACIÓN BUN/CREA", "ÁCIDO ÚRICO", "FOSFORO", "CALCIO", "MAGNESIO",
+    "AST", "ALT", "FOSFATASA ALCALINA", "GGT", "BILLIRRUBINA TOTAL",
+    "ALBUMINA", "PROTEINAS TOTALES", "GLOBULINAS TOTALES", "RELACIÓN ALBUMINA/GLOBULINAS"
+];
     
     const tablas = document.querySelectorAll('#template1 table');
     console.log(`Encontradas ${tablas.length} tablas`); // Para debugear
@@ -1580,15 +1639,19 @@ function cargarAnalisisDesdeHistorial(index) {
     const parametros = [
         { campo: 'Glucosa', ref: 'refglucosa' },
         { campo: 'Colesterol_total', ref: 'refcolesterolT' },
-        { campo: 'amilasa', ref: 'refamilasa' },
-        { campo: 'CK', ref: 'refCK' },
+        { campo: 'Trigliceridos', ref: 'refTrigliceridos' },
         { campo: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
+        { campo: 'urea', ref: 'refurea' },
         { campo: 'creatinina', ref: 'refcreatinina' },
         { campo: 'bun_crea', ref: 'refbun_crea' },
+        { campo: 'acido_urico', ref: 'refacido_urico' },
         { campo: 'fosforo', ref: 'reffosforo' },
         { campo: 'calcio', ref: 'refcalcio' },
+        { campo: 'magnesio', ref: 'refmagnesio' },
+        { campo: 'AST', ref: 'refAST' },
         { campo: 'ALT', ref: 'refALT' },
         { campo: 'Fosfatasa_Alcalina', ref: 'refFosfatasa_Alcalina' },
+        { campo: 'GGT', ref: 'refGGT' },
         { campo: 'billirrubina_total', ref: 'refbillirrubina' },
         { campo: 'Albumina', ref: 'refalbumina' },
         { campo: 'proteinas_totales', ref: 'refproteinas_totales' },
@@ -1739,7 +1802,7 @@ function cargarAnalisisDesdeHistorial(index) {
         pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
 
         // Genera el nombre del archivo según la plantilla actual y datos
-        const fileName = `Panel General Básico ${mascotaNombre} ${propietarioApellido}.pdf`;
+        const fileName = `Perfil Quimico General ${mascotaNombre} ${propietarioApellido}.pdf`;
         
         // Generar el blob del PDF
         const pdfBlob = pdf.output('blob');
