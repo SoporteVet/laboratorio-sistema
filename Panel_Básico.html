@@ -213,8 +213,7 @@
     "Galgo Inglés-español", "Golden Retriever", "Gran Danés", "Greyhound", 
     "Husky Siberiano", "Jack Russell Terrier", "Labrador Retriever", "Maltés", 
     "Pastor Alemán", "Pequinés", "Pomerania", "Pug", "Rottweiler", "Samoyedo", 
-    "San Bernardo", "Schnauzer Gigante", "Schnauzer Mediano", "Schnauzer Miniatura", 
-    "Shih Tzu", "SRD", "Yorkshire Terrier", "Weimaraner", "Fila Brasileiro",
+    "San Bernardo", "Schnauzer", "Shih Tzu", "SRD", "Yorkshire Terrier", "Weimaraner", "Fila Brasileiro",
 ];
 
 const razasFelinas = [
@@ -1038,7 +1037,43 @@ function calculateValues() {
     actualizarColor('Globulinas', 'refglobulinas');
     actualizarColor('alb/glo', 'refalb/glo'); // Corregido: usar el ID exacto que aparece en el HTML
 }
-
+// Add this function to calculate BUN/CREA ratio
+function calculateBunCreatinine() {
+    const nitrogenoUreico = parseFloat(document.getElementById('nitrogeno_ureico').value.replace(',', '.')) || 0;
+    const creatinina = parseFloat(document.getElementById('creatinina').value.replace(',', '.')) || 0;
+    
+    let ratio = 0;
+    if (creatinina > 0) {
+        ratio = nitrogenoUreico / creatinina;
+    }
+    
+    // Format with one decimal place and convert to Spanish format (comma as decimal separator)
+    document.getElementById('bun_crea').value = ratio.toFixed(1).replace('.', ',');
+    
+    // Update color/styling
+    actualizarColor('bun_crea', 'refbun_crea');
+}
+// Add this to your DOMContentLoaded event
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing event listeners...
+    
+    // Add BUN/CREA calculation listeners
+    const bunInput = document.getElementById('nitrogeno_ureico');
+    const creatininaInput = document.getElementById('creatinina');
+    
+    if (bunInput) {
+        bunInput.addEventListener('input', calculateBunCreatinine);
+        bunInput.addEventListener('blur', calculateBunCreatinine);
+    }
+    
+    if (creatininaInput) {
+        creatininaInput.addEventListener('input', calculateBunCreatinine);
+        creatininaInput.addEventListener('blur', calculateBunCreatinine);
+    }
+    
+    // Calculate initial values if data is already present
+    calculateBunCreatinine();
+});
 // Asegurarse que los event listeners estén correctamente asignados
 document.addEventListener('DOMContentLoaded', function() {
     // Asignar event listeners para los campos de interés
@@ -1236,6 +1271,19 @@ function cargarListaDeParametros() {
                 option.textContent = paramName;
                 selector.appendChild(option);
             }
+            // Modify the history loading function to calculate BUN/CREA instead of loading saved value
+    function cargarAnalisisDesdeHistorial(index) {
+    // ... existing code that loads other fields ...
+    
+    // Load the BUN and creatinine values
+    document.getElementById('nitrogeno_ureico').value = analisis.nitrogeno_ureico || '';
+    document.getElementById('creatinina').value = analisis.creatinina || '';
+    
+    // Calculate BUN/CREA instead of loading saved value
+    calculateBunCreatinine();
+    
+    // ... rest of the function ...
+}
         });
     });
     

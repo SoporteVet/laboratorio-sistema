@@ -106,7 +106,7 @@
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
-                            <option value="Dra. Maria Chacón">
+                            <option value="Dra. Lourdes Chacón">
                             <option value="Dra. Alejandra León">
                             <option value="Dra. Kharen Moreno">
                             <option value="Dra. Karina Madrigal">
@@ -993,8 +993,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>RELACIÓN BUN/CREA</td>
                     <td>
-                        <input type="text" id="bun_crea" list="rangobun_crea" onblur="formatearDecimal('bun_crea')" onkeydown="moverFoco(event, 'bun_crea')">
-                        <datalist id="rangobun_crea"></datalist>
+                    <input type="text" id="bun_crea" list="rangobun_crea" readonly style="background-color: #f0f0f0;" onkeydown="moverFoco(event, 'fosforo')">                        <datalist id="rangobun_crea"></datalist>
                     </td>
                     <td id="refbun_crea"> 4,2 - 32,8 </td>
                     <td>mg/dl</td>
@@ -1167,6 +1166,46 @@ function calculateValues() {
     actualizarColor('alb/glo', 'refalb/glo'); // Corregido: usar el ID exacto que aparece en el HTML
 }
 
+function calculateBunCreatinine() {
+    const nitrogenoUreico = parseFloat(document.getElementById('nitrogeno_ureico').value.replace(',', '.')) || 0;
+    const creatinina = parseFloat(document.getElementById('creatinina').value.replace(',', '.')) || 0;
+    
+    let ratio = 0;
+    if (creatinina > 0) {
+        ratio = nitrogenoUreico / creatinina;
+    }
+    
+    // Format with one decimal place and convert to Spanish format (comma as decimal separator)
+    document.getElementById('bun_crea').value = ratio.toFixed(1).replace('.', ',');
+    
+    // Update color/styling
+    actualizarColor('bun_crea', 'refbun_crea');
+}
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing event listeners...
+    
+    // Add BUN/CREA calculation listeners
+    const bunInput = document.getElementById('nitrogeno_ureico');
+    const creatininaInput = document.getElementById('creatinina');
+    
+    if (bunInput) {
+        bunInput.addEventListener('input', calculateBunCreatinine);
+        bunInput.addEventListener('blur', calculateBunCreatinine);
+    }
+    
+    if (creatininaInput) {
+        creatininaInput.addEventListener('input', calculateBunCreatinine);
+        creatininaInput.addEventListener('blur', calculateBunCreatinine);
+    }
+    
+    // Calculate initial values if data is already present
+    calculateBunCreatinine();
+});
+document.getElementById('nitrogeno_ureico').value = analisis.nitrogeno_ureico || '';
+document.getElementById('creatinina').value = analisis.creatinina || '';
+
+// Calculate BUN/CREA instead of loading the saved value
+calculateBunCreatinine();
 // Asegurarse que los event listeners estén correctamente asignados
 document.addEventListener('DOMContentLoaded', function() {
     // Asignar event listeners para los campos de interés
@@ -1739,25 +1778,29 @@ function eliminarParametroSeleccionado() {
     pdfButton.disabled = true;
     
     try {
-        const { jsPDF } = window.jspdf;
-        const selectedTemplate = document.getElementById('template1');
-
-        if (!selectedTemplate) {
-            alert('No se encontró la plantilla.');
-            return;
+        console.log("Iniciando generación de PDF...");
+        
+        // Verificar que las bibliotecas estén cargadas
+        if (!window.jspdf || !window.html2canvas) {
+            throw new Error("Las bibliotecas necesarias no están cargadas correctamente");
         }
-
-        // Obtener el nombre de la mascota y el primer apellido del propietario
+        
+        const { jsPDF } = window.jspdf;
+        console.log("jsPDF cargado correctamente");
+        
+        const selectedTemplate = document.getElementById('template1');
+        if (!selectedTemplate) {
+            throw new Error('No se encontró la plantilla');
+        }
+        
+        // Obtener datos para el nombre del archivo
         const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
         const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
-        
-        // Extraer el primer apellido (segundo elemento después de dividir por espacios)
         const nombreArray = propietarioNombre.split(' ');
-        // Si hay al menos dos palabras, tomar la segunda como primer apellido
-        // Si no, usar el valor completo o el default
         const propietarioApellido = nombreArray.length > 1 ? nombreArray[1] : nombreArray[0];
-
-        // Espera a que todas las imágenes dentro del elemento se carguen
+        
+        console.log("Esperando carga de imágenes...");
+        // Esperar a que todas las imágenes se carguen
         const images = selectedTemplate.getElementsByTagName('img');
         const loadImages = Array.from(images).map(img => {
             return new Promise((resolve, reject) => {
@@ -1769,71 +1812,51 @@ function eliminarParametroSeleccionado() {
                 }
             });
         });
-
+        
         await Promise.all(loadImages);
-
-        // Genera el canvas
+        console.log("Imágenes cargadas, generando canvas...");
+        
+        // Generar canvas con opciones óptimas
         const canvas = await html2canvas(selectedTemplate, {
-            scale: 2,
+            scale: 1.5, // Ajustado para mejor rendimiento
             useCORS: true,
-            logging: false,
+            logging: true, // Activar logs para diagnóstico
             allowTaint: true,
             backgroundColor: '#ffffff'
         });
-
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 140; 
-        const pageHeight = 297;
+        
+        console.log("Canvas generado, creando PDF...");
+        
+        // Crear PDF
+        const imgData = canvas.toDataURL('image/jpeg', 0.95); // Reducir calidad para mejor rendimiento
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+        
+        const imgWidth = 190; 
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        // Calcular la posición para centrar la imagen con márgenes
-        const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
-        const y = 5;
-
-        // Agrega la imagen de la plantilla escalada y centrada
+        const x = 10; // Margen izquierdo
+        const y = 10; // Margen superior
+        
+        // Añadir imagen al PDF
         pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
-
-        // Genera el nombre del archivo según la plantilla actual y datos
+        console.log("Imagen añadida al PDF");
+        
+        // Nombre del archivo
         const fileName = `Panel Plus ${mascotaNombre} ${propietarioApellido}.pdf`;
+        console.log("Guardando como:", fileName);
         
-        // Generar el blob del PDF
-        const pdfBlob = pdf.output('blob');
-        
-        // Intentar usar la API File System Access para guardar el archivo
-        if ('showSaveFilePicker' in window) {
-            try {
-                const fileHandle = await window.showSaveFilePicker({
-                    suggestedName: fileName,
-                    types: [{
-                        description: 'Archivo PDF',
-                        accept: { 'application/pdf': ['.pdf'] }
-                    }]
-                });
-                
-                const writable = await fileHandle.createWritable();
-                await writable.write(pdfBlob);
-                await writable.close();
-                
-                console.log('Archivo guardado con éxito usando File System Access API');
-            } catch (err) {
-                // Si el usuario cancela el guardado o hay un error
-                if (err.name !== 'AbortError') {
-                    console.error('Error al usar File System Access API:', err);
-                    // Caer en el método tradicional
-                    pdf.save(fileName);
-                }
-            }
-        } else {
-            // Navegador no soporta File System Access API, usar método tradicional
-            pdf.save(fileName);
-        }
+        // Método simplificado - usar el método tradicional que funciona en todos los navegadores
+        pdf.save(fileName);
+        console.log("PDF guardado exitosamente");
         
     } catch (error) {
-        console.error('Error al generar el PDF:', error);
-        alert('Ocurrió un error al generar el PDF: ' + error.message);
+        console.error('Error detallado al generar el PDF:', error);
+        alert('Error al generar el PDF: ' + error.message);
     } finally {
-        // Ocultar el indicador de carga y habilitar el botón nuevamente
+        // Ocultar indicador y habilitar botón
         loadingIndicator.style.display = 'none';
         pdfButton.disabled = false;
     }
