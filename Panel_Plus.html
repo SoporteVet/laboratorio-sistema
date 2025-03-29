@@ -1672,7 +1672,139 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarListaDeParametros();
     console.log("Cargando lista de parámetros..."); // Para debugear
 });
+// Función mejorada de redondeo que maneja correctamente los IDs de referencia
+function redondearAEntero(id) {
+    const input = document.getElementById(id);
+    if (!input || input.value === '') return;
+    
+    // Eliminar flechas y obtener valor numérico
+    const valorTexto = input.value.replace(/\s*[↑↓]$/, '').replace(',', '.');
+    const valor = parseFloat(valorTexto);
+    
+    if (isNaN(valor)) return;
+    
+    // Si tiene decimales, redondear a entero
+    if (!Number.isInteger(valor)) {
+        input.value = Math.round(valor);
+    }
+    
+    // Usar IDs de referencia específicos para cada campo
+    let refId;
+    switch(id) {
+        case 'Colesterol_total':
+            refId = 'refcolesterolT';
+            break;
+        case 'CK':
+            refId = 'refCK';
+            break;
+        case 'Glucosa':
+            refId = 'refglucosa';
+            break;
+        case 'amilasa':
+            refId = 'refamilasa';
+            break;
+        case 'ALT':
+            refId = 'refALT';
+            break;
+        case 'Fosfatasa_Alcalina':
+            refId = 'refFosfatasa_Alcalina';
+            break;
+        case 'urea':
+            refId = 'refurea';
+            break;
+        case 'nitrogeno_ureico':
+            refId = 'refnitrogeno_ureico';
+            break;
+        case 'sodio':
+            refId = 'refsodio';
+            break;
+        case 'cloro':
+            refId = 'refcloro';
+            break;
+        case 'Na_K':
+            refId = 'refNa_K';
+            break;
+        default:
+            refId = 'ref' + id.toLowerCase();
+    }
+    
+    // Aplicar color y flechas después del redondeo
+    const evento = new Event('blur');
+    actualizarColor(id, refId, evento);
+}
 
+// Asignar esta función a los campos que necesitan redondeo
+document.addEventListener('DOMContentLoaded', function() {
+    // Campos que deben redondearse a enteros
+    const camposEnteros = ['Glucosa', 'Colesterol_total', 'amilasa', 'CK', 'ALT', 'Fosfatasa_Alcalina', 'urea', 'nitrogeno_ureico', 'sodio', 'cloro', 'Na_K'];
+    
+    camposEnteros.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Remover listeners existentes para evitar conflictos
+            const nuevoInput = campo.cloneNode(true);
+            campo.parentNode.replaceChild(nuevoInput, campo);
+            
+            // Agregar el nuevo listener
+            nuevoInput.addEventListener('blur', function() {
+                redondearAEntero(id);
+            });
+            
+            // Mantener navegación con teclas
+            if (campo.hasAttribute('onkeydown')) {
+                const keydownValue = campo.getAttribute('onkeydown');
+                nuevoInput.setAttribute('onkeydown', keydownValue);
+            }
+        }
+    });
+});
+// Función para redondear a un decimal (para fósforo y calcio)
+function redondearAUnDecimal(id) {
+    const input = document.getElementById(id);
+    if (!input || input.value === '') return;
+    
+    // Eliminar flechas y obtener valor numérico
+    const valorTexto = input.value.replace(/\s*[↑↓]$/, '').replace(',', '.');
+    const valor = parseFloat(valorTexto);
+    
+    if (isNaN(valor)) return;
+    
+    // Redondear a un decimal
+    const valorRedondeado = Math.round(valor * 10) / 10;
+    
+    // Convertir a formato con coma decimal (español)
+    input.value = valorRedondeado.toFixed(1).replace('.', ',');
+    
+    // Aplicar color y flechas después del redondeo
+    const evento = new Event('blur');
+    actualizarColor(id, 'ref' + id.toLowerCase(), evento);
+}
+
+// Asignar esta función a los campos fósforo y calcio
+document.addEventListener('DOMContentLoaded', function() {
+    // Campos que deben redondearse a un decimal
+    const camposUnDecimal = ['fosforo', 'calcio'];
+    
+    camposUnDecimal.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Remover listeners existentes para evitar conflictos
+            const nuevoInput = campo.cloneNode(true);
+            campo.parentNode.replaceChild(nuevoInput, campo);
+            
+            // Agregar el nuevo listener
+            nuevoInput.addEventListener('blur', function() {
+                redondearAUnDecimal(id);
+            });
+            
+            // Mantener navegación con teclas
+            if (campo.hasAttribute('onkeydown')) {
+                const keydownValue = campo.getAttribute('onkeydown');
+                nuevoInput.setAttribute('onkeydown', keydownValue);
+            }
+        }
+    });
+});
 function cargarListaDeParametros() {
     const selector = document.getElementById('parameterSelector');
     if (!selector) {

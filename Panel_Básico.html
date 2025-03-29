@@ -105,7 +105,7 @@
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
-                            <option value="Dra. Lourdes Chacón">
+                            <option value="Dra. Maria Chacón">
                             <option value="Dra. Alejandra León">
                             <option value="Dra. Kharen Moreno">
                             <option value="Dra. Karina Madrigal">
@@ -1351,14 +1351,17 @@ function redondearAEntero(id) {
             refId = 'refamilasa';
             break;
         case 'ALT':
-        refId = 'refALT';
-        break;
+            refId = 'refALT';
+            break;
+        case 'nitrogeno_ureico':
+            refId = 'refnitrogeno_ureico';
+            break;
         case 'Fosfatasa_Alcalina':
-        refId = 'refFosfatasa_Alcalina';
-        break;
+            refId = 'refFosfatasa_Alcalina';
+            break;
         case 'urea':
-        refId = 'refurea';
-        break;
+            refId = 'refurea';
+            break;
         default:
             refId = 'ref' + id.toLowerCase();
     }
@@ -1371,7 +1374,7 @@ function redondearAEntero(id) {
 // Asignar esta función a los campos que necesitan redondeo
 document.addEventListener('DOMContentLoaded', function() {
     // Campos que deben redondearse a enteros
-    const camposEnteros = ['Glucosa', 'Colesterol_total', 'amilasa', 'CK', 'ALT', 'Fosfatasa_Alcalina', 'urea'];
+    const camposEnteros = ['Glucosa', 'Colesterol_total', 'amilasa', 'CK', 'ALT', 'Fosfatasa_Alcalina', 'urea', 'nitrogeno_ureico'];
     
     camposEnteros.forEach(id => {
         const campo = document.getElementById(id);
