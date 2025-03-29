@@ -193,6 +193,7 @@
                             event.preventDefault();
                             document.getElementById(arribaId).focus();
                             break;
+                        case 'Enter':
                         case 'ArrowDown':
                             event.preventDefault();
                             document.getElementById(abajoId).focus();
@@ -228,7 +229,7 @@ function reemplazarPuntoPorComa() {
     // Obtener todos los campos numéricos
     const camposNumericos = [
         'Glucosa', 'Colesterol_total', 'amilasa', 'CK', 
-        'nitrogeno_ureico', 'creatinina', 'bun_crea', 'fosforo', 'calcio',
+        'nitrogeno_ureico', 'urea', 'creatinina', 'bun_crea', 'fosforo', 'calcio',
         'ALT', 'Fosfatasa_Alcalina', 'billirrubina_total', 'Albumina',
         'proteinas_totales', 'Globulinas', 'alb/glo'
     ];
@@ -381,6 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "32 - 157",
                                 Nitrógeno_Ureico:	"7 - 23",
                                 Creatinina: "0,6 - 1,2",
+                                Urea: "20 - 50",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
                                 Calcio: "9,0 - 11,4",
                                 Fosforo: "3,3 - 6,4",
@@ -399,6 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "42 - 525",
                                 Nitrógeno_Ureico:	"7,3 - 23,5",
                                 Creatinina: "0,7 - 1,4",
+                                Urea: "20 - 50",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
                                 Calcio: "9,2 - 13,0",
                                 Fosforo: "4,8 - 9,0",
@@ -417,6 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "53 - 241",
                                 Nitrógeno_Ureico: "7 - 19",
                                 Creatinina: "0,3 - 0,9",
+                                Urea: "20 - 50",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "7,2 - 10,1",
                                 Calcio: "9,8 - 12,4",
@@ -437,6 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "36 - 211",
                                 Nitrógeno_Ureico:	"7 - 23",
                                 Creatinina: "0,6 - 1,2",
+                                Urea: "20 - 50",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
                                 Calcio: "9,0 - 11,4",
                                 Fosforo: "3,3 - 6,4",
@@ -455,6 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "45 - 531",
                                 Nitrógeno_Ureico: "10 - 27",
                                 Creatinina: "0.7 - 1.4",
+                                Urea: '20 - 50',
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "4,4 - 9,2",
                                 Calcio: "9,4 - 11,7",
@@ -473,6 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "34 - 272",
                                 Nitrógeno_Ureico: "7 - 19",
                                 Creatinina: "0,4 - 0,9",
+                                Urea: '20 - 50',
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "7,5 - 10,0",
                                 Calcio: "10,1 - 12,3",
@@ -495,6 +502,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "150 - 798",
                                 Nitrógeno_Ureico: "20 - 42",
                                 Creatinina: "0,5 - 1,8",
+                                Urea: "30 - 60",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "4,1 - 6,4",
                                 Calcio: "8,3 - 10,4",
@@ -513,6 +521,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "184 - 885",
                                 Nitrógeno_Ureico: "14 - 36",
                                 Creatinina: "0,4 - 1,2",
+                                Urea: "30 - 60",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "6,2 - 9,1",
                                 Calcio: "8,9 - 10,1",
@@ -531,6 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "185 - 814",
                                 Nitrógeno_Ureico: "19 - 34",
                                 Creatinina: "0,4 - 0,9",
+                                Urea: "30 - 60",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "7,1 - 9,5",
                                 Calcio: "9,1 - 10,9",
@@ -551,6 +561,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "164 - 930",
                                 Nitrógeno_Ureico: "19 - 30",
                                 Creatinina: "0,6 - 1,7",
+                                Urea: "30 - 60",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "3,2 - 6,6",
                                 Calcio: "7,8 - 9,2",
@@ -569,6 +580,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 CK: "172 - 875",
                                 Nitrógeno_Ureico: "19 - 37",
                                 Creatinina: "0,3 - 1,2",
+                                Urea: "30 - 60",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "4,9 - 8,3",
                                 Calcio: "8,5 - 10,3",
@@ -587,6 +599,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             CK: "188 - 894",
                             Nitrógeno_Ureico: "19 - 33",
                             Creatinina: "0,4 - 0,9",
+                            Urea: "30 - 60",
                             Relación_BUN_Crea: "4,2 - 32,8",
                             Fosforo: "6,9 - 9,5",
                             Calcio: "8,9 - 10,9",
@@ -699,6 +712,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('refamilasa').innerText = refValores.Amilasa || '';
         document.getElementById('refCK').innerText = refValores.CK || '';
         document.getElementById('refnitrogeno_ureico').innerText = refValores.Nitrógeno_Ureico || '';
+        document.getElementById('refurea').innerText = refValores.Urea || '';
         document.getElementById('refcreatinina').innerText = refValores.Creatinina || '';
         document.getElementById('refbun_crea').innerText = refValores.Relación_BUN_Crea || '';
         document.getElementById('reffosforo').innerText = refValores.Fosforo || '';
@@ -716,6 +730,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('refamilasa').innerText = "";
         document.getElementById('refCK').innerText = "";
         document.getElementById('refnitrogeno_ureico').innerText = "";
+        document.getElementById('refurea').innerText = "";
         document.getElementById('refcreatinina').innerText = "";
         document.getElementById('refbun_crea').innerText = "";
         document.getElementById('reffosforo').innerText = "";
@@ -791,6 +806,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { campo: 'amilasa', ref: 'refamilasa' },
         { campo: 'CK', ref: 'refCK' },
         { campo: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
+        { campo: 'urea', ref: 'refurea' },
         { campo: 'creatinina', ref: 'refcreatinina' },
         { campo: 'bun_crea', ref: 'refbun_crea' },
         { campo: 'fosforo', ref: 'reffosforo' },
@@ -888,6 +904,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td id="refnitrogeno_ureico">7 - 23</td>
                     <td>mg/dl</td>
                 </tr>
+                <tr>
+                    <td>UREA</td>
+                    <td>
+                        <input type="text" id="urea" list="rangourea" onkeydown="moverFoco(event, 'Urea')">
+                        <datalist id="rangourea"></datalist>
+                    </td>
+                    <td id="refurea">20 - 50</td>
+                    <td>mg/dl</td>
+                    </tr>
+                <tr>
                 <tr>
                     <td>CREATININA</td>
                     <td>
@@ -1166,6 +1192,7 @@ function moverFoco(event, siguienteId) {
             'amilasa', 
             'CK', 
             'nitrogeno_ureico', 
+            'urea',
             'creatinina', 
             'bun_crea', 
             'fosforo', 
@@ -1200,6 +1227,7 @@ function moverFoco(event, siguienteId) {
             'amilasa', 
             'CK', 
             'nitrogeno_ureico', 
+            'urea',
             'creatinina', 
             'bun_crea', 
             'fosforo', 
@@ -1240,7 +1268,7 @@ function cargarListaDeParametros() {
     // Lista de parámetros específicos que queremos mostrar
     const parametrosEspecificos = [
         "GLUCOSA", "COLESTEROL TOTAL", "AMILASA", "CK",
-        "NITROGENO UREICO", "CREATININA", "RELACIÓN BUN/CREA", "FOSFORO", "CALCIO",
+        "NITROGENO UREICO",  "UREA","CREATININA", "RELACIÓN BUN/CREA", "FOSFORO", "CALCIO",
         "ALT", "FOSFATASA ALCALINA", "BILLIRRUBINA TOTAL",
         "ALBUMINA", "PROTEINAS TOTALES", "GLOBULINAS TOTALES", "RELACIÓN ALBUMINA/GLOBULINAS"
     ];
@@ -1288,8 +1316,130 @@ function cargarListaDeParametros() {
     });
     
     console.log(`Total de opciones cargadas: ${selector.options.length - 1}`); // Para debugear
+
+  
+}
+// Función mejorada de redondeo que maneja correctamente los IDs de referencia
+function redondearAEntero(id) {
+    const input = document.getElementById(id);
+    if (!input || input.value === '') return;
+    
+    // Eliminar flechas y obtener valor numérico
+    const valorTexto = input.value.replace(/\s*[↑↓]$/, '').replace(',', '.');
+    const valor = parseFloat(valorTexto);
+    
+    if (isNaN(valor)) return;
+    
+    // Si tiene decimales, redondear a entero
+    if (!Number.isInteger(valor)) {
+        input.value = Math.round(valor);
+    }
+    
+    // Usar IDs de referencia específicos para cada campo
+    let refId;
+    switch(id) {
+        case 'Colesterol_total':
+            refId = 'refcolesterolT';
+            break;
+        case 'CK':
+            refId = 'refCK';
+            break;
+        case 'Glucosa':
+            refId = 'refglucosa';
+            break;
+        case 'amilasa':
+            refId = 'refamilasa';
+            break;
+        case 'ALT':
+        refId = 'refALT';
+        break;
+        case 'Fosfatasa_Alcalina':
+        refId = 'refFosfatasa_Alcalina';
+        break;
+        case 'urea':
+        refId = 'refurea';
+        break;
+        default:
+            refId = 'ref' + id.toLowerCase();
+    }
+    
+    // Aplicar color y flechas después del redondeo
+    const evento = new Event('blur');
+    actualizarColor(id, refId, evento);
 }
 
+// Asignar esta función a los campos que necesitan redondeo
+document.addEventListener('DOMContentLoaded', function() {
+    // Campos que deben redondearse a enteros
+    const camposEnteros = ['Glucosa', 'Colesterol_total', 'amilasa', 'CK', 'ALT', 'Fosfatasa_Alcalina', 'urea'];
+    
+    camposEnteros.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Remover listeners existentes para evitar conflictos
+            const nuevoInput = campo.cloneNode(true);
+            campo.parentNode.replaceChild(nuevoInput, campo);
+            
+            // Agregar el nuevo listener
+            nuevoInput.addEventListener('blur', function() {
+                redondearAEntero(id);
+            });
+            
+            // Mantener navegación con teclas
+            if (campo.hasAttribute('onkeydown')) {
+                const keydownValue = campo.getAttribute('onkeydown');
+                nuevoInput.setAttribute('onkeydown', keydownValue);
+            }
+        }
+    });
+});
+// Función para redondear a un decimal (para fósforo y calcio)
+function redondearAUnDecimal(id) {
+    const input = document.getElementById(id);
+    if (!input || input.value === '') return;
+    
+    // Eliminar flechas y obtener valor numérico
+    const valorTexto = input.value.replace(/\s*[↑↓]$/, '').replace(',', '.');
+    const valor = parseFloat(valorTexto);
+    
+    if (isNaN(valor)) return;
+    
+    // Redondear a un decimal
+    const valorRedondeado = Math.round(valor * 10) / 10;
+    
+    // Convertir a formato con coma decimal (español)
+    input.value = valorRedondeado.toFixed(1).replace('.', ',');
+    
+    // Aplicar color y flechas después del redondeo
+    const evento = new Event('blur');
+    actualizarColor(id, 'ref' + id.toLowerCase(), evento);
+}
+
+// Asignar esta función a los campos fósforo y calcio
+document.addEventListener('DOMContentLoaded', function() {
+    // Campos que deben redondearse a un decimal
+    const camposUnDecimal = ['fosforo', 'calcio'];
+    
+    camposUnDecimal.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Remover listeners existentes para evitar conflictos
+            const nuevoInput = campo.cloneNode(true);
+            campo.parentNode.replaceChild(nuevoInput, campo);
+            
+            // Agregar el nuevo listener
+            nuevoInput.addEventListener('blur', function() {
+                redondearAUnDecimal(id);
+            });
+            
+            // Mantener navegación con teclas
+            if (campo.hasAttribute('onkeydown')) {
+                const keydownValue = campo.getAttribute('onkeydown');
+                nuevoInput.setAttribute('onkeydown', keydownValue);
+            }
+        }
+    });
+});
 function eliminarParametroSeleccionado() {
     const selector = document.getElementById('parameterSelector');
     const filaId = selector.value;
@@ -1496,6 +1646,7 @@ function guardarAnalisisActual() {
         // Datos de funcionamiento renal
         nitrogeno_ureico: document.getElementById('nitrogeno_ureico').value,
         creatinina: document.getElementById('creatinina').value,
+        urea: document.getElementById('urea').value,
         bun_crea: document.getElementById('bun_crea').value,
         fosforo: document.getElementById('fosforo').value,
         calcio: document.getElementById('calcio').value,
@@ -1580,6 +1731,7 @@ function cargarAnalisisDesdeHistorial(index) {
     
     // Datos de funcionamiento renal
     document.getElementById('nitrogeno_ureico').value = analisis.nitrogeno_ureico || '';
+    urea: document.getElementById('urea').value;
     document.getElementById('creatinina').value = analisis.creatinina || '';
     document.getElementById('bun_crea').value = analisis.bun_crea || '';
     document.getElementById('fosforo').value = analisis.fosforo || '';
@@ -1631,6 +1783,7 @@ function cargarAnalisisDesdeHistorial(index) {
         { campo: 'amilasa', ref: 'refamilasa' },
         { campo: 'CK', ref: 'refCK' },
         { campo: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
+        { campo: 'urea', ref: 'refurea' },
         { campo: 'creatinina', ref: 'refcreatinina' },
         { campo: 'bun_crea', ref: 'refbun_crea' },
         { campo: 'fosforo', ref: 'reffosforo' },

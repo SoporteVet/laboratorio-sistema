@@ -1110,15 +1110,15 @@ function actualizarColor(inputId, refId) {
                 </tr>
             </thead>
             <tbody>
-             <tr>
-                <td>RECUENTO ERITROCITOS</td>
-                <td>
-                    <input type="text" id="eritrocitos" list="rangoEritrocitos" oninput="calcularEritrocitos()" onblur="formatearDecimales('eritrocitos', 2)" onkeydown="moverFoco(event, 'hemoglobina')">
-                    <datalist id="rangoEritrocitos"></datalist>
-                </td>
-                <td id="referitrocitos">5,61 - 7,47</td>
-                <td>x 10⁶/µl</td>
-            </tr>
+                <tr>
+                    <td>RECUENTO ERITROCITOS</td>
+                    <td>
+                        <input type="text" id="eritrocitos" list="rangoEritrocitos" onblur="calcularEritrocitos(); formatearDecimales('eritrocitos', 2)" onkeydown="moverFoco(event, 'hemoglobina')">
+                        <datalist id="rangoEritrocitos"></datalist>
+                    </td>
+                    <td id="referitrocitos">5,61 - 7,47</td>
+                    <td>x 10⁶/µl</td>
+                </tr>
              <tr>
     <td>HEMOGLOBINA</td>
     <td><input type="text" id="hemoglobina" list ="rangoHemoglobina"oninput="calcularTodosRojos()" onblur="formatearDecimal('hemoglobina', 1)" onkeydown="moverFoco(event, 'hematocrito')"></td>
@@ -1340,10 +1340,26 @@ function calcularMPV() {
        pdw.style.color = 'black';
     }
    
-   function calcularPCT() {
-       var pct = parseFloat(document.getElementById('pct').value.replace(',', '.')) || 0;
-       pct.style.color = 'black';
-   }
+    function calcularPCT() {
+    var pctElement = document.getElementById('pct');
+    var pct = parseFloat(pctElement.value.replace(',', '.')) || 0;
+    
+    // Aplicar el color al elemento, no al valor numérico
+    pctElement.style.color = 'black';
+}
+
+// Agregar esta función para el reemplazo automático punto → coma
+document.addEventListener('DOMContentLoaded', function() {
+    const pctInput = document.getElementById('pct');
+    if (pctInput) {
+        pctInput.addEventListener('input', function(e) {
+            // Reemplazar puntos por comas mientras el usuario escribe
+            if (this.value.includes('.')) {
+                this.value = this.value.replace('.', ',');
+            }
+        });
+    }
+});
 
    
    function formatearDecimal(id) {
