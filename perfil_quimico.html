@@ -34,6 +34,7 @@
                 <option value="De 1 año a 12 años">De 1 año a 12 años</option>
                 <option value="De 6 meses a 1 año">De 6 meses a 1 año</option>
                 <option value="De 3 meses a 6 meses">De 3 meses a 6 meses</option>
+                <option value="De 3 meses a 6 meses">De 3 meses a 6 meses</option>
                 <option value="Todas las edades">Todas las edades</option>
             </select>
         </div>
@@ -105,7 +106,7 @@
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
-                            <option value="Dra. Maria Chacón">
+                            <option value="Dra. Lourdes Chacón">
                             <option value="Dra. Alejandra León">
                             <option value="Dra. Kharen Moreno">
                             <option value="Dra. Karina Madrigal">
@@ -194,6 +195,7 @@
                             document.getElementById(arribaId).focus();
                             break;
                         case 'ArrowDown':
+                        case 'Enter':
                             event.preventDefault();
                             document.getElementById(abajoId).focus();
                             break;
@@ -213,7 +215,7 @@
     "Galgo Inglés-español", "Golden Retriever", "Gran Danés", "Greyhound", 
     "Husky Siberiano", "Jack Russell Terrier", "Labrador Retriever", "Maltés", 
     "Pastor Alemán", "Pequinés", "Pomerania", "Pug", "Rottweiler", "Samoyedo", 
-    "San Bernardo", "Schnauzer Gigante", "Schnauzer Mediano", "Schnauzer Miniatura", 
+    "San Bernardo", "Schnauzer", 
     "Shih Tzu", "SRD", "Yorkshire Terrier", "Weimaraner", "Fila Brasileiro",
 ];
 
@@ -378,15 +380,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 1 año a 12 años": {
                                 Glucosa: "77 - 126",
                                 Colesterol_total: "129 - 331",		
-                                Amilasa: "400 - 2500",
-                                CK: "32 - 157",
+                                Trigliceridos: "36 - 135",
                                 Nitrógeno_Ureico:	"7 - 23",
+                                Urea: "20 - 50",
                                 Creatinina: "0,6 - 1,2",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
+                                Acido_Urico: "1,0 - 3,0",
                                 Calcio: "9,0 - 11,4",
                                 Fosforo: "3,3 - 6,4",
+                                Magnesio: "1,8 - 3,0",
+                                AST: "14 - 42",
                                 ALT: "15 - 52",
                                 Fosfatasa_Alcalina: "20 - 70",
+                                GGT: "1 - 11,5",
                                 Bilirrubina_Total: "0,2- 0,8",
                                 Albumina: "2,6 - 3,6",
                                 Proteínas_Totales: "5,4 - 7,2",
@@ -396,15 +402,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         "De 6 meses a 1 año": {
                                 Glucosa: "76 - 129",
                                 Colesterol_total: "129 - 271",		
-                                Amilasa: "363 - 916",
-                                CK: "42 - 525",
+                                Trigliceridos: "36 - 122",
                                 Nitrógeno_Ureico:	"7,3 - 23,5",
                                 Creatinina: "0,7 - 1,4",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
+                                Acido_Urico: "0,5 - 1,4",
                                 Calcio: "9,2 - 13,0",
+                                Magnesio: "1,8 - 3,0",
                                 Fosforo: "4,8 - 9,0",
+                                AST: "15 - 36",
                                 ALT: "19 - 47",
                                 Fosfatasa_Alcalina: "32 - 97",
+                                GGT: "1 - 11,5",
                                 Bilirrubina_Total: "0,2- 0,9",
                                 Albumina: "2,7 - 3,5",
                                 Proteínas_Totales: "5,1 - 7,3",
@@ -414,13 +423,37 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 3 meses a 6 meses": {
                                 Glucosa: "89 - 133",
                                 Colesterol_Total: "115 - 255",
-                                Amilasa: "262 - 621",
-                                CK: "53 - 241",
+                                Trigliceridos: "45 - 105",
                                 Nitrógeno_Ureico: "7 - 19",
+                                Urea: "0,3 - 0,9",
                                 Creatinina: "0,3 - 0,9",
                                 Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,5 - 1,4",
                                 Fosforo: "7,2 - 10,1",
                                 Calcio: "9,8 - 12,4",
+                                Magnesio: "1,8 - 3,0",
+                                AST: "14 - 33",
+                                ALT: "13 - 30",
+                                Fosfatasa_Alcalina: "85 - 199",
+                                Bilirrubina_Total: "0,2 - 0,9",
+                                Albumina: "2,4 - 3,1",
+                                Proteínas_Totales: "4,6 - 5,6",
+                                Globulinas_Totales: "3,0 - 4,7",
+                                Relación_Albumina_Globulina: "0,6 - 1,1"
+                            },
+                            "De 3 meses a 6 meses": {
+                                Glucosa: "89 - 133",
+                                Colesterol_Total: "115 - 255",
+                                Trigliceridos: "45 - 105",
+                                Nitrógeno_Ureico: "7 - 19",
+                                Urea: "0,3 - 0,9",
+                                Creatinina: "0,3 - 0,9",
+                                Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,5 - 1,4",
+                                Fosforo: "7,2 - 10,1",
+                                Calcio: "9,8 - 12,4",
+                                Magnesio: "1,8 - 3,0",
+                                AST: "14 - 33",
                                 ALT: "13 - 30",
                                 Fosfatasa_Alcalina: "85 - 199",
                                 Bilirrubina_Total: "0,2 - 0,9",
@@ -434,15 +467,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 1 año a 12 años": {
                                 Glucosa: "77 - 126",
                                 Colesterol_total: "129 - 331",		
-                                Amilasa: "400 - 2500",
-                                CK: "36 - 211",
+                                Trigliceridos: "36 - 135",
                                 Nitrógeno_Ureico:	"7 - 23",
+                                Urea: "20 - 50",
                                 Creatinina: "0,6 - 1,2",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
                                 Calcio: "9,0 - 11,4",
+                                Acido_Urico: "0,5 - 1,4",
+                                Magnesio: "1,8 - 3,0",                       
                                 Fosforo: "3,3 - 6,4",
+                                AST: "14 - 42",
                                 ALT: "15 - 52",
                                 Fosfatasa_Alcalina: "20 - 70",
+                                GGT: "1 - 11,5",
                                 Bilirrubina_Total: "0,2- 0,8",
                                 Albumina: "2,6 - 3,6",
                                 Proteínas_Totales: "5,4 - 7,2",
@@ -450,17 +487,21 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Relación_Albumina_Globulina: "0,6 - 1,1 ",
                             },
                             "De 6 meses a 1 año": {
-                                Glucosa: "89 - 127",
+                                Glucosa: "29 - 127",
                                 Colesterol_Total: "127 - 247",
-                                Amilasa: "255 - 832",
-                                CK: "45 - 531",
+                                Trigliceridos: "37 - 94",
                                 Nitrógeno_Ureico: "10 - 27",
+                                Urea: "20 - 50",
                                 Creatinina: "0.7 - 1.4",
                                 Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,4 - 1,6",
                                 Fosforo: "4,4 - 9,2",
                                 Calcio: "9,4 - 11,7",
+                                Magnesio: "1,8 - 3,0",
+                                AST: "15 - 40",
                                 ALT: "16 - 49",
                                 Fosfatasa_Alcalina: "29 - 97",
+                                GTT: "1 - 11,5",
                                 Bilirrubina_Total: "0,2 - 1,1",
                                 Albumina: "2,7 - 3,6",
                                 Proteínas_Totales: "5,1 - 6,9",
@@ -470,15 +511,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 3 meses a 6 meses": {
                                 Glucosa: "82 - 130",
                                 Colesterol_Total: "105 - 241",
-                                Amilasa: "281 - 636",
-                                CK: "34 - 272",
+                                Trigliceridos: "43 - 126",
                                 Nitrógeno_Ureico: "7 - 19",
+                                Urea: "20 - 50",
                                 Creatinina: "0,4 - 0,9",
                                 Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,3 - 0,9",
                                 Fosforo: "7,5 - 10,0",
                                 Calcio: "10,1 - 12,3",
+                                Magnesio: "1,8 - 3,0",
+                                AST: "13 - 32",
                                 ALT: "9 - 27",
                                 Fosfatasa_Alcalina: "77 - 180",
+                                GGT: "1 - 11,5",
                                 Bilirrubina_Total: "0,2 - 0,9",
                                 Albumina: "2,4 - 3,1",
                                 Proteínas_Totales: "4,6 - 5,8",
@@ -492,13 +537,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 1 año a 12 años": {
                                 Glucosa: "65 - 111",
                                 Colesterol_Total: "76 - 146",
-                                Amilasa: "400 - 2500",
-                                CK: "150 - 798",
+                                Trigliceridos: "20 - 60",
                                 Nitrógeno_Ureico: "20 - 42",
                                 Creatinina: "0,5 - 1,8",
+                                Acido_Urico: "0,3 - 0,9",
                                 Relación_BUN_Crea: "4,2 - 32,8",
                                 Fosforo: "4,1 - 6,4",
                                 Calcio: "8,3 - 10,4",
+                                Magnesio: "1,9 - 2,28",
+                                AST: "10 - 29",
                                 ALT: "20 - 67",
                                 Fosfatasa_Alcalina: "13 - 47",
                                 Bilirrubina_Total: "0,2 - 0,7",
@@ -510,15 +557,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 6 meses a 1 años": {
                                 Glucosa: "67 - 101",
                                 Colesterol_Total: "68 - 128",
-                                Amilasa: "396 - 754",
-                                CK: "184 - 885",
+                                Trigliceridos: "19 - 52",
                                 Nitrógeno_Ureico: "14 - 36",
+                                Urea: "30 - 60",
                                 Creatinina: "0,4 - 1,2",
                                 Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,4 - 1,3",
                                 Fosforo: "6,2 - 9,1",
                                 Calcio: "8,9 - 10,1",
+                                Magnesio: "1,9 - 2,28",
+                                AST: "10 - 36",
                                 ALT: "19 - 72",
                                 Fosfatasa_Alcalina: "21 - 95",
+                                GGT: "1 - 10",
                                 Bilirrubina_Total: "0,2 - 0,8",
                                 Albumina: "2,4 - 3,6",
                                 Proteínas_Totales: "5,3 - 6,9",
@@ -528,15 +579,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 3 meses a 6 meses": {
                                 Glucosa: "61 - 102",
                                 Colesterol_Total: "66 - 132",
-                                Amilasa: "403 - 752",
-                                CK: "185 - 814",
+                                Trigliceridos: "15 - 47",
                                 Nitrógeno_Ureico: "19 - 34",
+                                Urea: "30 - 60",
                                 Creatinina: "0,4 - 0,9",
                                 Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,4 - 1,1",
                                 Fosforo: "7,1 - 9,5",
                                 Calcio: "9,1 - 10,9",
+                                Magnesio: "1,9 - 2,28",
+                                AST: "9 - 34",
                                 ALT: "18 - 55",
                                 Fosfatasa_Alcalina: "43 - 124",
+                                GGT: "1 - 10",
                                 Bilirrubina_Total: "0,2 - 0,8",
                                 Albumina: "2,7 - 3,6",
                                 Proteínas_Totales: "5,4 - 6,6",
@@ -548,15 +603,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 1 año a 12 años": {
                                 Glucosa: "65 - 112",
                                 Colesterol_Total: "51 - 112",
-                                Amilasa: "400 - 2500",
-                                CK: "164 - 930",
+                                Trigliceridos: "13 - 74",
                                 Nitrógeno_Ureico: "19 - 30",
+                                Urea: "30 - 60",
                                 Creatinina: "0,6 - 1,7",
                                 Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,5 - 1,4",
                                 Fosforo: "3,2 - 6,6",
                                 Calcio: "7,8 - 9,2",
+                                Magnesio: "1,9 - 2,28",
+                                AST: "10 - 29",
                                 ALT: "22 - 79",
                                 Fosfatasa_Alcalina: "12 - 55",
+                                GGT: "1 - 10",
                                 Bilirrubina_Total: "0,3 - 1,1",
                                 Albumina: "2,4 - 3,0",
                                 Proteínas_Totales: "5,6 - 7,7",
@@ -566,15 +625,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             "De 6 meses a 1 año": {
                                 Glucosa: "67 - 102",
                                 Colesterol_Total: "56 - 114",
-                                Amilasa: "352 - 833",
-                                CK: "172 - 875",
+                                Trigliceridos: "15 - 43",
                                 Nitrógeno_Ureico: "19 - 37",
+                                Urea: "30 - 60",
                                 Creatinina: "0,3 - 1,2",
                                 Relación_BUN_Crea: "4,2 - 32,8",
+                                Acido_Urico: "0,3 - 1,3",
                                 Fosforo: "4,9 - 8,3",
                                 Calcio: "8,5 - 10,3",
+                                Magnesio: "1,9 - 2,28",
+                                AST: "11 - 33",
                                 ALT: "25 - 77",
                                 Fosfatasa_Alcalina: "22 - 100",
+                                GGT: "1 - 10",
                                 Bilirrubina_Total: "0,2 - 0,9",
                                 Albumina: "2,5 - 3,6",
                                 Proteínas_Totales: "5,4 - 7,2",
@@ -584,15 +647,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         "De 3 meses a 6 meses": {
                             Glucosa: "59 - 99",
                             Colesterol_Total: "63 - 113",
-                            Amilasa: "464 - 988",
-                            CK: "188 - 894",
+                            Trigliceridos: "16 - 49",
                             Nitrógeno_Ureico: "19 - 33",
+                            Urea: "30 - 60",
                             Creatinina: "0,4 - 0,9",
                             Relación_BUN_Crea: "4,2 - 32,8",
+                            Acido_Urico: "0,4 - 1,2",
                             Fosforo: "6,9 - 9,5",
                             Calcio: "8,9 - 10,9",
+                            Magnesio: "1,9 - 2,28",
+                            AST: "10 - 27",
                             ALT: "19 - 58",
                             Fosfatasa_Alcalina: "39 - 114",
+                            GGT: "1 - 10",
                             Bilirrubina_Total: "0,1 - 0,6",
                             Albumina: "2,5 - 3,5",
                             Proteínas_Totales: "5,4 - 6,8",
@@ -1069,7 +1136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <datalist id="rangoalb/glo"></datalist>
                     </td>
                     <td id="refalb_glo">0,6 - 1,1</td>
-                    <td>mg/dl</td>
+                    <td></td>
                 </tr>
                 <script>
 function calculateValues() {
@@ -1089,6 +1156,46 @@ function calculateValues() {
     actualizarColor('Globulinas', 'refglobulinas');
     actualizarColor('alb/glo', 'refalb/glo'); // Corregido: usar el ID exacto que aparece en el HTML
 }
+function calculateBunCreatinine() {
+    const nitrogenoUreico = parseFloat(document.getElementById('nitrogeno_ureico').value.replace(',', '.')) || 0;
+    const creatinina = parseFloat(document.getElementById('creatinina').value.replace(',', '.')) || 0;
+    
+    let ratio = 0;
+    if (creatinina > 0) {
+        ratio = nitrogenoUreico / creatinina;
+    }
+    
+    // Format with one decimal place and convert to Spanish format (comma as decimal separator)
+    document.getElementById('bun_crea').value = ratio.toFixed(1).replace('.', ',');
+    
+    // Update color/styling
+    actualizarColor('bun_crea', 'refbun_crea');
+}
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing event listeners...
+    
+    // Add BUN/CREA calculation listeners
+    const bunInput = document.getElementById('nitrogeno_ureico');
+    const creatininaInput = document.getElementById('creatinina');
+    
+    if (bunInput) {
+        bunInput.addEventListener('input', calculateBunCreatinine);
+        bunInput.addEventListener('blur', calculateBunCreatinine);
+    }
+    
+    if (creatininaInput) {
+        creatininaInput.addEventListener('input', calculateBunCreatinine);
+        creatininaInput.addEventListener('blur', calculateBunCreatinine);
+    }
+    
+    // Calculate initial values if data is already present
+    calculateBunCreatinine();
+});
+document.getElementById('nitrogeno_ureico').value = analisis.nitrogeno_ureico || '';
+document.getElementById('creatinina').value = analisis.creatinina || '';
+
+// Calculate BUN/CREA instead of loading the saved value
+calculateBunCreatinine();
 
 // Asegurarse que los event listeners estén correctamente asignados
 document.addEventListener('DOMContentLoaded', function() {
@@ -1251,7 +1358,145 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarListaDeParametros();
     console.log("Cargando lista de parámetros..."); // Para debugear
 });
+// Función mejorada de redondeo que maneja correctamente los IDs de referencia
+function redondearAEntero(id) {
+    const input = document.getElementById(id);
+    if (!input || input.value === '') return;
+    
+    // Eliminar flechas y obtener valor numérico
+    const valorTexto = input.value.replace(/\s*[↑↓]$/, '').replace(',', '.');
+    const valor = parseFloat(valorTexto);
+    
+    if (isNaN(valor)) return;
+    
+    // Si tiene decimales, redondear a entero
+    if (!Number.isInteger(valor)) {
+        input.value = Math.round(valor);
+    }
+    
+    // Usar IDs de referencia específicos para cada campo
+    let refId;
+    switch(id) {
+        case 'Colesterol_total':
+            refId = 'refcolesterolT';
+            break;
+        case 'Trigliceridos':
+            refId = 'refTrigliceridos';
+            break;
+        case 'Glucosa':
+            refId = 'refglucosa';
+            break;
+        case 'amilasa':
+            refId = 'refamilasa';
+            break;
+        case 'AST':
+            refId = 'refAST';
+            break;
+        case 'ALT':
+            refId = 'refALT';
+            break;
+        case 'Fosfatasa_Alcalina':
+            refId = 'refFosfatasa_Alcalina';
+            break;
+        case 'urea':
+            refId = 'refurea';
+            break;
+        case 'nitrogeno_ureico':
+            refId = 'refnitrogeno_ureico';
+            break;
+        case 'GGT':
+            refId = 'refGGT';
+            break;
+        case 'sodio':
+            refId = 'refsodio';
+            break;
+        case 'cloro':
+            refId = 'refcloro';
+            break;
+        case 'Na_K':
+            refId = 'refNa_K';
+            break;
+        default:
+            refId = 'ref' + id.toLowerCase();
+    }
+    
+    // Aplicar color y flechas después del redondeo
+    const evento = new Event('blur');
+    actualizarColor(id, refId, evento);
+}
 
+// Asignar esta función a los campos que necesitan redondeo
+document.addEventListener('DOMContentLoaded', function() {
+    // Campos que deben redondearse a enteros
+    const camposEnteros = ['Glucosa', 'Colesterol_total', 'Trigliceridos', 'ALT', 'Fosfatasa_Alcalina', 'urea', 'AST', 'nitrogeno_ureico', 'sodio', 'cloro', 'Na_K', 'GGT'];
+    
+    camposEnteros.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Remover listeners existentes para evitar conflictos
+            const nuevoInput = campo.cloneNode(true);
+            campo.parentNode.replaceChild(nuevoInput, campo);
+            
+            // Agregar el nuevo listener
+            nuevoInput.addEventListener('blur', function() {
+                redondearAEntero(id);
+            });
+            
+            // Mantener navegación con teclas
+            if (campo.hasAttribute('onkeydown')) {
+                const keydownValue = campo.getAttribute('onkeydown');
+                nuevoInput.setAttribute('onkeydown', keydownValue);
+            }
+        }
+    });
+});
+// Función para redondear a un decimal (para fósforo y calcio)
+function redondearAUnDecimal(id) {
+    const input = document.getElementById(id);
+    if (!input || input.value === '') return;
+    
+    // Eliminar flechas y obtener valor numérico
+    const valorTexto = input.value.replace(/\s*[↑↓]$/, '').replace(',', '.');
+    const valor = parseFloat(valorTexto);
+    
+    if (isNaN(valor)) return;
+    
+    // Redondear a un decimal
+    const valorRedondeado = Math.round(valor * 10) / 10;
+    
+    // Convertir a formato con coma decimal (español)
+    input.value = valorRedondeado.toFixed(1).replace('.', ',');
+    
+    // Aplicar color y flechas después del redondeo
+    const evento = new Event('blur');
+    actualizarColor(id, 'ref' + id.toLowerCase(), evento);
+}
+
+// Asignar esta función a los campos fósforo y calcio
+document.addEventListener('DOMContentLoaded', function() {
+    // Campos que deben redondearse a un decimal
+    const camposUnDecimal = ['fosforo', 'calcio', 'acido_urico'];
+    
+    camposUnDecimal.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Remover listeners existentes para evitar conflictos
+            const nuevoInput = campo.cloneNode(true);
+            campo.parentNode.replaceChild(nuevoInput, campo);
+            
+            // Agregar el nuevo listener
+            nuevoInput.addEventListener('blur', function() {
+                redondearAUnDecimal(id);
+            });
+            
+            // Mantener navegación con teclas
+            if (campo.hasAttribute('onkeydown')) {
+                const keydownValue = campo.getAttribute('onkeydown');
+                nuevoInput.setAttribute('onkeydown', keydownValue);
+            }
+        }
+    });
+});
 function cargarListaDeParametros() {
     const selector = document.getElementById('parameterSelector');
     if (!selector) {
@@ -1501,19 +1746,23 @@ function guardarAnalisisActual() {
         // Datos de química clínica
         Glucosa: document.getElementById('Glucosa').value,
         Colesterol_total: document.getElementById('Colesterol_total').value,
-        amilasa: document.getElementById('amilasa').value,
-        CK: document.getElementById('CK').value,
+        Trigliceridos: document.getElementById('Trigliceridos').value,
         
         // Datos de funcionamiento renal
         nitrogeno_ureico: document.getElementById('nitrogeno_ureico').value,
         creatinina: document.getElementById('creatinina').value,
+        urea: document.getElementById('urea').value,
+        acido_urico: document.getElementById('acido_urico').value,
         bun_crea: document.getElementById('bun_crea').value,
         fosforo: document.getElementById('fosforo').value,
         calcio: document.getElementById('calcio').value,
+        magnesio: document.getElementById('magnesio').value,
         
         // Datos de funcionamiento hepático
+        AST: document.getElementById('AST').value,
         ALT: document.getElementById('ALT').value,
         Fosfatasa_Alcalina: document.getElementById('Fosfatasa_Alcalina').value,
+        GGT: document.getElementById('GGT').value,
         billirrubina_total: document.getElementById('billirrubina_total').value,
         
         // Datos de funcionamiento sanguíneo
@@ -1586,19 +1835,23 @@ function cargarAnalisisDesdeHistorial(index) {
     // Datos de química clínica
     document.getElementById('Glucosa').value = analisis.Glucosa || '';
     document.getElementById('Colesterol_total').value = analisis.Colesterol_total || '';
-    document.getElementById('amilasa').value = analisis.amilasa || '';
-    document.getElementById('CK').value = analisis.CK || '';
+    document.getElementById('Trigliceridos').value = analisis.Trigliceridos || '';
     
     // Datos de funcionamiento renal
     document.getElementById('nitrogeno_ureico').value = analisis.nitrogeno_ureico || '';
     document.getElementById('creatinina').value = analisis.creatinina || '';
+    document.getElementById('urea').value = analisis.urea || '';
+    document.getElementById('acido_urico').value = analisis.acido_urico || '';
     document.getElementById('bun_crea').value = analisis.bun_crea || '';
     document.getElementById('fosforo').value = analisis.fosforo || '';
     document.getElementById('calcio').value = analisis.calcio || '';
+    document.getElementById('magnesio').value = analisis.magnesio || '';
     
     // Datos de funcionamiento hepático
+    document.getElementById('AST').value = analisis.AST || '';
     document.getElementById('ALT').value = analisis.ALT || '';
     document.getElementById('Fosfatasa_Alcalina').value = analisis.Fosfatasa_Alcalina || '';
+    document.getElementById('GGT').value = analisis.GGT || '';
     document.getElementById('billirrubina_total').value = analisis.billirrubina_total || '';
     
     // Datos de funcionamiento sanguíneo
