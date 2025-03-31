@@ -108,6 +108,7 @@
                             <option value="Dra. Franciny Nuñez">
                             <option value="Dra. Lourdes Chacón">
                             <option value="Dra. Alejandra León">
+                            <option value="Dra. Karla Quesada">
                             <option value="Dra. Kharen Moreno">
                             <option value="Dra. Karina Madrigal">
                             <option value="Dra. Natalia Alvarado">
@@ -1682,7 +1683,7 @@ function setupHistorial() {
         borrarHistorialBtn.style.marginLeft = '10px';
         borrarHistorialBtn.onclick = function() {
             if (confirm('¿Estás seguro de que quieres borrar todo el historial de análisis?')) {
-                localStorage.removeItem('panelBasicoHistorial');
+                localStorage.removeItem('panelQuimicoHistorial');
                 cargarOpcionesHistorial(select);
                 alert('Historial borrado correctamente');
             }
@@ -1706,7 +1707,7 @@ function cargarOpcionesHistorial(selectElement) {
     }
     
     // Obtener historial del localStorage
-    const historial = JSON.parse(localStorage.getItem('panelBasicoHistorial') || '[]');
+    const historial = JSON.parse(localStorage.getItem('panelQuimicoHistorial') || '[]');
     
     // Agregar cada análisis como opción
     historial.forEach((analisis, index) => {
@@ -1789,7 +1790,7 @@ function guardarAnalisisActual() {
     if (!formData.mascotaNombre && !formData.propietarioNombre) return;
     
     // Obtener historial existente
-    let historial = JSON.parse(localStorage.getItem('panelBasicoHistorial') || '[]');
+    let historial = JSON.parse(localStorage.getItem('panelQuimicoHistorial') || '[]');
     
     // Añadir el nuevo análisis al principio
     historial.unshift(formData);
@@ -1798,7 +1799,7 @@ function guardarAnalisisActual() {
     historial = historial.slice(0, 10);
     
     // Guardar en localStorage
-    localStorage.setItem('panelBasicoHistorial', JSON.stringify(historial));
+    localStorage.setItem('panelQuimicoHistorial', JSON.stringify(historial));
     
     // Actualizar opciones en el selector
     const selector = document.getElementById('historialSelector');
@@ -1807,21 +1808,18 @@ function guardarAnalisisActual() {
     }
 }
 
-// Función para cargar un análisis desde el historial
+// Reemplaza la función cargarAnalisisDesdeHistorial por esta versión mejorada
 function cargarAnalisisDesdeHistorial(index) {
     // Obtener historial
-    const historial = JSON.parse(localStorage.getItem('panelBasicoHistorial') || '[]');
+    const historial = JSON.parse(localStorage.getItem('panelQuimicoHistorial') || '[]');
     
     if (!historial[index]) return;
     
     const analisis = historial[index];
     
-    // Cargar todos los campos con los datos guardados
-    // Datos de la mascota y propietario
+    // Cargar todos los campos básicos primero
     document.getElementById('mascotaNombre').value = analisis.mascotaNombre || '';
     document.getElementById('mascotaRaza').value = analisis.mascotaRaza || '';
-    document.getElementById('especieEnPlantilla').value = analisis.mascotaEspecie || '';
-    document.getElementById('sexoEnPlantilla').value = analisis.mascotaSexo || '';
     document.getElementById('mascotaEdad').value = analisis.mascotaEdad || '';
     document.getElementById('mascotaPeso').value = analisis.mascotaPeso || '';
     
@@ -1832,12 +1830,35 @@ function cargarAnalisisDesdeHistorial(index) {
     document.getElementById('propietarioFecha').value = analisis.propietarioFecha || '';
     document.getElementById('nombreMedico').value = analisis.nombreMedico || '';
     
-    // Datos de química clínica
+    // Establecer los selectores principales PRIMERO y en orden correcto
+    // 1. Especie
+    if (analisis.especieSelector) {
+        document.getElementById('especieSelector').value = analisis.especieSelector;
+        // Actualizar manualmente el campo relacionado
+        document.getElementById('especieEnPlantilla').value = analisis.mascotaEspecie || '';
+    }
+    
+    // 2. Sexo
+    if (analisis.sexoSelector) {
+        document.getElementById('sexoSelector').value = analisis.sexoSelector;
+        // Actualizar manualmente el campo relacionado
+        document.getElementById('sexoEnPlantilla').value = analisis.mascotaSexo || '';
+    }
+    
+    // 3. Edad
+    if (analisis.edadSelector) {
+        document.getElementById('edadSelector').value = analisis.edadSelector;
+    }
+    
+    // IMPORTANTE: Actualizar los valores de referencia explícitamente
+    // DESPUÉS de establecer todos los selectores
+    actualizarValoresReferencia2();
+    
+    // Ahora cargar los valores de los análisis
     document.getElementById('Glucosa').value = analisis.Glucosa || '';
     document.getElementById('Colesterol_total').value = analisis.Colesterol_total || '';
     document.getElementById('Trigliceridos').value = analisis.Trigliceridos || '';
     
-    // Datos de funcionamiento renal
     document.getElementById('nitrogeno_ureico').value = analisis.nitrogeno_ureico || '';
     document.getElementById('creatinina').value = analisis.creatinina || '';
     document.getElementById('urea').value = analisis.urea || '';
@@ -1847,46 +1868,24 @@ function cargarAnalisisDesdeHistorial(index) {
     document.getElementById('calcio').value = analisis.calcio || '';
     document.getElementById('magnesio').value = analisis.magnesio || '';
     
-    // Datos de funcionamiento hepático
     document.getElementById('AST').value = analisis.AST || '';
     document.getElementById('ALT').value = analisis.ALT || '';
     document.getElementById('Fosfatasa_Alcalina').value = analisis.Fosfatasa_Alcalina || '';
     document.getElementById('GGT').value = analisis.GGT || '';
     document.getElementById('billirrubina_total').value = analisis.billirrubina_total || '';
     
-    // Datos de funcionamiento sanguíneo
     document.getElementById('Albumina').value = analisis.Albumina || '';
     document.getElementById('proteinas_totales').value = analisis.proteinas_totales || '';
     document.getElementById('Globulinas').value = analisis.Globulinas || '';
     document.getElementById('alb/glo').value = analisis.alb_glo || '';
     
-    // Índices de interferencia
     document.getElementById('suero_hemolitico2').value = analisis.suero_hemolitico || 'No se observa';
     document.getElementById('suero_lipemico2').value = analisis.suero_lipemico || 'No se observa';
     document.getElementById('suero_icterico2').value = analisis.suero_icterico || 'No se observa';
     
-    // Selectores principales
-    if (analisis.especieSelector) {
-        document.getElementById('especieSelector').value = analisis.especieSelector;
-        // Disparar el evento change manualmente
-        const event = new Event('change');
-        document.getElementById('especieSelector').dispatchEvent(event);
-    }
-    
-    if (analisis.sexoSelector) {
-        document.getElementById('sexoSelector').value = analisis.sexoSelector;
-        const event = new Event('change');
-        document.getElementById('sexoSelector').dispatchEvent(event);
-    }
-    
-    if (analisis.edadSelector) {
-        document.getElementById('edadSelector').value = analisis.edadSelector;
-        const event = new Event('change');
-        document.getElementById('edadSelector').dispatchEvent(event);
-    }
-    
     // Actualizar colores y valores calculados
     calculateValues(); // Para actualizar globulinas y alb/glo
+    calculateBunCreatinine(); // Para actualizar BUN/CREA
     
     // Actualizar colores para todos los campos
     const parametros = [
@@ -1919,7 +1918,6 @@ function cargarAnalisisDesdeHistorial(index) {
     // Mostrar mensaje de éxito
     alert(`Datos de ${analisis.mascotaNombre} cargados correctamente`);
 }
-
 
 
         document.addEventListener('DOMContentLoaded', () => {
