@@ -311,10 +311,43 @@ button:hover {
     border-radius: 4px;
     border: 1px solid #ddd;
 }
+     /* Estilos para controlar la estructura de la página */
+     .a4-container {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: #fff;
+        padding: 10px;
+    }
+    
+    /* Asegura que las plantillas aparezcan justo debajo de los datos básicos */
+    #datosBasicos {
+        margin-bottom: 25px;
+    }
+    
+    .plantilla {
+        display: none;
+    }
+    .sign-column {
+        text-align: center;
+        font-weight: bold;
+        width: 50px;
+    }
+.plantilla {
+    margin-top: 15px; /* Espacio adicional encima de cada plantilla */
+    border-top: 1px solid #fff; /* Línea separadora sutil (opcional) */
+    padding-top: 15px; /* Espaciado interior superior */
+}
 
+/* También puedes mejorar la presentación visual de las plantillas */
+.plantilla h3.subheader {
+    margin-top: 5px; /* Ajusta el margen superior del título de la plantilla */
+    margin-bottom: 15px; /* Espacio entre el título y la tabla */
+}
 .footer {
     font-size: 12px;
     text-align: center;
     margin-top: 20px;
     font-weight: bold;
 }
+
