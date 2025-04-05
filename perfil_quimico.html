@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -968,12 +969,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>UREA</td>
                     <td>
-                        <input type="text" id="urea" list="rangourea" onblur="formatearDecimal('urea')" onkeydown="moverFoco(event, 'urea')">
+                        <input type="text" id="urea" list="rangourea" onkeydown="moverFoco(event, 'Urea')">
                         <datalist id="rangourea"></datalist>
                     </td>
-                    <td id="refurea">15 - 48</td>
+                    <td id="refurea">20 - 50</td>
                     <td>mg/dl</td>
-                </tr>
+                    </tr>
+                <tr>
                 <tr>
                     <td>CREATININA</td>
                     <td>
@@ -986,13 +988,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>RELACIÓN BUN/CREA</td>
                     <td>
-                        <input type="text" id="bun_crea" list="rangobun_crea" onblur="formatearDecimal('bun_crea')" onkeydown="moverFoco(event, 'bun_crea')">
+                        <input type="text" id="bun_crea" list="rangobun_crea" readonly style="background-color: #f0f0f0;" onkeydown="moverFoco(event, 'bun_crea')">
                         <datalist id="rangobun_crea"></datalist>
                     </td>
                     <td id="refbun_crea"> 4,2 - 32,8 </td>
                     <td>mg/dl</td>
                 </tr>
-                <tr>
                     <td>ÁCIDO ÚRICO</td>
                     <td>
                         <input type="text" id="acido_urico" list="rangoacido_urico" onblur="formatearDecimal('acido_urico')" onkeydown="moverFoco(event, 'acido_urico')">
@@ -2098,8 +2099,155 @@ function cargarAnalisisDesdeHistorial(index) {
         pdfButton.disabled = false;
     }
 }
+function formatearDecimal(id) {
+    const input = document.getElementById(id);
+    if (!input || input.value === '') return;
+    
+    // Eliminar flechas y obtener valor numérico
+    const valorTexto = input.value.replace(/\s*[↑↓]$/, '').replace(',', '.');
+    const valor = parseFloat(valorTexto);
+    
+    if (isNaN(valor)) return;
+    
+    // Determinar el número de decimales según el campo
+    let decimales = 1; // Por defecto, un decimal
+    
+    // Algunos campos podrían requerir diferente cantidad de decimales
+    if (['billirrubina_total', 'creatinina', 'Albumina'].includes(id)) {
+        decimales = 1; // 1 decimal para estos campos
+    } else if (['fosforo', 'calcio', 'potasio'].includes(id)) {
+        decimales = 1; // 1 decimal para estos campos
+    } else if (['ALT', 'Fosfatasa_Alcalina', 'amilasa', 'nitrogeno_ureico', 'urea'].includes(id)) {
+        decimales = 0; // Sin decimales para estos campos (enteros)
+    }
+    
+    // Formatear con el número adecuado de decimales y usar coma como separador
+    input.value = valor.toFixed(decimales).replace('.', ',');
+    
+    // Actualizar color basado en referencia
+    // Determinar qué ID de referencia usar
+    let refId;
+    switch(id) {
+        case 'Colesterol_total':
+            refId = 'refcolesterolT';
+            break;
+        case 'billirrubina_total':
+            refId = 'refbillirrubina';
+            break;
+        case 'Fosfatasa_Alcalina':
+            refId = 'refFosfatasa_Alcalina';
+            break;
+        case 'alb/glo':
+            refId = 'refalb_glo';
+            break;
+        case 'Na_K':
+            refId = 'refNa_K';
+            break;
+        default:
+            refId = 'ref' + id.toLowerCase();
+    }
+    
+    actualizarColor(id, refId);
+    
+    // Si es uno de los campos que afecta al cálculo BUN/CREA, recalcular
+    if (id === 'nitrogeno_ureico' || id === 'creatinina') {
+        calculateBunCreatinine();
+    }
+}
+
+// Reemplazar la función calculateBunCreatinine por esta versión mejorada
+function calculateBunCreatinine() {
+    const nitroInput = document.getElementById('nitrogeno_ureico');
+    const creaInput = document.getElementById('creatinina');
+    const bunCreaInput = document.getElementById('bun_crea');
+    const refElement = document.getElementById('refbun_crea');
+
+    // Verificar que los elementos existan
+    if (!nitroInput || !creaInput || !bunCreaInput || !refElement) {
+        console.error("Elementos necesarios para el cálculo BUN/CREA no encontrados");
+        return;
+    }
+
+    // Obtener y limpiar los valores
+    let nitroValue = nitroInput.value.trim().replace(/\s*[↑↓]$/, '').replace(',', '.');
+    let creaValue = creaInput.value.trim().replace(/\s*[↑↓]$/, '').replace(',', '.');
+
+    const nitroNum = parseFloat(nitroValue);
+    const creaNum = parseFloat(creaValue);
+
+    // Si no hay números válidos o creatinina es cero/negativa
+    if (isNaN(nitroNum) || isNaN(creaNum) || creaNum <= 0) {
+        bunCreaInput.value = "";
+        return;
+    }
+
+    // Calcular la relación
+    const ratio = nitroNum / creaNum;
+    
+    // Obtener rango de referencia
+    const rangoTexto = refElement.textContent.trim();
+    const match = rangoTexto.match(/([\d,.]+)\s*-\s*([\d,.]+)/);
+    
+    if (match) {
+        const min = parseFloat(match[1].replace(',', '.'));
+        const max = parseFloat(match[2].replace(',', '.'));
+        
+        // Formatear con un decimal y coma
+        let ratioFormatted = ratio.toFixed(1).replace('.', ',');
+        
+        // Aplicar estilo y añadir flecha según el valor
+        if (ratio < min) {
+            bunCreaInput.style.color = '#0096d2'; // Azul para valores bajos
+            ratioFormatted += ' ↓';
+        } else if (ratio > max) {
+            bunCreaInput.style.color = 'red'; // Rojo para valores altos
+            ratioFormatted += ' ↑';
+        } else {
+            bunCreaInput.style.color = 'black'; // Negro para valores normales
+        }
+        
+        // Mostrar el resultado
+        bunCreaInput.value = ratioFormatted;
+    } else {
+        // Si no se pudo determinar el rango, mostrar sin indicadores
+        bunCreaInput.value = ratio.toFixed(1).replace('.', ',');
+        bunCreaInput.style.color = 'black';
+    }
+}
+
+// Configurar los listeners para el cálculo automático de BUN/CREA
+document.addEventListener('DOMContentLoaded', function() {
+    // ...existing code...
+    
+    // Configurar event listeners para BUN/CREA
+    const nitro = document.getElementById('nitrogeno_ureico');
+    const crea = document.getElementById('creatinina');
+    
+    if (nitro) {
+        nitro.addEventListener('input', calculateBunCreatinine);
+        nitro.addEventListener('blur', function() {
+            if (typeof formatearDecimal === 'function') {
+                formatearDecimal('nitrogeno_ureico');
+            }
+            calculateBunCreatinine();
+        });
+    }
+    
+    if (crea) {
+        crea.addEventListener('input', calculateBunCreatinine);
+        crea.addEventListener('blur', function() {
+            if (typeof formatearDecimal === 'function') {
+                formatearDecimal('creatinina');
+            }
+            calculateBunCreatinine();
+        });
+    }
+    
+    // Ejecutar cálculo inicial después de cargar la página
+    setTimeout(calculateBunCreatinine, 500);
+});
 </script>
+
         <script type="module" src="numeros.js"></script>
     </body>
     </html>
-    
