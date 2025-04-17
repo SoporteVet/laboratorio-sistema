@@ -1920,10 +1920,18 @@ function eliminarParametroSeleccionado() {
             format: 'a4'
         });
         
-        const imgWidth = 190; 
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 140; 
+        const pageHeight = 297;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        const x = 10; // Margen izquierdo
-        const y = 10; // Margen superior
+
+        // Calcular la posición para centrar la imagen con márgenes
+        const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+        const y = 5;
+
+        // Agrega la imagen de la plantilla escalada y centrada
+        pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
         
         // Añadir imagen al PDF
         pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
