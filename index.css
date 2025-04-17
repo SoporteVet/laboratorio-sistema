@@ -221,8 +221,8 @@ td {
     background-color: #f9f9f9;
 }
 select {
-    padding: 5px;
-    margin: 5px;
+    padding: 7px;
+    margin: 7px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
@@ -234,6 +234,7 @@ select {
     background-size: 10px;
     appearance: none; /* Remove default arrow */
     flex: 1; /* Allow the select elements to grow and fill the available space */
+    width: 40%;
 }
 
 select:focus {
@@ -350,4 +351,5 @@ button:hover {
     margin-top: 20px;
     font-weight: bold;
 }
+
 
