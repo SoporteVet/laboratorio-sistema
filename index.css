@@ -234,7 +234,7 @@ select {
     background-size: 10px;
     appearance: none; /* Remove default arrow */
     flex: 1; /* Allow the select elements to grow and fill the available space */
-    width: 40%;
+    width: 45%;
 }
 
 select:focus {
