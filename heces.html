@@ -507,6 +507,86 @@ function updateMorfologia2() {
     document.getElementById('morfologiaMicroscopico2').value = selectedValues.join(' / ');
 }
 
+// Implementación de la función configurarNavegacionCampos
+function configurarNavegacionCampos() {
+    console.log("Configurando navegación de campos...");
+    
+    // Lista de todos los campos editables en el orden de tabulación
+    const camposTemplate1 = [
+        'mascotaNombre', 'mascotaRaza', 'sexoEnPlantilla', 'especieEnPlantilla', 
+        'mascotaEdad', 'mascotaPeso', 'propietarioNombre', 'propietarioCedula', 
+        'propietarioTelefono', 'propietarioEmail', 'nombreMedico', 'propietarioFecha',
+        'colorMacroscopico', 'consistenciaMacroscopico', 'mucoMacroscopico', 
+        'sangreVisibleMacroscopico', 'hallazgosMacroscopico',
+        'leucocitosMicroscopico', 'eritrocitosMicroscopico', 'microbiotaMicroscopico',
+        'morfologiaMicroscopico', 'levadurasMicroscopico', 'parasitosMicroscopico',
+        'quistesMicroscopico', 'ooquistesMicroscopico', 'huevecillosMicroscopico',
+        'trofozoitossMicroscopico', 'residuosMicroscopico', 'fibrasMuscularesMicroscopico',
+        'fibrasVegetalesMicroscopico', 'almidonMicroscopico', 'polenMicroscopico',
+        'antigenoGiardia', 'antigenoCryptosporidium', 'tincionGram',
+        'pruebaSangreOculta', 'tecnicasUsadas'
+    ];
+    
+    const camposTemplate2 = [
+        'mascotaNombre2', 'mascotaRaza2', 'sexoEnPlantilla2', 'especieEnPlantilla2', 
+        'mascotaEdad2', 'mascotaPeso2', 'propietarioNombre2', 'propietarioCedula2', 
+        'propietarioTelefono2', 'propietarioEmail2', 'nombreMedico2', 'propietarioFecha2',
+        'colorMacroscopico2', 'consistenciaMacroscopico2', 'mucoMacroscopico2', 
+        'sangreVisibleMacroscopico2', 'sangreOcultaMacroscopico2', 'hallazgosMacroscopico2',
+        'leucocitosMicroscopico2', 'eritrocitosMicroscopico2', 'microbiotaMicroscopico2',
+        'morfologiaMicroscopico2', 'levadurasMicroscopico2', 'parasitosMicroscopico2',
+        'quistesMicroscopico2', 'ooquistesMicroscopico2', 'huevecillosMicroscopico2',
+        'residuosMicroscopico2', 'fibrasMuscularesMicroscopico2', 'fibrasVegetalesMicroscopico2',
+        'almidonMicroscopico2', 'polenMicroscopico2', 'comentarioMicroscopico2', 'tecnicasUsadas2'
+    ];
+    
+    function configurarNavegacion(campos) {
+        for (let i = 0; i < campos.length; i++) {
+            const campo = document.getElementById(campos[i]);
+            if (campo) {
+                // Configurar navegación hacia el siguiente campo
+                campo.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' || event.key === 'ArrowDown') {
+                        event.preventDefault();
+                        const nextIndex = i + 1 < campos.length ? i + 1 : 0;
+                        const nextCampo = document.getElementById(campos[nextIndex]);
+                        if (nextCampo) {
+                            nextCampo.focus();
+                            
+                            // Si es un campo de selección, seleccionar todo el texto
+                            if (nextCampo.tagName.toLowerCase() === 'input' && 
+                                nextCampo.type === 'text' || nextCampo.type === 'number') {
+                                nextCampo.select();
+                            }
+                        }
+                    } else if (event.key === 'ArrowUp') {
+                        event.preventDefault();
+                        const prevIndex = i > 0 ? i - 1 : campos.length - 1;
+                        const prevCampo = document.getElementById(campos[prevIndex]);
+                        if (prevCampo) {
+                            prevCampo.focus();
+                            
+                            // Si es un campo de selección, seleccionar todo el texto
+                            if (prevCampo.tagName.toLowerCase() === 'input' &&
+                                prevCampo.type === 'text' || prevCampo.type === 'number') {
+                                prevCampo.select();
+                            }
+                        }
+                    }
+                });
+            } else {
+                console.warn(`Campo ${campos[i]} no encontrado en el DOM`);
+            }
+        }
+    }
+    
+    // Configurar navegación para ambas plantillas
+    configurarNavegacion(camposTemplate1);
+    configurarNavegacion(camposTemplate2);
+    
+    console.log("Navegación de campos configurada.");
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     configurarNavegacionCampos();
     
@@ -1365,6 +1445,11 @@ async function generatePDF() {
                     document.getElementById('tecnicasUsadas2').value = "Flot (S.Zinc, Sheater, Greenflix) Directo (Lugol, Salina)";
                 };
             });
+        </script>
+    </body>
+</body>
+</html>
+
         </script>
     </body>
 </body>
