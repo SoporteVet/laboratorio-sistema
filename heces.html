@@ -831,12 +831,45 @@ async function generatePDF() {
         // Generar nombre de archivo
         const fileName = `${tipoAnalisis} ${mascotaNombre} ${propietarioApellido}.pdf`;
         
-        console.log("PDF creado, guardando como:", fileName);
+        console.log("PDF creado, preparando para guardar como:", fileName);
+
+        // Generar blob del PDF para guardarlo
+        const pdfBlob = pdf.output('blob');
         
-        // Guardar el archivo
-        pdf.save(fileName);
-        
-        console.log("PDF guardado exitosamente");
+        // Verificar si el navegador soporta la API File System Access
+        if ('showSaveFilePicker' in window) {
+            try {
+                // Configurar las opciones para el diálogo de guardar
+                const opts = {
+                    suggestedName: fileName,
+                    types: [{
+                        description: 'Archivo PDF',
+                        accept: {'application/pdf': ['.pdf']},
+                    }],
+                };
+                
+                // Mostrar el diálogo para elegir dónde guardar
+                const fileHandle = await window.showSaveFilePicker(opts);
+                const writable = await fileHandle.createWritable();
+                await writable.write(pdfBlob);
+                await writable.close();
+                
+                console.log("PDF guardado exitosamente en ubicación seleccionada");
+                
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.warn("Error al usar File System Access API, usando método alternativo:", err);
+                    // Si hay un error que no sea cancelar el diálogo, usar el método tradicional
+                    pdf.save(fileName);
+                } else {
+                    console.log("Usuario canceló la operación de guardado");
+                }
+            }
+        } else {
+            // Para navegadores que no soportan File System Access API
+            console.log("Navegador no soporta File System Access API, usando método tradicional");
+            pdf.save(fileName);
+        }
         
         return true;
     } catch (error) {
@@ -1405,26 +1438,10 @@ async function generatePDF() {
                 // Si está vacío, no hacer nada
                 if (!valor) return;
                 
-                // Verificar si se trata del campo de leucocitos
-                if (input.id === 'leucocitosMicroscopico' || input.id === 'leucocitosMicroscopico2') {
-                    // Verificar si ya tiene el sufijo y el símbolo <
-                    if (!valor.includes("por campo de 40x")) {
-                        // Si no empieza con <, añadirlo
-                        if (!valor.startsWith("<")) {
-                            valor =  valor;
-                        }
-                        // Añadir el sufijo
-                        input.value = valor + " por campo de 40x";
-                    }
-                } else {
-                    // Para otros campos (como eritrocitos) mantener el comportamiento original
-                    if (!valor.includes("por campo de 40x")) {
-                        // Verificar si el valor comienza con un número
-                        if (/^\d+/.test(valor)) {
-                            // Añadir el sufijo
-                            input.value = valor + " por campo de 40x";
-                        }
-                    }
+                // Para todos los campos, simplemente verificar si ya tiene el sufijo
+                if (!valor.includes("por campo de 40x")) {
+                    // Añadir el sufijo sin importar si tiene o no el símbolo "<"
+                    input.value = valor + " por campo de 40x";
                 }
             }
         </script>
@@ -1450,7 +1467,3 @@ async function generatePDF() {
 </body>
 </html>
 
-        </script>
-    </body>
-</body>
-</html>
