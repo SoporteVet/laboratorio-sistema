@@ -1,11 +1,3 @@
-// -- al inicio del archivo, antes de cualquier otra línea --
-if (!sessionStorage.getItem('userRole')) {
-    // sin rol guardado, enviar al login
-    window.location.replace('home.html');
-    // detener ejecución
-    throw new Error('Redirigiendo a login por ausencia de sesión');
-}
-
 let currentTicketId = 1;
 let isDataLoaded = false;
 // Add this missing declaration
@@ -125,6 +117,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>
                 </div>
             `;
+        }
+    });
+
+    // Mostrar u ocultar filtro de fecha según permisos
+    const dateFilter = document.getElementById('dateFilterContainer');
+    if (dateFilter && hasPermission('canViewSchedule')) {
+        dateFilter.classList.remove('hidden');
+    }
+
+    // Evento para filtrar por fecha
+    safeAddEventListener('filterByDateBtn', 'click', () => {
+        const d = document.getElementById('filterDate').value;
+        if (d) {
+            // pasar 'fecha' como tipo de filtro
+            renderTickets('fecha', d);
         }
     });
 });
@@ -594,7 +601,7 @@ function addTicket() {
     }
 }
 
-function renderTickets(filter = 'todos') {
+function renderTickets(filter = 'todos', dateValue) {
     ticketContainer.innerHTML = '';
     let filteredTickets;
     // 'todos' shows only active (non-terminado) tickets
@@ -618,6 +625,11 @@ function renderTickets(filter = 'todos') {
     } else if (filter === 'urgentes') {
         // Filtrar tickets con urgencia alta
         filteredTickets = tickets.filter(ticket => ticket.urgencia === 'alta');
+    } else if (filter === 'fecha' && dateValue) {
+        filteredTickets = filteredTickets.filter(t => {
+            const f = (t.fechaConsulta || t.fecha).split('T')[0];
+            return f === dateValue;
+        });
     }
     
     // Ordenar por urgencia y luego por fecha

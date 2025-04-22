@@ -176,6 +176,13 @@
       <section id="verTicketsSection" class="hidden">
         <h2><i class="fas fa-list"></i> Sala de Espera</h2>
         
+        <!-- Nuevo: filtro por fecha (solo admin/recepción/externa) -->
+        <div id="dateFilterContainer" class="date-filter hidden">
+          <label for="filterDate"><i class="fas fa-calendar-alt"></i> Filtrar por fecha:</label>
+          <input type="date" id="filterDate">
+          <button id="filterByDateBtn"><i class="fas fa-search"></i> Aplicar Fecha</button>
+        </div>
+        
         <div class="filter-container">
           <button class="filter-btn active" data-filter="todos">Todos</button>
           <button class="filter-btn" data-filter="espera">En Espera</button>
