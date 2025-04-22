@@ -1354,77 +1354,62 @@ function calculateValues() {
             // Recopilación de todos los datos del formulario
             const formData = {
                 // Datos de la mascota y propietario
-                mascotaNombre: document.getElementById('mascotaNombre').value,
-                mascotaRaza: document.getElementById('mascotaRaza').value,
-                mascotaEspecie: document.getElementById('especieEnPlantilla').value,
-                mascotaSexo: document.getElementById('sexoEnPlantilla').value,
-                mascotaEdad: document.getElementById('mascotaEdad').value,
-                mascotaPeso: document.getElementById('mascotaPeso').value,
-                
-                propietarioNombre: document.getElementById('propietarioNombre').value,
-                propietarioCedula: document.getElementById('propietarioCedula').value,
-                propietarioTelefono: document.getElementById('propietarioTelefono').value,
-                propietarioEmail: document.getElementById('propietarioEmail').value,
-                propietarioFecha: document.getElementById('propietarioFecha').value,
-                nombreMedico: document.getElementById('nombreMedico').value,
-                
+                mascotaNombre: document.getElementById('mascotaNombre')?.value || '',
+                mascotaRaza: document.getElementById('mascotaRaza')?.value || '',
+                mascotaEspecie: document.getElementById('especieEnPlantilla')?.value || '',
+                mascotaSexo: document.getElementById('sexoEnPlantilla')?.value || '',
+                mascotaEdad: document.getElementById('mascotaEdad')?.value || '',
+                mascotaPeso: document.getElementById('mascotaPeso')?.value || '',
+
+                propietarioNombre: document.getElementById('propietarioNombre')?.value || '',
+                propietarioCedula: document.getElementById('propietarioCedula')?.value || '',
+                propietarioTelefono: document.getElementById('propietarioTelefono')?.value || '',
+                propietarioEmail: document.getElementById('propietarioEmail')?.value || '',
+                propietarioFecha: document.getElementById('propietarioFecha')?.value || '',
+                nombreMedico: document.getElementById('nombreMedico')?.value || '',
+
                 // Datos de química clínica
-                Glucosa: document.getElementById('Glucosa').value,
-                Colesterol_total: document.getElementById('Colesterol_total').value,
-                amilasa: document.getElementById('amilasa').value,
-                
-                // Datos de funcionamiento renal
-                nitrogeno_ureico: document.getElementById('nitrogeno_ureico').value,
-                creatinina: document.getElementById('creatinina').value,
-                urea: document.getElementById('urea').value,
-                bun_crea: document.getElementById('bun_crea').value,
-                fosforo: document.getElementById('fosforo').value,
-                calcio: document.getElementById('calcio').value,
-                sodio: document.getElementById('sodio').value,
-                potasio: document.getElementById('potasio').value,
-                cloro: document.getElementById('cloro').value,
-                Na_K: document.getElementById('Na_K').value,
-                
-                // Datos de funcionamiento hepático
-                ALT: document.getElementById('ALT').value,
-                Fosfatasa_Alcalina: document.getElementById('Fosfatasa_Alcalina').value,
-                billirrubina_total: document.getElementById('billirrubina_total').value,
-                
-                // Datos de funcionamiento sanguíneo
-                Albumina: document.getElementById('Albumina').value,
-                proteinas_totales: document.getElementById('proteinas_totales').value,
-                Globulinas: document.getElementById('Globulinas').value,
-                alb_glo: document.getElementById('alb/glo').value,
-                
+                Glucosa: document.getElementById('Glucosa')?.value || '',
+                Colesterol_total: document.getElementById('Colesterol_total')?.value || '',
+                Trigliceridos: document.getElementById('Trigliceridos')?.value || '',
+
+                // Datos adicionales
+                ALT: document.getElementById('ALT')?.value || '',
+                AST: document.getElementById('AST')?.value || '',
+                Fosfatasa_Alcalina: document.getElementById('Fosfatasa_Alcalina')?.value || '',
+
                 // Índices de interferencia
-                suero_hemolitico: document.getElementById('suero_hemolitico2').value,
-                suero_lipemico: document.getElementById('suero_lipemico2').value,
-                suero_icterico: document.getElementById('suero_icterico2').value,
-                
+                suero_hemolitico: document.getElementById('suero_hemolitico2')?.value || 'No se observa',
+                suero_lipemico: document.getElementById('suero_lipemico2')?.value || 'No se observa',
+                suero_icterico: document.getElementById('suero_icterico2')?.value || 'No se observa',
+
                 // Selectores principales
-                especieSelector: document.getElementById('especieSelector').value,
-                sexoSelector: document.getElementById('sexoSelector').value,
-                edadSelector: document.getElementById('edadSelector').value,
-                
+                especieSelector: document.getElementById('especieSelector')?.value || '',
+                sexoSelector: document.getElementById('sexoSelector')?.value || '',
+                edadSelector: document.getElementById('edadSelector')?.value || '',
+
                 // Añadir timestamp para ordenación
                 timestamp: new Date().getTime()
             };
-            
+
             // Verificar si hay datos significativos para guardar
-            if (!formData.mascotaNombre && !formData.propietarioNombre) return;
-            
+            if (!formData.mascotaNombre && !formData.propietarioNombre) {
+                console.warn('No hay datos significativos para guardar.');
+                return;
+            }
+
             // Obtener historial existente
             let historial = JSON.parse(localStorage.getItem('panelPlusHistorial') || '[]');
-            
+
             // Añadir el nuevo análisis al principio
             historial.unshift(formData);
-            
+
             // Limitar a los 10 últimos
             historial = historial.slice(0, 10);
-            
+
             // Guardar en localStorage
             localStorage.setItem('panelPlusHistorial', JSON.stringify(historial));
-            
+
             // Actualizar opciones en el selector
             const selector = document.getElementById('historialSelector');
             if (selector) {
