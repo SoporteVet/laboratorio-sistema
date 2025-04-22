@@ -1,0 +1,36 @@
+
+    .test-specific-content {
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+    }
+    
+    .results-table th, .results-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    .results-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    
+    .test-note {
+        font-style: italic;
+        color: #666;
+        margin-top: 10px;
+    }
+    
+    .resultado-select, .resultado-input, .interpretacion-select {
+        width: 100%;
+        padding: 5px;
+    }

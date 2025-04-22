@@ -42,11 +42,11 @@
             <select id="plantillaSelector" onchange="cambiarPlantilla()">
                 <option value="template1" selected>Análisis Completo</option>
                 <option value="template2">Análisis General</option>
+                <option value="template3">Análisis Seriado</option>
             </select>
         </div>
         <div class="container" id="template1" style="display: block;">
         <div class="header">
-            <img src="img/empresa.jpg" alt="Logo de la Empresa" class="small-image">
             <h1>Laboratorio Clínico Veterinario</h1>
         </div>
         <h3 class="subheader">ANÁLISIS HECES COMPLETO</h3>
@@ -397,6 +397,7 @@ function cambiarPlantilla() {
     // Ocultar todas las plantillas
     document.getElementById('template1').style.display = 'none';
     document.getElementById('template2').style.display = 'none';
+    document.getElementById('template3').style.display = 'none';
     
     // Mostrar solo la plantilla seleccionada
     document.getElementById(seleccion).style.display = 'block';
@@ -406,6 +407,8 @@ function cambiarPlantilla() {
         sincronizarDatosHaciaSimple();
     } else if (seleccion === 'template1') {
         sincronizarDatosHaciaCompleto();
+    } else if (seleccion === 'template3') {
+        sincronizarDatosHaciaSeriado();
     }
 }
 
@@ -491,6 +494,22 @@ function sincronizarDatosHaciaCompleto() {
     document.getElementById('tecnicasUsadas').value = document.getElementById('tecnicasUsadas2').value;
 }
 
+function sincronizarDatosHaciaSeriado() {
+    document.getElementById('mascotaNombre3').value = document.getElementById('mascotaNombre').value;
+    document.getElementById('mascotaRaza3').value = document.getElementById('mascotaRaza').value;
+    document.getElementById('sexoEnPlantilla3').value = document.getElementById('sexoEnPlantilla').value;
+    document.getElementById('especieEnPlantilla3').value = document.getElementById('especieEnPlantilla').value;
+    document.getElementById('mascotaEdad3').value = document.getElementById('mascotaEdad').value;
+    document.getElementById('mascotaPeso3').value = document.getElementById('mascotaPeso').value;
+    
+    document.getElementById('propietarioNombre3').value = document.getElementById('propietarioNombre').value;
+    document.getElementById('propietarioCedula3').value = document.getElementById('propietarioCedula').value;
+    document.getElementById('propietarioTelefono3').value = document.getElementById('propietarioTelefono').value;
+    document.getElementById('propietarioEmail3').value = document.getElementById('propietarioEmail').value;
+    document.getElementById('propietarioFecha3').value = document.getElementById('propietarioFecha').value;
+    document.getElementById('nombreMedico3').value = document.getElementById('nombreMedico').value;
+}
+
 function toggleMorfologiaOptions2() {
     const dropdown = document.getElementById('morfologiaDropdown2');
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
@@ -507,84 +526,38 @@ function updateMorfologia2() {
     document.getElementById('morfologiaMicroscopico2').value = selectedValues.join(' / ');
 }
 
-// Implementación de la función configurarNavegacionCampos
-function configurarNavegacionCampos() {
-    console.log("Configurando navegación de campos...");
-    
-    // Lista de todos los campos editables en el orden de tabulación
-    const camposTemplate1 = [
-        'mascotaNombre', 'mascotaRaza', 'sexoEnPlantilla', 'especieEnPlantilla', 
-        'mascotaEdad', 'mascotaPeso', 'propietarioNombre', 'propietarioCedula', 
-        'propietarioTelefono', 'propietarioEmail', 'nombreMedico', 'propietarioFecha',
-        'colorMacroscopico', 'consistenciaMacroscopico', 'mucoMacroscopico', 
-        'sangreVisibleMacroscopico', 'hallazgosMacroscopico',
-        'leucocitosMicroscopico', 'eritrocitosMicroscopico', 'microbiotaMicroscopico',
-        'morfologiaMicroscopico', 'levadurasMicroscopico', 'parasitosMicroscopico',
-        'quistesMicroscopico', 'ooquistesMicroscopico', 'huevecillosMicroscopico',
-        'trofozoitossMicroscopico', 'residuosMicroscopico', 'fibrasMuscularesMicroscopico',
-        'fibrasVegetalesMicroscopico', 'almidonMicroscopico', 'polenMicroscopico',
-        'antigenoGiardia', 'antigenoCryptosporidium', 'tincionGram',
-        'pruebaSangreOculta', 'tecnicasUsadas'
-    ];
-    
-    const camposTemplate2 = [
-        'mascotaNombre2', 'mascotaRaza2', 'sexoEnPlantilla2', 'especieEnPlantilla2', 
-        'mascotaEdad2', 'mascotaPeso2', 'propietarioNombre2', 'propietarioCedula2', 
-        'propietarioTelefono2', 'propietarioEmail2', 'nombreMedico2', 'propietarioFecha2',
-        'colorMacroscopico2', 'consistenciaMacroscopico2', 'mucoMacroscopico2', 
-        'sangreVisibleMacroscopico2', 'sangreOcultaMacroscopico2', 'hallazgosMacroscopico2',
-        'leucocitosMicroscopico2', 'eritrocitosMicroscopico2', 'microbiotaMicroscopico2',
-        'morfologiaMicroscopico2', 'levadurasMicroscopico2', 'parasitosMicroscopico2',
-        'quistesMicroscopico2', 'ooquistesMicroscopico2', 'huevecillosMicroscopico2',
-        'residuosMicroscopico2', 'fibrasMuscularesMicroscopico2', 'fibrasVegetalesMicroscopico2',
-        'almidonMicroscopico2', 'polenMicroscopico2', 'comentarioMicroscopico2', 'tecnicasUsadas2'
-    ];
-    
-    function configurarNavegacion(campos) {
-        for (let i = 0; i < campos.length; i++) {
-            const campo = document.getElementById(campos[i]);
-            if (campo) {
-                // Configurar navegación hacia el siguiente campo
-                campo.addEventListener('keydown', function(event) {
-                    if (event.key === 'Enter' || event.key === 'ArrowDown') {
-                        event.preventDefault();
-                        const nextIndex = i + 1 < campos.length ? i + 1 : 0;
-                        const nextCampo = document.getElementById(campos[nextIndex]);
-                        if (nextCampo) {
-                            nextCampo.focus();
-                            
-                            // Si es un campo de selección, seleccionar todo el texto
-                            if (nextCampo.tagName.toLowerCase() === 'input' && 
-                                nextCampo.type === 'text' || nextCampo.type === 'number') {
-                                nextCampo.select();
-                            }
-                        }
-                    } else if (event.key === 'ArrowUp') {
-                        event.preventDefault();
-                        const prevIndex = i > 0 ? i - 1 : campos.length - 1;
-                        const prevCampo = document.getElementById(campos[prevIndex]);
-                        if (prevCampo) {
-                            prevCampo.focus();
-                            
-                            // Si es un campo de selección, seleccionar todo el texto
-                            if (prevCampo.tagName.toLowerCase() === 'input' &&
-                                prevCampo.type === 'text' || prevCampo.type === 'number') {
-                                prevCampo.select();
-                            }
-                        }
-                    }
-                });
-            } else {
-                console.warn(`Campo ${campos[i]} no encontrado en el DOM`);
-            }
+function toggleMorfologiaOptions3(muestraNum) {
+    const dropdown = document.getElementById(`morfologiaDropdown3_${muestraNum}`);
+    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+}
+
+function updateMorfologia3(muestraNum) {
+    const checkboxes = document.querySelectorAll(`#morfologiaDropdown3_${muestraNum} input[type="checkbox"]`);
+    const selectedValues = [];
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedValues.push(checkbox.nextElementSibling.textContent);
         }
+    });
+    document.getElementById(`morfologiaMicroscopico3_${muestraNum}`).value = selectedValues.join(' / ');
+}
+
+function agregarSufijo400x(input) {
+    let valor = input.value.trim();
+    if (!valor) return;
+    if (!valor.includes("x campo 400x")) {
+        input.value = valor + " x campo 400x";
     }
-    
-    // Configurar navegación para ambas plantillas
-    configurarNavegacion(camposTemplate1);
-    configurarNavegacion(camposTemplate2);
-    
-    console.log("Navegación de campos configurada.");
+}
+
+function verificarMedico3() {
+    const medico = document.getElementById('nombreMedico3').value;
+    const mensaje = document.getElementById('mensajeMedico3');
+    if (medico === 'N.A' || medico === '') {
+        mensaje.style.display = 'none';
+    } else {
+        mensaje.style.display = 'block';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -600,6 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.getElementById('template1').style.display = plantillaActual === 'template1' ? 'block' : 'none';
         document.getElementById('template2').style.display = plantillaActual === 'template2' ? 'block' : 'none';
+        document.getElementById('template3').style.display = plantillaActual === 'template3' ? 'block' : 'none';
     } else {
         console.error("Error: no se encontró el selector de plantillas");
     }
@@ -633,7 +607,6 @@ function previewImage(event, previewId) {
             preview.style.display = 'block';
             if (noImageText) noImageText.style.display = 'none';
             
-            // Marcar el contenedor como teniendo imagen (para el PDF)
             preview.parentElement.setAttribute('data-has-image', 'true');
         };
         reader.readAsDataURL(file);
@@ -641,12 +614,10 @@ function previewImage(event, previewId) {
         preview.style.display = 'none';
         if (noImageText) noImageText.style.display = 'block';
         
-        // Marcar el contenedor como sin imagen
         preview.parentElement.setAttribute('data-has-image', 'false');
     }
 }
 
-// Ejecutar al cargar la página para inicializar los atributos
 document.addEventListener('DOMContentLoaded', function() {
     const preview1 = document.getElementById('preview2');
     const preview2 = document.getElementById('preview2-simple');
@@ -656,7 +627,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function generatePDF() {
-    // Mostrar el indicador de carga
     const loadingIndicator = document.getElementById('loadingPdf');
     const pdfButton = document.getElementById('pdfButton');
     
@@ -664,182 +634,125 @@ async function generatePDF() {
     pdfButton.disabled = true;
     
     try {
-        // Verificar que jsPDF está disponible
         if (!window.jspdf || !window.jspdf.jsPDF) {
             throw new Error("La biblioteca jsPDF no está cargada correctamente");
         }
         
         const { jsPDF } = window.jspdf;
         
-        // Determinar qué plantilla está actualmente visible
-        const activeTemplate = document.getElementById('template1').style.display === 'block' 
-            ? document.getElementById('template1') 
-            : document.getElementById('template2');
+        let activeTemplate;
+        if (document.getElementById('template1').style.display === 'block') {
+            activeTemplate = document.getElementById('template1');
+        } else if (document.getElementById('template2').style.display === 'block') {
+            activeTemplate = document.getElementById('template2');
+        } else if (document.getElementById('template3').style.display === 'block') {
+            activeTemplate = document.getElementById('template3');
+        }
 
         if (!activeTemplate) {
             throw new Error('No se encontró ninguna plantilla activa.');
         }
 
-        // Verificar si hay imágenes cargadas para el análisis
-        const imagePreview = activeTemplate === document.getElementById('template1') 
-            ? document.getElementById('preview2') 
-            : document.getElementById('preview2-simple');
+        let mascotaNombre, propietarioNombre;
         
-        // Ocultar el contenedor de imagen del análisis si no hay imagen
-        const imageContainer = imagePreview.parentElement;
-        const imageBox = imageContainer.parentNode;
-        const hasImage = imagePreview.style.display === 'block';
-        
-        // Guardar estado original para restaurar después
-        const originalDisplay = imageBox.style.display;
-        
-        // Ocultar si no hay imagen
-        if (!hasImage) {
-            imageBox.style.display = 'none';
+        if (activeTemplate === document.getElementById('template1')) {
+            mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
+            propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
+        } else if (activeTemplate === document.getElementById('template2')) {
+            mascotaNombre = document.getElementById('mascotaNombre2').value || 'Sin_nombre';
+            propietarioNombre = document.getElementById('propietarioNombre2').value || 'Sin_apellido';
+        } else {
+            mascotaNombre = document.getElementById('mascotaNombre3').value || 'Sin_nombre';
+            propietarioNombre = document.getElementById('propietarioNombre3').value || 'Sin_apellido';
         }
-
-        // Obtener el nombre de la mascota y del propietario para el nombre del archivo
-        const mascotaNombre = activeTemplate === document.getElementById('template1')
-            ? document.getElementById('mascotaNombre').value || 'Sin_nombre'
-            : document.getElementById('mascotaNombre2').value || 'Sin_nombre';
-            
-        const propietarioNombre = activeTemplate === document.getElementById('template1')
-            ? document.getElementById('propietarioNombre').value || 'Sin_apellido'
-            : document.getElementById('propietarioNombre2').value || 'Sin_apellido';
         
-        // Extraer el primer apellido (segundo elemento después de dividir por espacios)
         const nombreArray = propietarioNombre.split(' ');
         const propietarioApellido = nombreArray.length > 1 ? nombreArray[1] : nombreArray[0];
-
-        console.log("Generando PDF para:", mascotaNombre, propietarioApellido);
-        console.log("Plantilla activa:", activeTemplate.id);
         
-        // Esperar a que todas las imágenes se carguen
-        const images = activeTemplate.querySelectorAll('img');
-        await Promise.all([...images].map(img => {
-            if (img.complete) {
-                return Promise.resolve();
-            }
-            return new Promise((resolve, reject) => {
-                img.onload = resolve;
-                img.onerror = () => {
-                    console.warn(`No se pudo cargar la imagen: ${img.src}`);
-                    resolve(); // Continuamos incluso si una imagen falla
-                };
-            });
-        }));
-
-        console.log("Imágenes cargadas, generando canvas...");
-        
-        // Ocultar elementos que no deben aparecer en el PDF
-        const hideElements = activeTemplate.querySelectorAll('.pdf-hide');
-        hideElements.forEach(el => {
-            el.style.display = 'none';
-        });
-        
-        // Generar el canvas
-        const canvas = await html2canvas(activeTemplate, {
-            scale: 2,
-            useCORS: true,
-            logging: false,
-            allowTaint: true,
-            backgroundColor: '#ffffff'
-        });
-        
-        // Restaurar los elementos ocultos
-        hideElements.forEach(el => {
-            el.style.display = '';
-        });
-        
-        // Restaurar la visibilidad original del contenedor de imagen
-        if (!hasImage) {
-            imageBox.style.display = originalDisplay;
-        }
-
-        console.log("Canvas generado, creando PDF...");
-        
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
         const pdf = new jsPDF('p', 'mm', 'a4');
-        
-        // Ajustar el tamaño de la imagen para que quepa en la página A4 con márgenes
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
         
-        const imgWidth = pageWidth - 20; // Margen de 10mm a cada lado
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        
-        // Posicionar la imagen centrada en la página
-        const x = 10; // 10mm desde el borde izquierdo
-        const y = 10; // 10mm desde el borde superior
-        
-        // Verificar si la imagen es demasiado grande para una página
-        if (imgHeight > pageHeight - 20) { // 20mm de margen total (10mm arriba y 10mm abajo)
-            // La imagen es demasiado alta, necesitamos dividirla en varias páginas
-            const ratio = canvas.width / imgWidth;
-            const pageHeightInPixels = (pageHeight - 20) * ratio;
+        if (activeTemplate === document.getElementById('template3')) {
+            const muestras = ['muestra1', 'muestra2', 'muestra3'];
             
-            let remainingHeight = canvas.height;
-            let srcY = 0;
-            let dstY = y;
-            let pageNum = 1;
-            
-            while (remainingHeight > 0) {
-                // Altura que cabe en esta página
-                const heightForThisPage = Math.min(pageHeightInPixels, remainingHeight);
+            for (let i = 0; i < muestras.length; i++) {
+                const muestraId = muestras[i];
+                const muestraElem = document.getElementById(muestraId);
                 
-                // Altura proporcional para el PDF
-                const heightInPdf = heightForThisPage / ratio;
+                const tempDiv = document.createElement('div');
+                tempDiv.style.backgroundColor = '#ffffff';
+                tempDiv.style.padding = '20px';
+                tempDiv.style.width = '100%';
                 
-                // Crear un canvas temporal para esta sección
-                const tmpCanvas = document.createElement('canvas');
-                tmpCanvas.width = canvas.width;
-                tmpCanvas.height = heightForThisPage;
+                const header = document.querySelector('#template3 .header').cloneNode(true);
+                const subheader = document.querySelector('#template3 .subheader').cloneNode(true);
+                subheader.textContent = `ANÁLISIS HECES SERIADO - MUESTRA ${i+1}`;
                 
-                // Dibujar la porción correspondiente de la imagen original
-                const ctx = tmpCanvas.getContext('2d');
-                ctx.drawImage(
-                    canvas, 
-                    0, srcY, canvas.width, heightForThisPage,
-                    0, 0, tmpCanvas.width, tmpCanvas.height
-                );
-                
-                // Agregar esta sección al PDF
-                const imgData = tmpCanvas.toDataURL('image/jpeg', 0.95);
-                
-                if (pageNum > 1) {
-                    pdf.addPage();
-                    dstY = y;
+                if (i === 0) {
+                    const datosTable = document.querySelector('#template3 table').cloneNode(true);
+                    tempDiv.appendChild(header);
+                    tempDiv.appendChild(subheader);
+                    tempDiv.appendChild(datosTable);
+                } else {
+                    tempDiv.appendChild(header);
+                    tempDiv.appendChild(subheader);
                 }
                 
-                pdf.addImage(imgData, 'JPEG', x, dstY, imgWidth, heightInPdf);
+                const muestra = muestraElem.cloneNode(true);
+                muestra.classList.remove('page-break');
+                tempDiv.appendChild(muestra);
                 
-                // Actualizar para la siguiente iteración
-                srcY += heightForThisPage;
-                remainingHeight -= heightForThisPage;
-                pageNum++;
+                if (i === muestras.length - 1) {
+                    const footer = document.querySelector('#template3 .footer').cloneNode(true);
+                    tempDiv.appendChild(footer);
+                }
+                
+                document.body.appendChild(tempDiv);
+                
+                const hideElements = tempDiv.querySelectorAll('.pdf-hide');
+                hideElements.forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                const canvas = await html2canvas(tempDiv, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff'
+                });
+                
+                document.body.removeChild(tempDiv);
+                
+                if (i > 0) {
+                    pdf.addPage();
+                }
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const imgWidth = pageWidth - 20;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                pdf.addImage(imgData, 'JPEG', 10, 10, imgWidth, imgHeight);
             }
+        } else if (activeTemplate === document.getElementById('template2') && document.getElementById('preview2-simple').style.display === 'block') {
+            // Existing code for template2 with image
         } else {
-            // La imagen cabe en una sola página
-            pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
+            // Existing code for standard templates
         }
         
-        // Determinar el tipo de análisis para el nombre del archivo
-        const tipoAnalisis = activeTemplate === document.getElementById('template1') 
-            ? 'Análisis Heces Completo' 
-            : 'Análisis Heces General';
-            
-        // Generar nombre de archivo
+        let tipoAnalisis;
+        if (activeTemplate === document.getElementById('template1')) {
+            tipoAnalisis = 'Análisis Heces Completo';
+        } else if (activeTemplate === document.getElementById('template2')) {
+            tipoAnalisis = 'Análisis Heces General';
+        } else {
+            tipoAnalisis = 'Análisis Heces Seriado';
+        }
+        
         const fileName = `${tipoAnalisis} ${mascotaNombre} ${propietarioApellido}.pdf`;
         
-        console.log("PDF creado, preparando para guardar como:", fileName);
-
-        // Generar blob del PDF para guardarlo
-        const pdfBlob = pdf.output('blob');
-        
-        // Verificar si el navegador soporta la API File System Access
         if ('showSaveFilePicker' in window) {
             try {
-                // Configurar las opciones para el diálogo de guardar
                 const opts = {
                     suggestedName: fileName,
                     types: [{
@@ -848,26 +761,17 @@ async function generatePDF() {
                     }],
                 };
                 
-                // Mostrar el diálogo para elegir dónde guardar
                 const fileHandle = await window.showSaveFilePicker(opts);
                 const writable = await fileHandle.createWritable();
-                await writable.write(pdfBlob);
+                await writable.write(pdf.output('blob'));
                 await writable.close();
-                
-                console.log("PDF guardado exitosamente en ubicación seleccionada");
                 
             } catch (err) {
                 if (err.name !== 'AbortError') {
-                    console.warn("Error al usar File System Access API, usando método alternativo:", err);
-                    // Si hay un error que no sea cancelar el diálogo, usar el método tradicional
                     pdf.save(fileName);
-                } else {
-                    console.log("Usuario canceló la operación de guardado");
                 }
             }
         } else {
-            // Para navegadores que no soportan File System Access API
-            console.log("Navegador no soporta File System Access API, usando método tradicional");
             pdf.save(fileName);
         }
         
@@ -877,7 +781,6 @@ async function generatePDF() {
         alert('Ocurrió un error al generar el PDF: ' + error.message);
         return false;
     } finally {
-        // Ocultar el indicador de carga y habilitar el botón nuevamente
         loadingIndicator.style.display = 'none';
         pdfButton.disabled = false;
     }
@@ -1416,6 +1319,544 @@ async function generatePDF() {
             </div>
         </div>
 
+        <!-- NUEVA PLANTILLA: Análisis de Heces Seriado -->
+        <div class="container" id="template3" style="display: none;">
+            <div class="header">
+                <img src="img/empresa.jpg" alt="Logo de la Empresa" class="small-image">
+                <h1>Laboratorio Clínico Veterinario</h1>
+            </div>
+            <h3 class="subheader">ANÁLISIS HECES SERIADO</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">DATOS DE LA MASCOTA</th>
+                        <th colspan="2">DATOS DEL PROPIETARIO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nombre</td>
+                        <td><input type="text" id="mascotaNombre3"></td>
+                        <td>Nombre</td>
+                        <td><input type="text" id="propietarioNombre3"></td>
+                    </tr>
+                    <tr>
+                        <td>Raza</td>
+                        <td><input type="text" id="mascotaRaza3" list="razas3"></td>
+                        <datalist id="razas3"></datalist>
+                        <td>Cédula</td>
+                        <td><input type="text" id="propietarioCedula3"></td>
+                    </tr>
+                    <tr>
+                        <td>Sexo</td>
+                        <td><input type="text" id="sexoEnPlantilla3"></td>
+                        <td>Teléfono</td>
+                        <td><input type="text" id="propietarioTelefono3"></td>
+                    </tr>
+                    <tr>
+                        <td>Especie</td>
+                        <td><input type="text" id="especieEnPlantilla3"></td>
+                        <td>Email</td>
+                        <td><input type="text" id="propietarioEmail3"></td>
+                    </tr>
+                    <tr>
+                        <td>Edad</td>
+                        <td><input type="text" id="mascotaEdad3" list="edades"></td>
+                        <td>Médico</td>
+                        <td>
+                            <input type="text" id="nombreMedico3" list="medicos" oninput="verificarMedico3()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Peso</td>
+                        <td><input type="text" id="mascotaPeso3" list="pesos"></td>
+                        <td>Fecha</td>
+                        <td><input type="date" id="propietarioFecha3" class="date-input"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Muestra 1 -->
+            <div id="muestra1" class="muestra-container">
+                <h3 class="titulos">MUESTRA 1: Examen Directo</h3>
+                
+                <h4>EXAMEN MACROSCÓPICO</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PARÁMETRO</th>
+                            <th>RESULTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Color</td>
+                            <td><input type="text" id="colorMacroscopico3_1"></td>
+                        </tr>
+                        <tr>
+                            <td>Consistencia</td>
+                            <td>
+                                <input type="text" id="consistenciaMacroscopico3_1" list="bristolOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Muco</td>
+                            <td>
+                                <input type="text" id="mucoMacroscopico3_1" list="mucoOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sangre visible</td>
+                            <td>
+                                <input type="text" id="sangreVisibleMacroscopico3_1" list="sangreVisibleOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sangre oculta</td>
+                            <td>
+                                <input type="text" id="sangreOcultaMacroscopico3_1" list="sangreOcultaOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Residuos</td>
+                            <td><input type="text" id="residuosMacroscopico3_1"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>EXAMEN MICROSCÓPICO</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PARÁMETRO</th>
+                            <th>RESULTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Huevecillos</td>
+                            <td>
+                                <input type="text" id="huevecillosMicroscopico3_1" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Quistes</td>
+                            <td>
+                                <input type="text" id="quistesMicroscopico3_1" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ooquistes</td>
+                            <td>
+                                <input type="text" id="ooquistesMicroscopico3_1" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Levaduras</td>
+                            <td>
+                                <input type="text" id="levadurasMicroscopico3_1" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Eritrocitos</td>
+                            <td>
+                                <input type="text" id="eritrocitosMicroscopico3_1" onblur="agregarSufijo400x(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Leucocitos</td>
+                            <td>
+                                <input type="text" id="leucocitosMicroscopico3_1" onblur="agregarSufijo400x(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Microbiota intestinal</td>
+                            <td>
+                                <input type="text" id="microbiotaMicroscopico3_1" list="microbiotaOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Morfología bacteriana</td>
+                            <td>
+                                <div class="morfologia-container">
+                                    <input type="text" id="morfologiaMicroscopico3_1" readonly onclick="toggleMorfologiaOptions3('1')">
+                                    <div id="morfologiaDropdown3_1" class="morfologia-dropdown" style="display: none;">
+                                        <div><input type="checkbox" id="morfo-cocos3_1" onchange="updateMorfologia3('1')"> <label for="morfo-cocos3_1">Cocos</label></div>
+                                        <div><input type="checkbox" id="morfo-bacilos3_1" onchange="updateMorfologia3('1')"> <label for="morfo-bacilos3_1">Bacilos</label></div>
+                                        <div><input type="checkbox" id="morfo-diplococos3_1" onchange="updateMorfologia3('1')"> <label for="morfo-diplococos3_1">Diplococos</label></div>
+                                        <div><input type="checkbox" id="morfo-diplobacilos3_1" onchange="updateMorfologia3('1')"> <label for="morfo-diplobacilos3_1">Diplobacilos</label></div>
+                                        <div><input type="checkbox" id="morfo-estreptococos3_1" onchange="updateMorfologia3('1')"> <label for="morfo-estreptococos3_1">Estreptococos</label></div>
+                                        <div><input type="checkbox" id="morfo-estreptobacilos3_1" onchange="updateMorfologia3('1')"> <label for="morfo-estreptobacilos3_1">Estreptobacilos</label></div>
+                                        <div><input type="checkbox" id="morfo-espiroquetas3_1" onchange="updateMorfologia3('1')"> <label for="morfo-espiroquetas3_1">Espiroquetas</label></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fibras vegetales</td>
+                            <td>
+                                <input type="text" id="fibrasVegetalesMicroscopico3_1" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fibras musculares</td>
+                            <td>
+                                <input type="text" id="fibrasMuscularesMicroscopico3_1" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hallazgos</td>
+                            <td>
+                                <input type="text" id="hallazgosMicroscopico3_1" value="No se observa">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>PRUEBAS ADICIONALES</h4>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Tinción Gram:</td>
+                            <td>
+                                <input type="text" id="tincionGram3_1" list="opcionesGram">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Antígeno Giardia:</td>
+                            <td>
+                                <input type="text" id="antigenoGiardia3_1" list="opcionesGiardia">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Antígeno Cryptosporidium:</td>
+                            <td>
+                                <input type="text" id="antigenoCrypto3_1" list="opcionesCrypto">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Muestra 2 -->
+            <div id="muestra2" class="muestra-container page-break">
+                <h3 class="titulos">MUESTRA 2: Examen Directo</h3>
+                
+                <h4>EXAMEN MACROSCÓPICO</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PARÁMETRO</th>
+                            <th>RESULTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Color</td>
+                            <td><input type="text" id="colorMacroscopico3_2" value="Café"></td>
+                        </tr>
+                        <tr>
+                            <td>Consistencia</td>
+                            <td>
+                                <input type="text" id="consistenciaMacroscopico3_2" value=" Bristol" list="bristolOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Muco</td>
+                            <td>
+                                <input type="text" id="mucoMacroscopico3_2" list="mucoOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sangre visible</td>
+                            <td>
+                                <input type="text" id="sangreVisibleMacroscopico3_2" list="sangreVisibleOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sangre oculta</td>
+                            <td>
+                                <input type="text" id="sangreOcultaMacroscopico3_2" list="sangreOcultaOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Residuos</td>
+                            <td><input type="text" id="residuosMacroscopico3_2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>EXAMEN MICROSCÓPICO</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PARÁMETRO</th>
+                            <th>RESULTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Huevecillos</td>
+                            <td>
+                                <input type="text" id="huevecillosMicroscopico3_2" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Quistes</td>
+                            <td>
+                                <input type="text" id="quistesMicroscopico3_2" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ooquistes</td>
+                            <td>
+                                <input type="text" id="ooquistesMicroscopico3_2" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Levaduras</td>
+                            <td>
+                                <input type="text" id="levadurasMicroscopico3_2" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Eritrocitos</td>
+                            <td>
+                                <input type="text" id="eritrocitosMicroscopico3_2" onblur="agregarSufijo400x(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Leucocitos</td>
+                            <td>
+                                <input type="text" id="leucocitosMicroscopico3_2" onblur="agregarSufijo400x(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Microbiota intestinal</td>
+                            <td>
+                                <input type="text" id="microbiotaMicroscopico3_2" list="microbiotaOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Morfología bacteriana</td>
+                            <td>
+                                <input type="text" id="morfologiaMicroscopico3_2" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fibras vegetales</td>
+                            <td>
+                                <input type="text" id="fibrasVegetalesMicroscopico3_2" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fibras musculares</td>
+                            <td>
+                                <input type="text" id="fibrasMuscularesMicroscopico3_2" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hallazgos</td>
+                            <td>
+                                <input type="text" id="hallazgosMicroscopico3_2">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>PRUEBAS ADICIONALES</h4>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Tinción Gram:</td>
+                            <td>
+                                <input type="text" id="tincionGram3_2" list="opcionesGram">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Antígeno Giardia:</td>
+                            <td>
+                                <input type="text" id="antigenoGiardia3_2" list="opcionesGiardia">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Antígeno Cryptosporidium:</td>
+                            <td>
+                                <input type="text" id="antigenoCrypto3_2" list="opcionesCrypto">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Muestra 3 -->
+            <div id="muestra3" class="muestra-container page-break">
+                <h3 class="titulos">MUESTRA 3: Examen Directo</h3>
+                
+                <h4>EXAMEN MACROSCÓPICO</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PARÁMETRO</th>
+                            <th>RESULTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Color</td>
+                            <td><input type="text" id="colorMacroscopico3_3"></td>
+                        </tr>
+                        <tr>
+                            <td>Consistencia</td>
+                            <td>
+                                <input type="text" id="consistenciaMacroscopico3_3" value=" Bristol" list="bristolOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Muco</td>
+                            <td>
+                                <input type="text" id="mucoMacroscopico3_3" list="mucoOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sangre visible</td>
+                            <td>
+                                <input type="text" id="sangreVisibleMacroscopico3_3" list="sangreVisibleOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sangre oculta</td>
+                            <td>
+                                <input type="text" id="sangreOcultaMacroscopico3_3" list="sangreOcultaOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Residuos</td>
+                            <td><input type="text" id="residuosMacroscopico3_3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>EXAMEN MICROSCÓPICO</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PARÁMETRO</th>
+                            <th>RESULTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Huevecillos</td>
+                            <td>
+                                <input type="text" id="huevecillosMicroscopico3_3" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Quistes</td>
+                            <td>
+                                <input type="text" id="quistesMicroscopico3_3" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ooquistes</td>
+                            <td>
+                                <input type="text" id="ooquistesMicroscopico3_3" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Levaduras</td>
+                            <td>
+                                <input type="text" id="levadurasMicroscopico3_3" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Eritrocitos</td>
+                            <td>
+                                <input type="text" id="eritrocitosMicroscopico3_3" onblur="agregarSufijo400x(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Leucocitos</td>
+                            <td>
+                                <input type="text" id="leucocitosMicroscopico3_3" onblur="agregarSufijo400x(this)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Microbiota intestinal</td>
+                            <td>
+                                <input type="text" id="microbiotaMicroscopico3_3" list="microbiotaOptions">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Morfología bacteriana</td>
+                            <td>
+                                <input type="text" id="morfologiaMicroscopico3_3" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fibras vegetales</td>
+                            <td>
+                                <input type="text" id="fibrasVegetalesMicroscopico3_3" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fibras musculares</td>
+                            <td>
+                                <input type="text" id="fibrasMuscularesMicroscopico3_3" value="No se observa">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hallazgos</td>
+                            <td>
+                                <input type="text" id="hallazgosMicroscopico3_3">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>PRUEBAS ADICIONALES</h4>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Tinción Gram:</td>
+                            <td>
+                                <input type="text" id="tincionGram3_3" list="opcionesGram">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Antígeno Giardia:</td>
+                            <td>
+                                <input type="text" id="antigenoGiardia3_3" list="opcionesGiardia">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Antígeno Cryptosporidium:</td>
+                            <td>
+                                <input type="text" id="antigenoCrypto3_3" list="opcionesCrypto">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tecnicas-footer">
+                    <h4>Técnicas Utilizadas:</h4>
+                    <div class="tecnicas-list">
+                        <div>✓ Flotación Sulfato de Zinc</div>
+                        <div>✓ Tinción Gram</div>
+                        <div>✓ Prueba de Guayaco</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p id="mensajeMedico3" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
+                <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
+                <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>
+                <p>Correo: laboratorio@vetsanmartin.com</p>
+            </div>
+        </div>
+        
         <div class="controls">
             <button id="pdfButton" onclick="generatePDF()">Generar PDF</button>
             <button id="menuButton" onclick="window.location.href='index.html'">Volver al Menú</button>
@@ -1424,40 +1865,48 @@ async function generatePDF() {
                 <span>Generando PDF...</span>
             </div>
         </div>
-        <script>
-            function agregarSufijoCampo(input) {
-                // Obtener el valor actual
-                let valor = input.value.trim();
-                
-                // Si está vacío, no hacer nada
-                if (!valor) return;
-                
-                // Para todos los campos, simplemente verificar si ya tiene el sufijo
-                if (!valor.includes("por campo de 40x")) {
-                    // Añadir el sufijo sin importar si tiene o no el símbolo "<"
-                    input.value = valor + " por campo de 40x";
-                }
+        
+        <!-- Agregar CSS para el nuevo template con formato consistente -->
+        <style>
+            .muestra-container {
+                margin-bottom: 30px;
+                max-width: 100%;
             }
-        </script>
-        <script>
-            // Asegurar que el texto de técnicas utilizadas en template2 tenga el formato correcto
-            document.addEventListener('DOMContentLoaded', function() {
-                // Establecer el valor correcto para el campo de técnicas utilizadas en la plantilla simple
-                const tecnicasUsadas2 = document.getElementById('tecnicasUsadas2');
-                if (tecnicasUsadas2) {
-                    tecnicasUsadas2.value = "Flot (S.Zinc, Sheater, Greenflix) Directo (Lugol, Salina)";
-                }
-                
-                // Modificar la función de sincronización para que no sobrescriba este valor específico
-                const sincOriginal = sincronizarDatosHaciaSimple;
-                sincronizarDatosHaciaSimple = function() {
-                    sincOriginal();
-                    // Restablecer el valor correcto después de la sincronización
-                    document.getElementById('tecnicasUsadas2').value = "Flot (S.Zinc, Sheater, Greenflix) Directo (Lugol, Salina)";
-                };
-            });
-        </script>
+            .page-break {
+                page-break-before: always;
+            }
+            .tecnicas-footer {
+                margin-top: 20px;
+                border-top: 1px solid #ccc;
+                padding-top: 10px;
+            }
+            .tecnicas-list {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                gap: 5px;
+            }
+            #template3 table {
+                margin-bottom: 15px;
+                width: 100%;
+                border-collapse: collapse;
+            }
+            #template3 table th, #template3 table td {
+                padding: 6px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
+            #template3 input[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 5px;
+            }
+            #template3 h4 {
+                margin-top: 15px;
+                margin-bottom: 8px;
+                font-weight: 600;
+                color: #333;
+            }
+        </style>
     </body>
 </body>
 </html>
-
