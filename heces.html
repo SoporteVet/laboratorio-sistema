@@ -28,6 +28,14 @@
                 <option value="Lagomorfo">Lagomorfo</option>
                 <option value="Cuilo">Cuilo</option>
             </select>
+            <label for="edadSelector">Selecciona el rango de edad:</label>
+            <select id="edadSelector" onchange="actualizarValoresReferencia2()">
+                <option value="Seleccionar" selected>-- Seleccionar --</option>
+                <option value="De 1 año a 12 años">De 1 año a 12 años</option>
+                <option value="De 6 meses a 1 año">De 6 meses a 1 año</option>
+                <option value="De 3 meses a 6 meses">De 3 meses a 6 meses</option>
+                <option value="Todas las edades">Todas las edades</option>
+            </select>
             
             <!-- NUEVO: Selector de plantilla -->
             <label for="plantillaSelector">Selecciona la plantilla:</label>
@@ -103,7 +111,6 @@
                             <option value="N.A">
                             <option value="Dr. Randall Azofeifa">
                             <option value="Dr. Luis Coto">
-                            <option value="Dr. Gustavo González">
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
@@ -131,26 +138,26 @@
                             }
                             function verificarMedico() {
                                 // Para plantilla 1
-                                const medico1 = document.getElementById('nombreMedico')?.value;
+                                const medico1 = document.getElementById('nombreMedico').value;
                                 const mensaje1 = document.getElementById('mensajeMedico2');
-                                if (mensaje1) {
-                                    if (medico1 && medico1 !== 'N.A') {
-                                        mensaje1.style.display = 'block';
-                                    } else {
-                                        mensaje1.style.display = 'none';
-                                    }
+                                
+                                if (medico1 === 'N.A' || medico1 === '') {
+                                    if (mensaje1) mensaje1.style.display = 'none';
+                                } else {
+                                    if (mensaje1) mensaje1.style.display = 'block';
                                 }
+                                
                                 // Para plantilla 2
-                                const medico2 = document.getElementById('nombreMedico2')?.value;
+                                const medico2 = document.getElementById('nombreMedico2').value;
                                 const mensaje2 = document.getElementById('mensajeMedico');
-                                if (mensaje2) {
-                                    if (medico2 && medico2 !== 'N.A') {
-                                        mensaje2.style.display = 'block';
-                                    } else {
-                                        mensaje2.style.display = 'none';
-                                    }
+                                
+                                if (medico2 === 'N.A' || medico2 === '') {
+                                    if (mensaje2) mensaje2.style.display = 'none';
+                                } else {
+                                    if (mensaje2) mensaje2.style.display = 'block';
                                 }
                             }
+                            
 
             function moverFocoConFlechas(event, derechaId, izquierdaId, arribaId, abajoId) {
                     switch (event.key) {
@@ -187,12 +194,7 @@
             <option value="2,0 kg">2,0 kg</option><option value="2,1 kg">2,1 kg</option><option value="2,2 kg">2,2 kg</option><option value="2,3 kg">2,3 kg</option><option value="2,4 kg">2,4 kg</option>
             <option value="2,5 kg">2,5 kg</option><option value="2,6 kg">2,6 kg</option><option value="2,7 kg">2,7 kg</option><option value="2,8 kg">2,8 kg</option><option value="2,9 kg">2,9 kg</option>
             <option value="3,0 kg">3,0 kg</option><option value="3,1 kg">3,1 kg</option><option value="3,2 kg">3,2 kg</option><option value="3,3 kg">3,3 kg</option><option value="3,4 kg">3,4 kg</option>
-            <option value="3,5 kg">3,5 kg</option><option value="3,6 kg">3,6 kg</option><option value="3,7 kg">3,7 kg</option><option value="3,8 kg">3,8 kg</option><option value="3,9 kg">3,9 kg</option>
-            <option value="4,0 kg">4,0 kg</option><option value="4,1 kg">4,1 kg</option><option value="4,2 kg">4,2 kg</option><option value="4,3 kg">4,3 kg</option><option value="4,4 kg">4,4 kg</option>
-            <option value="4,5 kg">4,5 kg</option><option value="4,6 kg">4,6 kg</option><option value="4,7 kg">4,7 kg</option><option value="4,8 kg">4,8 kg</option><option value="4,9 kg">4,9 kg</option>
-            <option value="5,0 kg">5,0 kg</option><option value="5,1 kg">5,1 kg</option><option value="5,2 kg">5,2 kg</option><option value="5,3 kg">5,3 kg</option><option value="5,4 kg">5,4 kg</option>
-            <option value="5,5 kg">5,5 kg</option><option value="5,6 kg">5,6 kg</option><option value="5,7 kg">5,7 kg</option><option value="5,8 kg">5,8 kg</option><option value="5,9 kg">5,9 kg</option>
-            <option value="6,0 kg">6,0 kg</option><option value="6,1 kg">6,1 kg</option><option value="6,2 kg">6,2 kg</option><option value="6,3 kg">6,3 kg</option><option value="6,4 kg">6,4 kg</option>
+            <option value="3,5 kg">3,5 kg</option><option value="3,
             <option value="6,5 kg">6,5 kg</option><option value="6,6 kg">6,6 kg</option><option value="6,7 kg">6,7 kg</option><option value="6,8 kg">6,8 kg</option><option value="6,9 kg">6,9 kg</option>
             <option value="7,0 kg">7,0 kg</option><option value="7,1 kg">7,1 kg</option><option value="7,2 kg">7,2 kg</option><option value="7,3 kg">7,3 kg</option><option value="7,4 kg">7,4 kg</option>
             <option value="7,5 kg">7,5 kg</option><option value="7,6 kg">7,6 kg</option><option value="7,7 kg">7,7 kg</option><option value="7,8 kg">7,8 kg</option><option value="7,9 kg">7,9 kg</option>
@@ -508,99 +510,44 @@ function resetPage2() {
     if (noGif) noGif.style.display = 'block';
 }
 
-async function generatePDF() {
+ async function generatePDF() {
     const loadingIndicator = document.getElementById('loadingPdf');
     const pdfButton = document.getElementById('pdfButton');
+
     loadingIndicator.style.display = 'flex';
     pdfButton.disabled = true;
+    // hide file upload controls prior to capture
     document.querySelectorAll('.pdf-hide').forEach(el => el.style.display = 'none');
+
     try {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p','mm','a4');
         const imgWidth = 180;
         const plantillaSel = document.getElementById('plantillaSelector')?.value || 'template1';
         if (plantillaSel === 'template1') {
-            // Página 1
+            // Two-page PDF for complete analysis
             const page1Elem = document.getElementById('page1Content');
             const canvas1 = await html2canvas(page1Elem, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
             pdf.addImage(canvas1.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvas1.height * imgWidth / canvas1.width);
-            // Página 2
             pdf.addPage();
-            const analysisImage = document.getElementById('preview2-simple');
-            const hasAnalysisImage = analysisImage && analysisImage.parentElement.getAttribute('data-has-image') === 'true';
             const page2Elem = document.getElementById('page2Content');
-            let originalAnalysisBoxDisplay = null;
-            let originalReferenceBoxFlex = null;
-            let originalReferenceBoxMargin = null;
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox) {
-                    originalAnalysisBoxDisplay = analysisBox.style.display;
-                    analysisBox.style.display = 'none';
-                }
-                const referenceBox = page2Elem.querySelector('.image-box');
-                if (referenceBox) {
-                    originalReferenceBoxFlex = referenceBox.style.flex;
-                    originalReferenceBoxMargin = referenceBox.style.margin;
-                    referenceBox.style.flex = '1 1 100%';
-                    referenceBox.style.margin = '0 auto';
-                }
-            }
             const canvas2 = await html2canvas(page2Elem, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
             pdf.addImage(canvas2.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvas2.height * imgWidth / canvas2.width);
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox && originalAnalysisBoxDisplay !== null) {
-                    analysisBox.style.display = originalAnalysisBoxDisplay;
-                }
-                const referenceBox = page2Elem.querySelector('.image-box');
-                if (referenceBox) {
-                    referenceBox.style.flex = originalReferenceBoxFlex ?? '';
-                    referenceBox.style.margin = originalReferenceBoxMargin ?? '';
-                }
-            }
         } else {
-            // General (template2)
+            // Two-page PDF for general analysis
+            // Page 1: main content
             const pageA = document.getElementById('page2_1Content');
             const canvasA = await html2canvas(pageA, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
             pdf.addImage(canvasA.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvasA.height * imgWidth / canvasA.width);
+            // Page 2: images and footer
             pdf.addPage();
-            const analysisImage = document.getElementById('preview2');
-            const hasAnalysisImage = analysisImage && analysisImage.parentElement.getAttribute('data-has-image') === 'true';
             const pageB = document.getElementById('page2_2Content');
-            let originalAnalysisBoxDisplay = null;
-            let originalReferenceBoxFlex = null;
-            let originalReferenceBoxMargin = null;
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox) {
-                    originalAnalysisBoxDisplay = analysisBox.style.display;
-                    analysisBox.style.display = 'none';
-                }
-                const referenceBox = pageB.querySelector('.image-box');
-                if (referenceBox) {
-                    originalReferenceBoxFlex = referenceBox.style.flex;
-                    originalReferenceBoxMargin = referenceBox.style.margin;
-                    referenceBox.style.flex = '1 1 100%';
-                    referenceBox.style.margin = '0 auto';
-                }
-            }
             const canvasB = await html2canvas(pageB, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
             pdf.addImage(canvasB.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvasB.height * imgWidth / canvasB.width);
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox && originalAnalysisBoxDisplay !== null) {
-                    analysisBox.style.display = originalAnalysisBoxDisplay;
-                }
-                const referenceBox = pageB.querySelector('.image-box');
-                if (referenceBox) {
-                    referenceBox.style.flex = originalReferenceBoxFlex ?? '';
-                    referenceBox.style.margin = originalReferenceBoxMargin ?? '';
-                }
-            }
         }
-        // choose base filename by template
+         // choose base filename by template
         const baseName = plantillaSel === 'template1' ? 'Análisis de Heces Completo' : 'Análisis de Heces General';
+         // choose fields per template
         const petName = plantillaSel === 'template1' ? document.getElementById('mascotaNombre')?.value.trim() : document.getElementById('mascotaNombre2')?.value.trim();
         const ownerFull = plantillaSel === 'template1' ? document.getElementById('propietarioNombre')?.value.trim() : document.getElementById('propietarioNombre2')?.value.trim();
         const ownerParts = ownerFull.split(/\s+/);
@@ -609,9 +556,10 @@ async function generatePDF() {
         pdf.save(fileName);
 
     } catch (error) {
-        console.error('Error al generar PDF:', error);
-        alert('Ocurrió un error al generar el PDF: ' + error.message);
+        console.error('Error al generar PDF:',error);
+        alert('Ocurrió un error al generar el PDF: '+error.message);
     } finally {
+        // restore file upload controls
         document.querySelectorAll('.pdf-hide').forEach(el => el.style.display = 'block');
         loadingIndicator.style.display = 'none';
         pdfButton.disabled = false;
@@ -999,7 +947,7 @@ async function generatePDF() {
                     <tr>
                         <td>Morfología bacteriana</td>
                         <td>
-                           
+                            <div class="morfologia-container">
                                 <input type="text" id="morfologiaMicroscopico2" readonly onclick="toggleMorfologiaOptions2()">
                                 <div id="morfologiaDropdown2" class="morfologia-dropdown" style="display:none;">
                                     <div><input type="checkbox" id="morfo-cocos2" onchange="updateMorfologia2()"> <label for="morfo-cocos2">Cocos</label></div>
@@ -1019,46 +967,55 @@ async function generatePDF() {
                             <input type="text" id="levadurasMicroscopico2" list="levadurasOptions">
                         </td>
                     </tr>
-                    <tr><td>Parásitos</td><td>
-                        <input type="text" id="parasitosMicroscopico" list="parasitosOptions">
-                        <datalist id="parasitosOptions"><option value="No se observa"></datalist>
-                    </td></tr>
-                    <tr><td>Quistes</td><td>
-                        <input type="text" id="quistesMicroscopico" list="quistesOptions">
-                        <datalist id="quistesOptions"><option value="No se observa"></datalist>
-                    </td></tr>
-                    <tr><td>Ooquistes</td><td>
-                        <input type="text" id="ooquistesMicroscopico" list="ooquistesOptions">
-                        <datalist id="ooquistesOptions"><option value="No se observa"></datalist>
-                    </td></tr>
-                    <tr><td>Huevecillos</td><td>
-                        <input type="text" id="huevecillosMicroscopico" list="huevecillosOptions">
-                        <datalist id="huevecillosOptions"><option value="No se observa"></datalist>
-                    </td></tr>
-                    <tr><td>Residuos</td><td>
-                        <input type="text" id="residuosMicroscopico" list="residuosOptions">
-                        <datalist id="residuosOptions"><option value="No se observa"></datalist>
-                    </td></tr>
-                    <tr><td>Fibras musculares</td><td>
-                        <input type="text" id="fibrasMuscularesMicroscopico" list="fibrasMuscularesOptions">
-                        <datalist id="fibrasMuscularesOptions"><option value="Escaso"><option value="Moderado"><option value="Abundante"></datalist>
-                    </td></tr>
-                    <tr><td>Fibras vegetales</td><td>
-                        <input type="text" id="fibrasVegetalesMicroscopico" list="fibrasVegetalesOptions">
-                        <datalist id="fibrasVegetalesOptions"><option value="Escaso"><option value="Moderado"><option value="Abundante"></datalist>
-                    </td></tr>
-                    <tr><td>Almidón</td><td>
-                        <input type="text" id="almidonMicroscopico" list="almidonOptions">
-                        <datalist id="almidonOptions"><option value="Se observa"><option value="No se observa"></datalist>
-                    </td></tr>
-                    <tr><td>Polen</td><td>
-                        <input type="text" id="polenMicroscopico" list="polenOptions">
-<datalist id="polenOptions">
-                                <option value="Se observa">
-                                <option value="No se observa">
-                            </datalist>
-                    </td>
-</tr>
+                    <tr>
+                        <td>Parásitos</td>
+                        <td><input type="text" id="parasitosMicroscopico2"></td>
+                    </tr>
+                    <tr>
+                        <td>Quistes</td>
+                        <td><input type="text" id="quistesMicroscopico2"></td>
+                    </tr>
+                    <tr>
+                        <td>Ooquistes</td>
+                        <td><input type="text" id="ooquistesMicroscopico2"></td>
+                    </tr>
+                    <tr>
+                        <td>Huevecillos</td>
+                        <td><input type="text" id="huevecillosMicroscopico2"></td>
+                    </tr>
+                    <tr>
+                        <td>Trofozoitos</td>
+                        <td><input type="text" id="trofozoitosMicroscopico2"></td>
+                    </tr>
+                    <tr>
+                        <td>Residuos</td>
+                        <td><input type="text" id="residuosMicroscopico2"></td>
+                    </tr>
+                    <tr>
+                        <td>Fibras musculares</td>
+                        <td>
+                            <input type="text" id="fibrasMuscularesMicroscopico2" list="fibrasMuscularesOptions">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Fibras vegetales</td>
+                        <td>
+                            <input type="text" id="fibrasVegetalesMicroscopico2" list="fibrasVegetalesOptions">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Almidón</td>
+                        <td>
+                            <input type="text" id="almidonMicroscopico2" list="almidonOptions">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Polen</td>
+                        <td>
+                            <input type="text" id="polenMicroscopico2" list="polenOptions">
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Técnicas Usadas</td>
                         <td>
                             <input type="text" id="tecnicasUsadas2" value="Flotación, Tinción Lugol, Directo, Salina">
@@ -1112,96 +1069,41 @@ async function generatePDF() {
 async function generatePDF() {
     const loadingIndicator = document.getElementById('loadingPdf');
     const pdfButton = document.getElementById('pdfButton');
+
     loadingIndicator.style.display = 'flex';
     pdfButton.disabled = true;
+    // hide file upload controls prior to capture
     document.querySelectorAll('.pdf-hide').forEach(el => el.style.display = 'none');
+
     try {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p','mm','a4');
         const imgWidth = 180;
         const plantillaSel = document.getElementById('plantillaSelector')?.value || 'template1';
         if (plantillaSel === 'template1') {
-            // Página 1
+            // Two-page PDF for complete analysis
             const page1Elem = document.getElementById('page1Content');
             const canvas1 = await html2canvas(page1Elem, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
             pdf.addImage(canvas1.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvas1.height * imgWidth / canvas1.width);
-            // Página 2
             pdf.addPage();
-            const analysisImage = document.getElementById('preview2-simple');
-            const hasAnalysisImage = analysisImage && analysisImage.parentElement.getAttribute('data-has-image') === 'true';
             const page2Elem = document.getElementById('page2Content');
-            let originalAnalysisBoxDisplay = null;
-            let originalReferenceBoxFlex = null;
-            let originalReferenceBoxMargin = null;
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox) {
-                    originalAnalysisBoxDisplay = analysisBox.style.display;
-                    analysisBox.style.display = 'none';
-                }
-                const referenceBox = page2Elem.querySelector('.image-box');
-                if (referenceBox) {
-                    originalReferenceBoxFlex = referenceBox.style.flex;
-                    originalReferenceBoxMargin = referenceBox.style.margin;
-                    referenceBox.style.flex = '1 1 100%';
-                    referenceBox.style.margin = '0 auto';
-                }
-            }
             const canvas2 = await html2canvas(page2Elem, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
-pdf.addImage(canvas2.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvas2.height * imgWidth / canvas2.width);
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox && originalAnalysisBoxDisplay !== null) {
-                    analysisBox.style.display = originalAnalysisBoxDisplay;
-                }
-                const referenceBox = page2Elem.querySelector('.image-box');
-                if (referenceBox) {
-                    referenceBox.style.flex = originalReferenceBoxFlex ?? '';
-                    referenceBox.style.margin = originalReferenceBoxMargin ?? '';
-                }
-            }
+            pdf.addImage(canvas2.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvas2.height * imgWidth / canvas2.width);
         } else {
-            // General (template2)
+            // Two-page PDF for general analysis
+            // Page 1: main content
             const pageA = document.getElementById('page2_1Content');
             const canvasA = await html2canvas(pageA, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
             pdf.addImage(canvasA.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvasA.height * imgWidth / canvasA.width);
+            // Page 2: images and footer
             pdf.addPage();
-            const analysisImage = document.getElementById('preview2');
-            const hasAnalysisImage = analysisImage && analysisImage.parentElement.getAttribute('data-has-image') === 'true';
             const pageB = document.getElementById('page2_2Content');
-            let originalAnalysisBoxDisplay = null;
-            let originalReferenceBoxFlex = null;
-            let originalReferenceBoxMargin = null;
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox) {
-                    originalAnalysisBoxDisplay = analysisBox.style.display;
-                    analysisBox.style.display = 'none';
-                }
-                const referenceBox = pageB.querySelector('.image-box');
-                if (referenceBox) {
-                    originalReferenceBoxFlex = referenceBox.style.flex;
-                    originalReferenceBoxMargin = referenceBox.style.margin;
-                    referenceBox.style.flex = '1 1 100%';
-                    referenceBox.style.margin = '0 auto';
-                }
-            }
             const canvasB = await html2canvas(pageB, {scale:3, useCORS:true, backgroundColor:'#ffffff'});
             pdf.addImage(canvasB.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvasB.height * imgWidth / canvasB.width);
-            if (!hasAnalysisImage) {
-                const analysisBox = analysisImage.closest('.analysis-box');
-                if (analysisBox && originalAnalysisBoxDisplay !== null) {
-                    analysisBox.style.display = originalAnalysisBoxDisplay;
-                }
-                const referenceBox = pageB.querySelector('.image-box');
-                if (referenceBox) {
-                    referenceBox.style.flex = originalReferenceBoxFlex ?? '';
-                    referenceBox.style.margin = originalReferenceBoxMargin ?? '';
-                }
-            }
         }
-        // choose base filename by template
+         // choose base filename by template
         const baseName = plantillaSel === 'template1' ? 'Análisis de Heces Completo' : 'Análisis de Heces General';
+         // choose fields per template
         const petName = plantillaSel === 'template1' ? document.getElementById('mascotaNombre')?.value.trim() : document.getElementById('mascotaNombre2')?.value.trim();
         const ownerFull = plantillaSel === 'template1' ? document.getElementById('propietarioNombre')?.value.trim() : document.getElementById('propietarioNombre2')?.value.trim();
         const ownerParts = ownerFull.split(/\s+/);
@@ -1210,13 +1112,13 @@ pdf.addImage(canvas2.toDataURL('image/jpeg'), 'JPEG', 15, 10, imgWidth, canvas2.
         pdf.save(fileName);
 
     } catch (error) {
-        console.error('Error al generar PDF:', error);
-        alert('Ocurrió un error al generar el PDF: ' + error.message);
+        console.error('Error al generar PDF:',error);
+        alert('Ocurrió un error al generar el PDF: '+error.message);
     } finally {
+        // restore file upload controls
         document.querySelectorAll('.pdf-hide').forEach(el => el.style.display = 'block');
         loadingIndicator.style.display = 'none';
         pdfButton.disabled = false;
     }
-        }
+}
 </script>
-</html>
