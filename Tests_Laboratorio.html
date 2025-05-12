@@ -207,40 +207,43 @@
                     <tr>
                         <td colspan="2" style="background-color: #f2f2f2; font-weight: bold; text-align: left;">INMUNOLOGÍA</td>
                     </tr>
-                    <tr>
-                        <td>Anaplasma phagocytofila</td>
+                    <tr>                        <td>Anaplasma phagocytofila</td>
                         <td>
-                            <select style="width: 90%;">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="anaplasmaOptions_4dx">
+                            <datalist id="anaplasmaOptions_4dx">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                     </tr>
                     <tr>
                         <td>Borrelia burgdorferi</td>
                         <td>
-                            <select style="width: 90%;">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="borreliaOptions_4dx">
+                            <datalist id="borreliaOptions_4dx">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                     </tr>
                     <tr>
                         <td>Dirofilaria immitis</td>
                         <td>
-                            <select style="width: 90%;">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="dirofilariaOptions_4dx">
+                            <datalist id="dirofilariaOptions_4dx">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                     </tr>
                     <tr>
                         <td>Ehrlichia canis/ewingii</td>
                         <td>
-                            <select style="width: 90%;">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="ehrlichiaOptions_4dx">
+                            <datalist id="ehrlichiaOptions_4dx">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                     </tr>
                     <tr>
@@ -273,43 +276,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Dirofilaria (HW A)</td>
+                    <tr>                        <td>Dirofilaria (HW A)</td>
                         <td>
-                            <select style="width: 90%;" onchange="formatResultSign(this)">
-                                <option value="Negativo">Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="dirofilariaOptions_caniv4" onchange="formatResultSign(this)">
+                            <datalist id="dirofilariaOptions_caniv4">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td class="sign-column">-</td>
                     </tr>
                     <tr>
                         <td>Ehrilichia Canis Ab</td>
                         <td>
-                            <select style="width: 90%;" onchange="formatResultSign(this)">
-                                <option value="Negativo">Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="ehrlichiaOptions_caniv4" onchange="formatResultSign(this)">
+                            <datalist id="ehrlichiaOptions_caniv4">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td class="sign-column">-</td>
                     </tr>
                     <tr>
                         <td>Borrelia (Lyme Ab)</td>
                         <td>
-                            <select style="width: 90%;" onchange="formatResultSign(this)">
-                                <option value="Negativo">Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="borreliaOptions_caniv4" onchange="formatResultSign(this)">
+                            <datalist id="borreliaOptions_caniv4">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td class="sign-column">-</td>
                     </tr>
                     <tr>
                         <td>Anaplasma Ab</td>
                         <td>
-                            <select style="width: 90%;" onchange="formatResultSign(this)">
-                                <option value="Negativo">Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" list="anaplasmaOptions_caniv4" onchange="formatResultSign(this)">
+                            <datalist id="anaplasmaOptions_caniv4">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td class="sign-column">-</td>
                     </tr>
@@ -364,12 +370,12 @@
                     <tr>
                         <td>Interpretación</td>
                         <td colspan="2">
-                            <input type="text" id="cplResultado" onblur="actualizarInterpretacionCPL()" style="width: 40%; margin-right: 10px;" placeholder="Valor en ng/ml">
-                            <select id="cplInterpretacion" style="width: 50%;">
-                                <option value="Normal">Normal</option>
-                                <option value="Sospechoso">Sospechoso</option>
-                                <option value="Consistente con Pancreatitis">Consistente con Pancreatitis</option>
-                            </select>
+                            <input type="text" id="cplResultado" onblur="actualizarInterpretacionCPL()" style="width: 40%; margin-right: 10px;" placeholder="Valor en ng/ml">                            <input type="text" id="cplInterpretacion" style="width: 50%;" list="cplInterpretacionOptions">
+                            <datalist id="cplInterpretacionOptions">
+                                <option value="Normal">
+                                <option value="Sospechoso">
+                                <option value="Consistente con Pancreatitis">
+                            </datalist>
                         </td>
                     </tr>
                 </tbody>
@@ -427,13 +433,13 @@
                         <td>Muestra</td>
                         <td colspan="2">Hisopado</td>
                     </tr>
-                    <tr>
-                        <td>Parvovirus Canino (CPV)</td>
+                    <tr>                        <td>Parvovirus Canino (CPV)</td>
                         <td>
-                            <select style="width: 90%;" id="cpvResultado" onchange="formatResultSignCPV(this)">
-                                <option value="Negativo">Negativo</option>
-                                <option value="Positivo" selected>Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" id="cpvResultado" list="cpvResultadoOptions" onchange="formatResultSignCPV(this)">
+                            <datalist id="cpvResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td>Presencia de antígeno CPV</td>
                     </tr>
@@ -444,13 +450,13 @@
                             COI=<input type="text" id="coiCPV"  style="width: 50px; text-align: center;"> CPV
                         </td>
                     </tr>
-                    <tr>
-                        <td>Coronavirus Canino (CCV)</td>
+                    <tr>                        <td>Coronavirus Canino (CCV)</td>
                         <td>
-                            <select style="width: 90%;" id="ccvResultado" onchange="formatResultSignCCV(this)">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" id="ccvResultado" list="ccvResultadoOptions" onchange="formatResultSignCCV(this)">
+                            <datalist id="ccvResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td>Ausencia de antígeno CCV</td>
                     </tr>
@@ -514,10 +520,11 @@
                     <tr>
                         <td>Virus Distemper Canino (CDV)</td>
                         <td>
-                            <select style="width: 90%;" id="cdvResultado" onchange="formatResultSignCDV(this)">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" id="cdvResultado" list="cdvResultadoOptions" onchange="formatResultSignCDV(this)">
+                            <datalist id="cdvResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td id="cdvObservacion">Ausencia de antígeno CDV</td>
                     </tr>
@@ -534,7 +541,6 @@
                 <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
                 <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>
                 <p>Correo: laboratorio@vetsanmartin.com</p>
-            </div>
                 </div>
             </div>
         </div>
@@ -553,12 +559,14 @@
                     <tr>
                         <td>Muestra</td>
                         <td colspan="2">
-                            <select style="width: 90%;" id="distemperMuestra">
-                                <option value="Plasma">Plasma</option>
-                                <option value="Conjuntiva">Conjuntiva</option>
-                                <option value="Suero">Suero</option>
-                                <option value="Orina">Orina</option>
-                            </select>
+                            <input type="text" style="width: 90%;" id="distemperMuestra" list="distemperMuestraOptions">
+                            <datalist id="distemperMuestraOptions">
+                                <option value="Plasma"></option>
+                                <option value="Conjuntiva"></option>
+                                <option value="Hisopado">
+                                <option value="Suero">
+                                <option value="Sangre">
+                            </datalist>
                         </td>
                     </tr>
                     <tr>
@@ -568,10 +576,11 @@
                     <tr>
                         <td>Virus Distemper Canino (CDV)</td>
                         <td>
-                            <select style="width: 90%;" id="distemperResultado" onchange="actualizarDistemperSigno(this)">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" id="distemperResultado" list="distemperResultadoOptions" onchange="actualizarDistemperSigno(this)">
+                            <datalist id="distemperResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td id="distemperSigno">(-)</td>
                     </tr>
@@ -615,26 +624,38 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Matriz de Muestra</td>
-                        <td colspan="2">Sangre Entera</td>
+                        <td>Muestra</td>
+                        <td colspan="2">
+                            <input type="text" style="width: 90%;" id="ehrlichia_anaplasmaMuestra" list="ehrlichiaAnaplasmaMuestraOptions">
+                            <datalist id="ehrlichiaAnaplasmaMuestraOptions">
+                                <option value="Suero">
+                                <option value="Sangre">
+                            </datalist>
+                        </td>
                     </tr>
                     <tr>
-                        <td>E. Canis</td>
+                        <td>Control</td>
+                        <td colspan="2">Válido</td>
+                    </tr>
+                    <tr>
+                        <td>Ehrlichia Ab</td>
                         <td>
-                            <select style="width: 90%;" id="ecResultado" onchange="actualizarEcSigno(this)">
-                                <option value="Negativo">Negativo</option>
-                                <option value="Positivo" selected>Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" id="ehrlichiaResultado" list="ehrlichiaResultadoOptions" onchange="actualizarEhrlichiaSigno(this)">
+                            <datalist id="ehrlichiaResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
-                        <td id="ecSigno">(+)</td>
+                        <td id="ehrlichiaSigno">(-)</td>
                     </tr>
                     <tr>
                         <td>Anaplasma Ab</td>
                         <td>
-                            <select style="width: 90%;" id="anaplasmaResultado" onchange="actualizarAnaplasmaSigno(this)">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                            <input type="text" style="width: 90%;" id="anaplasmaResultado" list="anaplasmaResultadoOptions" onchange="actualizarAnaplasmaSigno(this)">
+                            <datalist id="anaplasmaResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td id="anaplasmaSigno">(-)</td>
                     </tr>
@@ -684,11 +705,11 @@
                 </tr>
                 <tr>
                     <td>E. Canis</td>
-                    <td>
-                        <select style="width: 90%;" id="ehrlichiaCanisResultado" onchange="actualizarEhrlichiaCanisSigno(this)">
-                            <option value="Negativo">Negativo</option>
-                            <option value="Positivo" selected>Positivo</option>
-                        </select>
+                    <td>                        <input type="text" style="width: 90%;" id="ehrlichiaCanisResultado" list="ehrlichiaCanisResultadoOptions" onchange="actualizarEhrlichiaCanisSigno(this)">
+                        <datalist id="ehrlichiaCanisResultadoOptions">
+                            <option value="Negativo">
+                            <option value="Positivo">
+                        </datalist>
                     </td>
                     <td id="ehrlichiaCanisSigno">(+)</td>
                 </tr>
@@ -811,21 +832,21 @@
                 </tr>
                 <tr>
                     <td>Giardia</td>
-                    <td>
-                        <select style="width: 90%;" id="giardiaResultado" onchange="actualizarGiardiaSigno(this)">
-                            <option value="Negativo">Negativo</option>
-                            <option value="Positivo" selected>Positivo</option>
-                        </select>
+                    <td>                        <input type="text" style="width: 90%;" id="giardiaResultado" list="giardiaResultadoOptions" onchange="actualizarGiardiaSigno(this)">
+                        <datalist id="giardiaResultadoOptions">
+                            <option value="Negativo">
+                            <option value="Positivo">
+                        </datalist>
                     </td>
                     <td id="giardiaSigno">(+)</td>
                 </tr>
                 <tr>
                     <td>Cryptosporidium</td>
-                    <td>
-                        <select style="width: 90%;" id="cryptoResultado" onchange="actualizarCryptoSigno(this)">
-                            <option value="Negativo">Negativo</option>
-                            <option value="Positivo" selected>Positivo</option>
-                        </select>
+                    <td>                        <input type="text" style="width: 90%;" id="cryptoResultado" list="cryptoResultadoOptions" onchange="actualizarCryptoSigno(this)">
+                        <datalist id="cryptoResultadoOptions">
+                            <option value="Negativo">
+                            <option value="Positivo">
+                        </datalist>
                     </td>
                     <td id="cryptoSigno">(+)</td>
                 </tr>
@@ -942,31 +963,31 @@
                 </tr>
                 <tr>
                     <td>Parvovirus Canino (CPV)</td>
-                    <td>
-                        <select style="width: 90%;" id="tripleResultadoCPV" onchange="actualizarTripleSignoCPV(this)">
-                            <option value="Negativo" selected>Negativo</option>
-                            <option value="Positivo">Positivo</option>
-                        </select>
+                    <td>                        <input type="text" style="width: 90%;" id="tripleResultadoCPV" list="tripleResultadoCPVOptions" onchange="actualizarTripleSignoCPV(this)">
+                        <datalist id="tripleResultadoCPVOptions">
+                            <option value="Negativo">
+                            <option value="Positivo">
+                        </datalist>
                     </td>
                     <td id="tripleSignoCPV">(-)</td>
                 </tr>
                 <tr>
                     <td>Giardia</td>
-                    <td>
-                        <select style="width: 90%;" id="tripleResultadoGiardia" onchange="actualizarTripleSignoGiardia(this)">
-                            <option value="Negativo" selected>Negativo</option>
-                            <option value="Positivo">Positivo</option>
-                        </select>
+                    <td>                        <input type="text" style="width: 90%;" id="tripleResultadoGiardia" list="tripleResultadoGiardiaOptions" onchange="actualizarTripleSignoGiardia(this)">
+                        <datalist id="tripleResultadoGiardiaOptions">
+                            <option value="Negativo">
+                            <option value="Positivo">
+                        </datalist>
                     </td>
                     <td id="tripleSignoGiardia">(-)</td>
                 </tr>
                 <tr>
                     <td>Coronavirus Canino (CCV)</td>
-                    <td>
-                        <select style="width: 90%;" id="tripleResultadoCCV" onchange="actualizarTripleSignoCCV(this)">
-                            <option value="Negativo" selected>Negativo</option>
-                            <option value="Positivo">Positivo</option>
-                        </select>
+                    <td>                        <input type="text" style="width: 90%;" id="tripleResultadoCCV" list="tripleResultadoCCVOptions" onchange="actualizarTripleSignoCCV(this)">
+                        <datalist id="tripleResultadoCCVOptions">
+                            <option value="Negativo">
+                            <option value="Positivo">
+                        </datalist>
                     </td>
                     <td id="tripleSignoCCV">(-)</td>
                 </tr>
@@ -1086,21 +1107,21 @@
                     </tr>
                     <tr>
                         <td>Sida Felino (FIV)</td>
-                        <td>
-                            <select style="width: 90%;" id="fivResultado" onchange="actualizarFIVSigno(this)">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                        <td>                            <input type="text" style="width: 90%;" id="fivResultado" list="fivResultadoOptions" onchange="actualizarFIVSigno(this)">
+                            <datalist id="fivResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td id="fivSigno">(-)</td>
                     </tr>
                     <tr>
                         <td>Leucemia Felina (FeLV)</td>
-                        <td>
-                            <select style="width: 90%;" id="felvResultado" onchange="actualizarFeLVSigno(this)">
-                                <option value="Negativo" selected>Negativo</option>
-                                <option value="Positivo">Positivo</option>
-                            </select>
+                        <td>                            <input type="text" style="width: 90%;" id="felvResultado" list="felvResultadoOptions" onchange="actualizarFeLVSigno(this)">
+                            <datalist id="felvResultadoOptions">
+                                <option value="Negativo">
+                                <option value="Positivo">
+                            </datalist>
                         </td>
                         <td id="felvSigno">(-)</td>
                     </tr>
@@ -1230,11 +1251,11 @@
                         </tr>
                         <tr>
                             <td>Parvovirus Canino (CPV)</td>
-                            <td>
-                                <select style="width: 90%;" id="cpvSoloResultado" onchange="actualizarCpvSoloSigno(this)">
-                                    <option value="Negativo" selected>Negativo</option>
-                                    <option value="Positivo">Positivo</option>
-                                </select>
+                            <td>                                <input type="text" style="width: 90%;" id="cpvSoloResultado" list="cpvSoloResultadoOptions" onchange="actualizarCpvSoloSigno(this)">
+                                <datalist id="cpvSoloResultadoOptions">
+                                    <option value="Negativo">
+                                    <option value="Positivo">
+                                </datalist>
                             </td>
                             <td id="cpvSoloSigno">(-)</td>
                         </tr>
@@ -1300,11 +1321,11 @@
                         </tr>
                         <tr>
                             <td>Test de Rivalta</td>
-                            <td colspan="2">
-                                <select style="width: 90%;" id="rivaltaResultado">
-                                    <option value="Negativo" selected>Negativo</option>
-                                    <option value="Positivo">Positivo</option>
-                                </select>
+                            <td colspan="2">                                <input type="text" style="width: 90%;" id="rivaltaResultado" list="rivaltaResultadoOptions">
+                                <datalist id="rivaltaResultadoOptions">
+                                    <option value="Negativo">
+                                    <option value="Positivo">
+                                </datalist>
                             </td>
                         </tr>
                         <tr>
