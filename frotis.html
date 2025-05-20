@@ -13,6 +13,7 @@
     <style>
         /* Oculta elementos durante la generación de PDF */
         .pdf-hide { display: none !important; }
+        .remove-row { background: none; border: none; color: red; cursor: pointer; font-size: 1.2em; }
     </style>
     <script>
 function toggleFrotisSection() {
@@ -310,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="container" id="frotisPage" style="display:block;">
     <table>
       <thead>
-        <tr><th colspan="6">FÓRMULA ROJA</th></tr>
+        <tr><th colspan="7">FÓRMULA ROJA</th></tr>
       </thead>
       <tbody>
         <tr>
@@ -373,14 +374,15 @@ document.addEventListener('DOMContentLoaded', function() {
             </datalist>
           </td>
         </tr>
-        <tr><th colspan="6">FÓRMULA BLANCA</th></tr>
+        <tr><th colspan="7">FÓRMULA BLANCA</th></tr>
         <tr><td>LINFOCITOS</td><td colspan="5"><input type="text" id="frotis_linfocitos"></td></tr>
         <tr><td>NEUTRÓFILOS</td><td colspan="5"><input type="text" id="frotis_neutrofilos"></td></tr>
         <tr><td>NEUTRÓFILOS EN BANDA</td><td colspan="5"><input type="text" id="frotis_banda"></td></tr>
         <tr><td>MONOCITOS</td><td colspan="5"><input type="text" id="frotis_monocitos"></td></tr>
         <tr><td>EOSINÓFILOS</td><td colspan="5"><input type="text" id="frotis_eosinofilos"></td></tr>
         <tr><td>BASÓFILOS</td><td colspan="5"><input type="text" id="frotis_basofilos"></td></tr>
-        <tr><th colspan="6">PLAQUETAS</th></tr>
+        <tr><td>nRBC</td><td colspan="5"><input type="text" id="frotis_nRBC"></td></tr>
+        <tr><th colspan="7">PLAQUETAS</th></tr>
         <tr><td>CONTEO PLAQUETARIO</td><td colspan="5"><input type="text" id="frotis_conteo"></td></tr>
         <tr>
           <td>MORFOLOGÍAS PLAQUETARIAS</td>
@@ -421,6 +423,16 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 
+<!-- Panel para eliminar parámetros -->
+<div class="parameter-selector-panel">
+    <h3>Eliminar parámetros</h3>
+    <div class="selector-container">
+        <select id="parameterSelector" class="parameter-dropdown">
+            <option value="" selected disabled>-- Seleccionar parámetro --</option>
+        </select>
+        <button onclick="eliminarParametroSeleccionado()" class="remove-param-btn">Eliminar</button>
+    </div>
+</div>
 
 <script>
 
@@ -429,13 +441,16 @@ async function generatePDF() {
     const loadingIndicator = document.getElementById('loadingPdf');
     const pdfButton = document.getElementById('pdfButton');
     const menuButton = document.getElementById('menuButton');
+    // List all delete button elements for dynamic hiding
+    const deleteBtns = Array.from(document.querySelectorAll('.remove-row'));
     // Mostrar spinner y deshabilitar botón
     loadingIndicator.classList.remove('pdf-hide');
-    loadingIndicator.style.display = 'flex';
     pdfButton.disabled = true;
     // Oculta controles para la captura
     pdfButton.classList.add('pdf-hide');
     menuButton.classList.add('pdf-hide');
+    // Oculta botones de eliminar filas para la captura de PDF
+    deleteBtns.forEach(btn => btn.classList.add('pdf-hide'));
     // --- OCULTAR SPINNER SOLO PARA LA CAPTURA ---
     await new Promise(resolve => setTimeout(resolve, 100)); // Permite que el spinner se vea antes de ocultar
     loadingIndicator.classList.add('pdf-hide');
@@ -474,6 +489,8 @@ async function generatePDF() {
         loadingIndicator.classList.remove('pdf-hide');
         loadingIndicator.style.display = 'none';
         pdfButton.disabled = false;
+        // Restaurar visibilidad de botones de eliminar filas
+        deleteBtns.forEach(btn => btn.classList.remove('pdf-hide'));
     }
 }
 
@@ -546,10 +563,45 @@ document.addEventListener('click', function(e) {
 // Autocompletar x campo de 100x en conteo plaquetario
 const cnt = document.getElementById('frotis_conteo');
 if (cnt) cnt.addEventListener('blur', () => {
-  let v = cnt.value.replace(/\s*x\s+campo\s+de\s+100x$/i,'');
+  // Quitar ' campo' agregado previamente
+  let v = cnt.value.replace(/\s*campo$/i, '');
 
-  cnt.value = v ? v + ' x campo' : '';
+  // Añadir ' campo' sin la 'x'
+  cnt.value = v ? v + ' campo' : '';
 });
+</script>
+<script>
+// --- Lógica para poblar y eliminar filas desde el panel de parámetros ---
+function cargarListaDeParametrosFrotis() {
+    const selector = document.getElementById('parameterSelector');
+    selector.innerHTML = '<option value="" selected disabled>-- Seleccionar parámetro --</option>';
+    // Buscar filas con label en la primera celda (excepto encabezados)
+    document.querySelectorAll('#frotisPage table tbody tr').forEach((tr, idx) => {
+        const firstCell = tr.querySelector('td');
+        if (firstCell && firstCell.textContent.trim() && !tr.querySelector('th')) {
+            // Asignar un id único si no tiene
+            if (!tr.id) tr.id = 'frotis-row-' + idx;
+            const opt = document.createElement('option');
+            opt.value = tr.id;
+            opt.textContent = firstCell.textContent.trim();
+            selector.appendChild(opt);
+        }
+    });
+}
+function eliminarParametroSeleccionado() {
+    const selector = document.getElementById('parameterSelector');
+    const filaId = selector.value;
+    if (!filaId) {
+        alert('Por favor, selecciona un parámetro para eliminar.');
+        return;
+    }
+    const fila = document.getElementById(filaId);
+    if (fila) {
+        fila.remove();
+        cargarListaDeParametrosFrotis();
+    }
+}
+document.addEventListener('DOMContentLoaded', cargarListaDeParametrosFrotis);
 </script>
 </body>
 </html>
