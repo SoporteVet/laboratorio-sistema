@@ -1,9 +1,10 @@
-
-
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
     background-color: #f4f4f9;
     color: #333;
     font-family: "Poppins", sans-serif;
@@ -132,13 +133,16 @@ button:active {
     .container {
         width: 210mm;
         min-height: 297mm;
-        margin: auto;
+        margin: 32px auto;
+        max-width: 900px;
         padding: 5px; /* Reducir el padding */
         position: relative;
         background-color: #fff;
-        border-radius: 5px; /* Reducir el radio del borde */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reducir la sombra */
-        display: none; /* Ocultar por defecto */
+        border-radius: 16px;
+        box-shadow: 0 2px 16px #0001;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .header {
@@ -288,7 +292,10 @@ button:hover {
     background-color: #0056b3;
 }
 .parameter-selector-panel {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 24px auto;
     padding: 15px;
     background-color: #f8f9fa;
     border-radius: 8px;
@@ -303,7 +310,9 @@ button:hover {
 
 .selector-container {
     display: flex;
-    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
 }
 
 .parameter-dropdown {
