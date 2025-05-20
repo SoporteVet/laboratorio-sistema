@@ -42,15 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <option value="Lagomorfo">Lagomorfo</option>
             <option value="Cuilo">Cuilo</option>
         </select>
-        <label for="edadSelector">Selecciona el rango de edad:</label>
-        <select id="edadSelector" onchange="actualizarValoresReferencia()">
-            <option value="Seleccionar" selected>-- Seleccionar --</option>
-            <option value="De 1 año a 12 años">De 1 año a 12 años</option>
-            <option value="De 6 meses a 1 año">De 6 meses a 1 año</option>
-            <option value="De mes y medio a 5 meses">De mes y medio a 5 meses</option>
-            <option value="Menor de mes y medio">Menor de mes y medio</option>
-            <option value="Todas las edades">Todas las edades</option>
-        </select>
+      </div>
 
 
 <div class="container" id="template1" style="display: block;">
@@ -563,45 +555,10 @@ document.addEventListener('click', function(e) {
 // Autocompletar x campo de 100x en conteo plaquetario
 const cnt = document.getElementById('frotis_conteo');
 if (cnt) cnt.addEventListener('blur', () => {
-  // Quitar ' campo' agregado previamente
-  let v = cnt.value.replace(/\s*campo$/i, '');
+  let v = cnt.value.replace(/\s*x\s+campo\s+de\s+100x$/i,'');
 
-  // Añadir ' campo' sin la 'x'
-  cnt.value = v ? v + ' campo' : '';
+  cnt.value = v ? v + ' x campo' : '';
 });
-</script>
-<script>
-// --- Lógica para poblar y eliminar filas desde el panel de parámetros ---
-function cargarListaDeParametrosFrotis() {
-    const selector = document.getElementById('parameterSelector');
-    selector.innerHTML = '<option value="" selected disabled>-- Seleccionar parámetro --</option>';
-    // Buscar filas con label en la primera celda (excepto encabezados)
-    document.querySelectorAll('#frotisPage table tbody tr').forEach((tr, idx) => {
-        const firstCell = tr.querySelector('td');
-        if (firstCell && firstCell.textContent.trim() && !tr.querySelector('th')) {
-            // Asignar un id único si no tiene
-            if (!tr.id) tr.id = 'frotis-row-' + idx;
-            const opt = document.createElement('option');
-            opt.value = tr.id;
-            opt.textContent = firstCell.textContent.trim();
-            selector.appendChild(opt);
-        }
-    });
-}
-function eliminarParametroSeleccionado() {
-    const selector = document.getElementById('parameterSelector');
-    const filaId = selector.value;
-    if (!filaId) {
-        alert('Por favor, selecciona un parámetro para eliminar.');
-        return;
-    }
-    const fila = document.getElementById(filaId);
-    if (fila) {
-        fila.remove();
-        cargarListaDeParametrosFrotis();
-    }
-}
-document.addEventListener('DOMContentLoaded', cargarListaDeParametrosFrotis);
 </script>
 </body>
 </html>
