@@ -279,20 +279,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Asegurarse de que existe el selector de especies
     const especieSelector = document.getElementById('especieSelector');
     if (especieSelector) {
-        // Si ya hay una especie seleccionada al cargar
-        if (especieSelector.value !== "Seleccionar") {
-            actualizarRazasPorEspecie();
-        }
-        
-        // Agregar un listener adicional para garantizar que se actualicen las razas
+        // Siempre actualizar las razas al cargar la página
+        actualizarRazasPorEspecie();
+        // Agregar un listener para garantizar que se actualicen las razas
         especieSelector.addEventListener('change', actualizarRazasPorEspecie);
     }
-    
     // Crear datalist si no existe
     if (!document.getElementById('razas')) {
         const datalist = document.createElement('datalist');
         datalist.id = 'razas';
         document.body.appendChild(datalist);
+    }
+    // Asegurar que el input de raza tenga el atributo list correcto
+    const campoRaza = document.getElementById('mascotaRaza');
+    if (campoRaza && campoRaza.getAttribute('list') !== 'razas') {
+        campoRaza.setAttribute('list', 'razas');
     }
 });
                 </script>
@@ -559,6 +560,65 @@ if (cnt) cnt.addEventListener('blur', () => {
 
   cnt.value = v ? v + ' x campo' : '';
 });
+</script>
+<script>
+// === Llenar el selector de parámetros para eliminar ===
+document.addEventListener('DOMContentLoaded', function() {
+    // Llenar el selector de parámetros para eliminar
+    const paramSelector = document.getElementById('parameterSelector');
+    if (paramSelector) {
+        // Limpiar opciones previas (excepto la primera)
+        while (paramSelector.options.length > 1) paramSelector.remove(1);
+        // Lista de campos del frotis (id y nombre visible)
+        const campos = [
+            {id: 'frotis_anisocitosis', label: 'Anisocitosis'},
+            {id: 'frotis_poiquilocitosis', label: 'Poiquilocitosis'},
+            {id: 'frotis_hipocromia', label: 'Hipocromía'},
+            {id: 'frotis_hemoparasitos', label: 'Hemoparásitos'},
+            {id: 'frotis_inclusiones', label: 'Inclusiones eritrocitarias'},
+            {id: 'frotis_linfocitos', label: 'Linfocitos'},
+            {id: 'frotis_neutrofilos', label: 'Neutrófilos'},
+            {id: 'frotis_banda', label: 'Neutrófilos en banda'},
+            {id: 'frotis_monocitos', label: 'Monocitos'},
+            {id: 'frotis_eosinofilos', label: 'Eosinófilos'},
+            {id: 'frotis_basofilos', label: 'Basófilos'},
+            {id: 'frotis_nRBC', label: 'nRBC'},
+            {id: 'frotis_conteo', label: 'Conteo plaquetario'},
+            {id: 'frotis_morfologias', label: 'Morfologías plaquetarias'},
+            {id: 'frotis_granulosidad', label: 'Granulosidad plaquetaria'}
+        ];
+        campos.forEach(campo => {
+            const input = document.getElementById(campo.id);
+            if (input) {
+                const option = document.createElement('option');
+                option.value = campo.id;
+                option.textContent = campo.label;
+                paramSelector.appendChild(option);
+            }
+        });
+    }
+});
+
+// === Eliminar parámetro seleccionado ===
+function eliminarParametroSeleccionado() {
+    const paramSelector = document.getElementById('parameterSelector');
+    const selectedId = paramSelector.value;
+    if (!selectedId) return;
+    // Buscar el input y su fila (tr)
+    const input = document.getElementById(selectedId);
+    if (input) {
+        let tr = input.closest('tr');
+        if (!tr) {
+            // Si el input está en un td anidado, buscar el ancestro tr
+            let parent = input.parentElement;
+            while (parent && parent.tagName !== 'TR') parent = parent.parentElement;
+            tr = parent;
+        }
+        if (tr) tr.style.display = 'none';
+    }
+    // Opcional: quitar la opción del selector
+    paramSelector.selectedIndex = 0;
+}
 </script>
 </body>
 </html>

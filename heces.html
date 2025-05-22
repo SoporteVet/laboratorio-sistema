@@ -244,7 +244,7 @@
                             break;
                     }
                 }
-                const razasCaninas = [
+    const razasCaninas = [
     "Ainu", "Airedale terrier", "Akita", "Akita Inu", "Alaskan Malamute",
     "American Black and Tan Coonhound", "American Bull Terrier", "American Pit Bull Terrier",
     "American Staffordshire terrier", "American Water Spaniel", "Apso Tibetano", "Barzoi", 
@@ -268,62 +268,54 @@ const razasFelinas = [
     "Oriental", "Persa", "Sagrado de Birmania", "Siamés", "Siberiano", 
     "Silvestre", "SRD"
 ];
-function reemplazarPuntoPorComa() {
-    // Obtener todos los campos numéricos
-    const camposNumericos = [
-        'Glucosa', 'Colesterol_total', 'amilasa', 'CK', 
-        'nitrogeno_ureico', 'urea', 'creatinina', 'bun_crea', 'fosforo', 'calcio',
-        'ALT', 'Fosfatasa_Alcalina', 'billirrubina_total', 'Albumina',
-        'proteinas_totales', 'Globulinas', 'alb/glo'
-    ];
-    
-    // Aplicar la funcionalidad a cada campo
-    camposNumericos.forEach(id => {
-        const campo = document.getElementById(id);
-        if (campo) {
-            // Usar keydown en lugar de input
-            campo.addEventListener('keydown', function(event) {
-                // Solo actuar cuando se presiona la tecla punto
-                if (event.key === '.') {
-                    event.preventDefault(); // Prevenir la acción por defecto
-                    
-                    // Obtener la posición actual del cursor
-                    const cursorPos = this.selectionStart;
-                    
-                    // Obtener el valor actual e insertar una coma en lugar del punto
-                    const valorActual = this.value;
-                    const nuevoValor = valorActual.slice(0, cursorPos) + ',' + valorActual.slice(cursorPos);
-                    
-                    // Establecer el nuevo valor
-                    this.value = nuevoValor;
-                    
-                    // Restaurar la posición del cursor justo después de la coma
-                    setTimeout(() => {
-                        this.setSelectionRange(cursorPos + 1, cursorPos + 1);
-                    }, 0);
-                }
-            });
-            
-            // Mover las actualizaciones de color y cálculos al evento blur
-            campo.addEventListener('blur', function() {
-                actualizarColor(id, 'ref' + id.toLowerCase());
-                if (id === 'Albumina' || id === 'proteinas_totales') {
-                    calculateValues();
-                }
-            });
-            
-            // Eliminar cualquier evento input que pueda interferir
-            const oldInputListeners = campo._inputListeners || [];
-            oldInputListeners.forEach(listener => {
-                campo.removeEventListener('input', listener);
-            });
-        }
-    });
+
+function actualizarRazasPorEspecie() {
+    const especie = document.getElementById('especieSelector').value;
+    let datalistRazas = document.getElementById('razas');
+    if (!datalistRazas) {
+        datalistRazas = document.createElement('datalist');
+        datalistRazas.id = 'razas';
+        document.body.appendChild(datalistRazas);
+    } else {
+        datalistRazas.innerHTML = '';
+    }
+    const campoRaza = document.getElementById('mascotaRaza');
+    if (campoRaza.value && campoRaza.value !== "SRD") {
+        campoRaza.value = '';
+    }
+    if (especie === "Canino") {
+        razasCaninas.forEach(raza => {
+            const option = document.createElement('option');
+            option.value = raza;
+            datalistRazas.appendChild(option);
+        });
+    } else if (especie === "Felino") {
+        razasFelinas.forEach(raza => {
+            const option = document.createElement('option');
+            option.value = raza;
+            datalistRazas.appendChild(option);
+        });
+    } else if (especie === "Lagomorfo" || especie === "Cuilo") {
+        const option = document.createElement('option');
+        option.value = "SRD";
+        datalistRazas.appendChild(option);
+    }
 }
 
-// Ejecutar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     reemplazarPuntoPorComa();
+    
+    // Actualizar razas al cargar y al cambiar especie
+    const especieSelector = document.getElementById('especieSelector');
+    if (especieSelector) {
+        actualizarRazasPorEspecie();
+        especieSelector.addEventListener('change', actualizarRazasPorEspecie);
+    }
+    // Asegurar que el input de raza tenga el atributo list correcto
+    const campoRaza = document.getElementById('mascotaRaza');
+    if (campoRaza && campoRaza.getAttribute('list') !== 'razas') {
+        campoRaza.setAttribute('list', 'razas');
+    }
 });
 
 function cambiarPlantilla() {
@@ -467,8 +459,8 @@ function configurarNavegacionCampos() {
 function agregarSufijoCampo(input) {
     const valor = input.value.trim();
     if (!valor) return;
-    if (!valor.includes('x campo de 40x')) {
-        input.value = valor + ' x campo de 40x';
+    if (!valor.includes('x campo de 40')) {
+        input.value = valor + ' x campo de 40';
     }
 }
 
@@ -508,8 +500,16 @@ function adjustImageLayout() {
 function previewImage(event, previewId) {
     const file = event.target.files[0];
     const preview = document.getElementById(previewId);
-    const noImageText = preview.parentElement.querySelector('[id^="noImageText"]');
-    
+    // Buscar el span de "Sin imagen" de forma robusta
+    let noImageText = null;
+    if (previewId === 'preview2') {
+        noImageText = document.getElementById('noImageText2');
+    } else if (previewId === 'preview2-simple') {
+        noImageText = document.getElementById('noImageText2-simple');
+    } else {
+        // fallback: buscar el primer span dentro del padre
+        noImageText = preview?.parentElement?.querySelector('span');
+    }
     if (file) {
         const reader = new FileReader();
         reader.onload = function() {
@@ -527,90 +527,79 @@ function previewImage(event, previewId) {
 }
 
 async function generatePDF() {
-    // Show loading indicator
     const loadingIndicator = document.getElementById('loadingPdf');
     const pdfButton = document.getElementById('pdfButton');
-    
     loadingIndicator.style.display = 'flex';
-    pdfButton.disabled = true;    try {
-        const selectedTemplate = document.getElementById('template1');
-        
-        // Get selected test type and patient info for filename
+    pdfButton.disabled = true;
+    try {
         const templateSelector = document.getElementById('plantillaSelector');
-        const testType = templateSelector.value === 'template1' ? 'Análisis Completo' : 'Análisis General';
-        const petName = document.getElementById('mascotaNombre')?.value.trim() || 
-            document.getElementById('mascotaNombre2')?.value.trim();
-        const ownerFull = templateSelector.value === 'template1' ? 
-            document.getElementById('propietarioNombre')?.value.trim() : 
-            document.getElementById('propietarioNombre2')?.value.trim();
+        const isCompleto = templateSelector && templateSelector.value === 'template1';
+        let selectedTemplate, page1Content, page2Content, petName, ownerFull;
+        let testType = isCompleto ? 'Análisis Completo' : 'Análisis General';
+        if (isCompleto) {
+            selectedTemplate = document.getElementById('template1');
+            page1Content = document.getElementById('page1Content');
+            page2Content = document.getElementById('page2Content');
+            petName = document.getElementById('mascotaNombre')?.value.trim() || '';
+            ownerFull = document.getElementById('propietarioNombre')?.value.trim() || '';
+        } else {
+            selectedTemplate = document.getElementById('template2');
+            page1Content = document.getElementById('page2_1Content');
+            page2Content = document.getElementById('page2_2Content');
+            petName = document.getElementById('mascotaNombre2')?.value.trim() || '';
+            ownerFull = document.getElementById('propietarioNombre2')?.value.trim() || '';
+        }
         const ownerParts = ownerFull.split(/\s+/);
-        const firstSurname = ownerParts.length > 1 ? ownerParts[1] : ownerParts[0];
-          // Hide elements that shouldn't be in the PDF
+        const firstSurname = ownerParts.length > 1 ? ownerParts[1] : ownerParts[0] || '';
+        // Ocultar elementos no deseados
         document.querySelectorAll('.pdf-hide').forEach(el => {
             el.style.display = 'none';
         });
-
-        // Solo en la generación del PDF, ocultar la caja de análisis si no hay imagen
+        // Ocultar caja de análisis si no hay imagen
         document.querySelectorAll('.image-container').forEach(container => {
             const analysisBox = container.querySelector('.analysis-box');
-            const preview = container.querySelector('img[id^="preview2"]');
+            const preview = analysisBox?.querySelector('img');
             if (preview && preview.style.display !== 'block') {
                 const uploadBox = analysisBox?.querySelector('.pdf-hide')?.parentElement;
                 if (uploadBox) uploadBox.style.display = 'none';
             }
         });
-
-        // First page content (hasta el examen microscópico)
-        const page1Content = document.querySelector('#page1Content');
-        const page2Content = document.querySelector('#page2Content');
-
-        // Temporarily hide second page content
+        // --- CAPTURAR PRIMERA PÁGINA ---
         if (page2Content) page2Content.style.display = 'none';
-
-        // Generate first page
-        const canvas1 = await html2canvas(selectedTemplate, {
+        if (page1Content) page1Content.style.display = 'block';
+        const canvas1 = await html2canvas(page1Content, {
             scale: 3,
             useCORS: true,
             backgroundColor: '#ffffff'
         });
-
-        const imgWidth = 170; 
-        const pageHeight = 297;
+        const imgWidth = 170;
         const imgHeight = (canvas1.height * imgWidth) / canvas1.width;
-        
-        // Initialize PDF with A4 size
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const marginLeft = (210 - imgWidth) / 2; // A4 width is 210mm
-
-        // Add first page content
+        const marginLeft = (210 - imgWidth) / 2;
         pdf.addImage(canvas1.toDataURL('image/jpeg', 1.0), 'JPEG', marginLeft, 10, imgWidth, imgHeight);
-
-        // Show second page content and hide first page for second capture
-        if (page1Content) page1Content.style.display = 'none';
-        if (page2Content) page2Content.style.display = 'block';
-
-        // Add new page
-        pdf.addPage();
-
-        // Generate second page
-        const canvas2 = await html2canvas(selectedTemplate, {
-            scale: 3,
-            useCORS: true,
-            backgroundColor: '#ffffff'
-        });
-
-        const imgHeight2 = (canvas2.height * imgWidth) / canvas2.width;
-
-        // Add second page content
-        pdf.addImage(canvas2.toDataURL('image/jpeg', 1.0), 'JPEG', marginLeft, 10, imgWidth, imgHeight2);
-
-        // Restore original display states
+        // --- CAPTURAR SEGUNDA PÁGINA SI EXISTE ---
+        if (page2Content) {
+            page1Content.style.display = 'none';
+            page2Content.style.display = 'block';
+            pdf.addPage();
+            const canvas2 = await html2canvas(page2Content, {
+                scale: 3,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            });
+            const imgHeight2 = (canvas2.height * imgWidth) / canvas2.width;
+            pdf.addImage(canvas2.toDataURL('image/jpeg', 1.0), 'JPEG', marginLeft, 10, imgWidth, imgHeight2);
+        }
+        // Restaurar visibilidad
         if (page1Content) page1Content.style.display = 'block';
         if (page2Content) page2Content.style.display = 'block';
-
+        document.querySelectorAll('.pdf-hide').forEach(el => {
+            el.style.display = 'block';
+        });
+        document.querySelectorAll('.analysis-box').forEach(box => {
+            box.style.display = 'block';
+        });
         const fileName = `${testType} de Heces ${petName} ${firstSurname}.pdf`;
-
-        // Try to use File System Access API for saving
         if ('showSaveFilePicker' in window) {
             try {
                 const handle = await window.showSaveFilePicker({
@@ -623,35 +612,27 @@ async function generatePDF() {
                 const writable = await handle.createWritable();
                 await writable.write(pdf.output('blob'));
                 await writable.close();
-                console.log('Archivo guardado con éxito usando File System Access API');
             } catch (err) {
-                console.log('Error al usar File System Access API, usando método tradicional', err);
                 pdf.save(fileName);
             }
         } else {
-            // Browser doesn't support File System Access API, use traditional method
             pdf.save(fileName);
         }
-
     } catch (error) {
         console.error('Error al generar PDF:', error);
-        alert('Ocurrió un error al generar el PDF: ' + error.message);    } finally {
-        // Show all content again
-        const page1Content = document.querySelector('#page1Content');
-        const page2Content = document.querySelector('#page2Content');
+        alert('Ocurrió un error al generar el PDF: ' + error.message);
+    } finally {
+        // Restaurar visibilidad
+        const page1Content = document.getElementById('page1Content') || document.getElementById('page2_1Content');
+        const page2Content = document.getElementById('page2Content') || document.getElementById('page2_2Content');
         if (page1Content) page1Content.style.display = 'block';
         if (page2Content) page2Content.style.display = 'block';
-
-        // Show hidden elements again
         document.querySelectorAll('.pdf-hide').forEach(el => {
             el.style.display = 'block';
         });
-
-        // Restore analysis boxes visibility
         document.querySelectorAll('.analysis-box').forEach(box => {
             box.style.display = 'block';
         });
-
         loadingIndicator.style.display = 'none';
         pdfButton.disabled = false;
     }
@@ -1120,34 +1101,28 @@ document.addEventListener('DOMContentLoaded', adjustImageLayout);
                     </tr>
                 </tbody>
             </table>
-            </div> <!-- end page2_1Content -->
-            <!-- Second page: images and footer -->
-            <div id="page2_2Content">            <div class="image-container" style="display: flex; justify-content: center; margin: 20px 0;">
+            <!-- Imagen de análisis para plantilla simple -->
+            <div class="image-container" style="display: flex; justify-content: center; margin: 20px 0;">
                 <div class="image-box reference-box" style="text-align: center; margin: 0 10px; max-width: 70%;">
                     <h4>Imagen de Referencia</h4>
                     <img src="img/heces.png" alt="Escala de Bristol" style="max-width: 100%; max-height: 200px; border: 1px solid #ddd; padding: 5px;">
                 </div>
                 <div class="image-box analysis-box" style="text-align: center; margin: 0 10px; max-width: 50%;">
                     <h4>Imagen del Análisis</h4>
-                    <div style="margin-bottom: 10px;">
-                        <label for="image2">Seleccionar imagen:</label>
-                        <input type="file" id="image2" accept="image/*" onchange="previewImage(event, 'preview2')" style="display: inline-block;">
+                    <div class="pdf-hide" style="margin-bottom: 10px;">
+                        <label for="upload2-simple">Seleccionar imagen:</label>
+                        <input type="file" id="upload2-simple" accept="image/*" onchange="previewImage(event, 'preview2-simple')" style="display: inline-block;">
                     </div>
                     <div style="margin-top: 10px; min-height: 200px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center;">
-                        <img id="preview2" alt="Imagen del Análisis" style="max-width: 100%; max-height: 200px; display: none;">
-                        <span id="noImageText2" class="pdf-hide">Sin imagen</span>
+                        <img id="preview2-simple" alt="Imagen del Análisis" style="max-width: 100%; max-height: 200px; display: none;">
+                        <span id="noImageText2-simple" class="pdf-hide">Sin imagen</span>
                     </div>
                 </div>
             </div>
-             </div>
-            <div class="footer">
-                <p id="mensajeMedico" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
-                <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
-                <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>
-                <p>Correo: laboratorio@vetsanmartin.com</p>
+            </div> 
             </div>
-            </div> <!-- end page2_2Content -->
-        </div>
+             </div>
+    
 
         <div class="controls">
             <button id="pdfButton" onclick="generatePDF()">Generar PDF</button>
