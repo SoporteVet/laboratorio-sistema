@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Plantillas</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=League+Spartan:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <body>
+        <div class="controls">
+            <label for="sexoSelector">Selecciona el sexo:</label>
+            <select id="sexoSelector" onchange="actualizarSexoEnPlantilla(),actualizarValoresReferencia2()">
+                <option value="Seleccionar" selected>-- Seleccionar --</option>
+                <option value="Macho">Macho</option>
+                <option value="Hembra">Hembra</option>
+            </select>
+            <label for="especieSelector">Selecciona la especie:</label>
+            <select id="especieSelector" onchange="actualizarEspecieEnPlantilla(),actualizarValoresReferencia2()">
+                <option value="Seleccionar" selected>-- Seleccionar --</option>
+                <option value="Canino">Canino</option>
+                <option value="Felino">Felino</option>
+                <option value="Lagomorfo">Lagomorfo</option>
+                <option value="Cuilo">Cuilo</option>
+            </select>
+          <label for="plantillaSelector">Selecciona la plantilla:</label>
+          <select id="plantillaUrianalisisSelect" onchange="mostrarPlantillaUrianalisis()">
+          <option value="11">11 parámetros</option>
+          <option value="15">15 parámetros</option>
+        </select>
+</div>
+        </div>
+        <div class="container" id="template1" style="display: block;">
+        <div class="header">
+            <img src="img/empresa.jpg" alt="Logo de la Empresa" class="small-image">
+            <h1>Laboratorio Clínico Veterinario</h1>
+        </div>
+        <h3 class="subheader">URIANÁLISIS</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">DATOS DE LA MASCOTA</th>
+                        <th colspan="2">DATOS DEL PROPIETARIO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nombre</td>
+                        <td><input type="text" id="mascotaNombre" onkeydown="moverFocoConFlechas(event, 'propietarioNombre', 'propietarioNombre', 'mascotaNombre', 'mascotaRaza')"></td>
+                        <td>Nombre</td>
+                        <td><input type="text" id="propietarioNombre"  onkeydown="moverFocoConFlechas(event, 'propietarioCedula', 'mascotaNombre', 'mascotaNombre', 'propietarioCedula')"></td>
+                    </tr>
+                    <tr>
+                        <td>Raza</td>
+                        <td><input type="text" id="mascotaRaza" list="razas"  onkeydown="moverFocoConFlechas(event, 'propietarioCedula', 'mascotaNombre', 'mascotaNombre', 'mascotaSexo')"></td>
+                        <datalist id="razas">
+
+                        </datalist>
+                        <td>Cédula</td>
+                        <td><input type="text" id="propietarioCedula"  onkeydown="moverFocoConFlechas(event, 'propietarioTelefono', 'mascotaRaza', 'propietarioNombre', 'propietarioTelefono')"></td>
+                    </tr>
+                    <tr>
+                        <td>Sexo</td>
+                        <td><input type="text" id="sexoEnPlantilla"></td>
+                        <td>Teléfono</td>
+                        <td><input type="text" id="propietarioTelefono" onkeydown="moverFocoConFlechas(event, 'propietarioCedula', 'mascotaSexo', 'propietarioCedula', 'propietarioEmail')"></td>
+                    </tr>
+                    <tr>
+                        <td>Especie</td>
+                        <td><input type="text" id="especieEnPlantilla"></td>
+                        <td>Email</td>
+                        <td><input type="text" id="propietarioEmail"  onkeydown="moverFocoConFlechas(event, 'mascotaEspecie', 'mascotaEspecie', 'propietarioTelefono', 'nombreMedico')"></td>
+                    </tr>
+                    <tr>
+                        <td>Edad</td>
+                        <td><input type="text" id="mascotaEdad" list="edades"  onkeydown="moverFocoConFlechas(event, 'nombreMedico', 'mascotaEspecie', 'mascotaEspecie', 'mascotaPeso')"></td>
+    
+                        <datalist id="edades">
+                        <option value="1 mes"><option value="2 meses"><option value="3 meses"><option value="4 meses">
+                        <option value="5 meses"><option value="6 meses"><option value="7 meses"><option value="8 meses"><option value="9 meses">
+                        <option value="10 meses"><option value="11 meses"><option value="12 meses">
+                        <option value="1 año"><option value="2 años"><option value="3 años"><option value="4 años">
+                        <option value="5 años"><option value="6 años"><option value="7 años"><option value="8 años"><option value="9 años">
+                        <option value="10 años"><option value="11 años"><option value="12 años"><option value="13 años"></option><option value="14 años"></option>
+                        <option value="15 años"><option value="16 años"><option value="17 años"><option value="18 años"></option>
+                        <option value="19 años"><option value="20 años"></option>    
+                    </datalist>
+                        <td>Médico</td>
+                        <td>
+                            <input type="text" id="nombreMedico" list="medicos" 
+                                onkeydown="moverFocoConFlechas(event, 'propietarioFecha', 'mascotaEdad', 'propietarioEmail', 'propietarioFecha')" 
+                                oninput="verificarMedico()">
+                        </td>
+                        <datalist id="medicos">
+                            <option value="N.A">
+                            <option value="Dr. Randall Azofeifa">
+                            <option value="Dr. Luis Coto">
+                            <option value="Dr. Gustavo Gónzalez">
+                            <option value="Dra. Daniela Sancho">
+                            <option value="Dra. Sofia Carrillo">
+                            <option value="Dra. Franciny Nuñez">
+                            <option value="Dra. Lourdes Chacón">
+                            <option value="Dra. Alejandra León">
+                            <option value="Dra. Karla Quesada">
+                            <option value="Dra. Kharen Moreno">
+                            <option value="Dra. Karina Madrigal">
+                            <option value="Dra. Natalia Alvarado">
+                        </datalist>
+                    </tr>
+                    <tr>
+                        <script>    
+                            function actualizarSexoEnPlantilla() {
+                                const sexo = document.getElementById('sexoSelector').value;
+                                document.getElementById('sexoEnPlantilla').value = sexo.charAt(0).toUpperCase() + sexo.slice(1);
+                            }
+                            function actualizarEspecieEnPlantilla() {
+                                const especie = document.getElementById('especieSelector').value;
+                                document.getElementById('especieEnPlantilla').value = especie;
+                            }
+                            function verificarMedico() {
+                                const medico = document.getElementById('nombreMedico').value;
+                                const mensaje = document.getElementById('mensajeMedico');
+                                if (medico === 'N.A' || medico === '') {
+                                    mensaje.style.display = 'none';
+                                } else {
+                                    mensaje.style.display = 'block';
+                                }
+                            }
+                            
+                            </script>
+                    </tr>
+                    <tr>
+                        <td>Peso</td>
+    <td><input type="text" id="mascotaPeso" list="pesos" onkeydown="moverFocoConFlechas(event, 'propietarioFecha', 'mascotaEdad', 'mascotaEdad', 'mascotaPeso')"></td>
+    
+        <datalist id="pesos">
+            <option value="N.A">N.A</option><option value="0,1 kg">0,1 kg</option><option value="0,2 kg">0,2 kg</option><option value="0,3 kg">0,3 kg</option><option value="0,4 kg">0,4 kg</option>
+            <option value="0,5 kg">0,5 kg</option><option value="0,6 kg">0,6 kg</option><option value="0,7 kg">0,7 kg</option><option value="0,8 kg">0,8 kg</option><option value="0,9 kg">0,9 kg</option>
+            <option value="1,0 kg">1,0 kg</option><option value="1,1 kg">1,1 kg</option><option value="1,2 kg">1,2 kg</option><option value="1,3 kg">1,3 kg</option><option value="1,4 kg">1,4 kg</option>
+            <option value="1,5 kg">1,5 kg</option><option value="1,6 kg">1,6 kg</option><option value="1,7 kg">1,7 kg</option><option value="1,8 kg">1,8 kg</option><option value="1,9 kg">1,9 kg</option>
+            <option value="2,0 kg">2,0 kg</option><option value="2,1 kg">2,1 kg</option><option value="2,2 kg">2,2 kg</option><option value="2,3 kg">2,3 kg</option><option value="2,4 kg">2,4 kg</option>
+            <option value="2,5 kg">2,5 kg</option><option value="2,6 kg">2,6 kg</option><option value="2,7 kg">2,7 kg</option><option value="2,8 kg">2,8 kg</option><option value="2,9 kg">2,9 kg</option>
+            <option value="3,0 kg">3,0 kg</option><option value="3,1 kg">3,1 kg</option><option value="3,2 kg">3,2 kg</option><option value="3,3 kg">3,3 kg</option><option value="3,4 kg">3,4 kg</option>
+            <option value="3,5 kg">3,5 kg</option><option value="3,6 kg">3,6 kg</option><option value="3,7 kg">3,7 kg</option><option value="3,8 kg">3,8 kg</option><option value="3,9 kg">3,9 kg</option>
+            <option value="4,0 kg">4,0 kg</option><option value="4,1 kg">4,1 kg</option><option value="4,2 kg">4,2 kg</option><option value="4,3 kg">4,3 kg</option><option value="4,4 kg">4,4 kg</option>
+            <option value="4,5 kg">4,5 kg</option><option value="4,6 kg">4,6 kg</option><option value="4,7 kg">4,7 kg</option><option value="4,8 kg">4,8 kg</option><option value="4,9 kg">4,9 kg</option>
+            <option value="5,0 kg">5,0 kg</option><option value="5,1 kg">5,1 kg</option><option value="5,2 kg">5,2 kg</option><option value="5,3 kg">5,3 kg</option><option value="5,4 kg">5,4 kg</option>
+            <option value="5,5 kg">5,5 kg</option><option value="5,6 kg">5,6 kg</option><option value="5,7 kg">5,7 kg</option><option value="5,8 kg">5,8 kg</option><option value="5,9 kg">5,9 kg</option>
+            <option value="6,0 kg">6,0 kg</option><option value="6,1 kg">6,1 kg</option><option value="6,2 kg">6,2 kg</option><option value="6,3 kg">6,3 kg</option><option value="6,4 kg">6,4 kg</option>
+            <option value="6,5 kg">6,5 kg</option><option value="6,6 kg">6,6 kg</option><option value="6,7 kg">6,7 kg</option><option value="6,8 kg">6,8 kg</option><option value="6,9 kg">6,9 kg</option>
+            <option value="7,0 kg">7,0 kg</option><option value="7,1 kg">7,1 kg</option><option value="7,2 kg">7,2 kg</option><option value="7,3 kg">7,3 kg</option><option value="7,4 kg">7,4 kg</option>
+            <option value="7,5 kg">7,5 kg</option><option value="7,6 kg">7,6 kg</option><option value="7,7 kg">7,7 kg</option><option value="7,8 kg">7,8 kg</option><option value="7,9 kg">7,9 kg</option>
+            <option value="8,0 kg">8,0 kg</option><option value="8,1 kg">8,1 kg</option><option value="8,2 kg">8,2 kg</option><option value="8,3 kg">8,3 kg</option><option value="8,4 kg">8,4 kg</option>
+            <option value="8,5 kg">8,5 kg</option><option value="8,6 kg">8,6 kg</option><option value="8,7 kg">8,7 kg</option><option value="8,8 kg">8,8 kg</option><option value="8,9 kg">8,9 kg</option>
+            <option value="9,0 kg">9,0 kg</option><option value="9,1 kg">9,1 kg</option><option value="9,2 kg">9,2 kg</option><option value="9,3 kg">9,3 kg</option><option value="9,4 kg">9,4 kg</option>
+            <option value="9,5 kg">9,5 kg</option><option value="9,6 kg">9,6 kg</option><option value="9,7 kg">9,7 kg</option><option value="9,8 kg">9,8 kg</option><option value="9,9 kg">9,9 kg</option>
+            <option value="10,0 kg">10,0 kg</option><option value="10,1 kg">10,1 kg</option><option value="10,2 kg">10,2 kg</option><option value="10,3 kg">10,3 kg</option><option value="10,4 kg">10,4 kg</option>
+            <option value="10,5 kg">10,5 kg</option><option value="10,6 kg">10,6 kg</option><option value="10,7 kg">10,7 kg</option><option value="10,8 kg">10,8 kg</option><option value="10,9 kg">10,9 kg</option>
+            <option value="11,0 kg">11,0 kg</option><option value="11,1 kg">11,1 kg</option><option value="11,2 kg">11,2 kg</option><option value="11,3 kg">11,3 kg</option><option value="11,4 kg">11,4 kg</option>
+            <option value="11,5 kg">11,5 kg</option><option value="11,6 kg">11,6 kg</option><option value="11,7 kg">11,7 kg</option><option value="11,8 kg">11,8 kg</option><option value="11,9 kg">11,9 kg</option>
+            <option value="12,0 kg">12,0 kg</option>
+            
+        </datalist>
+            <td>Fecha</td>
+            <td><input type="date" id="propietarioFecha" class="date-input" onkeydown="moverFocoConFlechas(event, 'nombreMedico', 'mascotaPeso', 'nombreMedico', 'propietarioFecha')"></td>
+                    </tr>
+                    
+                    <script>
+                  function formatearFecha(input) {
+                const fecha = new Date(input.value);
+                const dia = String(fecha.getDate()).padStart(2, '0');
+                const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                const año = fecha.getFullYear();
+                input.value = `${dia}-${mes}-${año}`;
+            }
+       
+            function moverFocoConFlechas(event, derechaId, izquierdaId, arribaId, abajoId) {
+                    switch (event.key) {
+                        case 'ArrowRight':
+                            event.preventDefault();
+                            document.getElementById(derechaId).focus();
+                            break;
+                        case 'ArrowLeft':
+                            event.preventDefault();
+                            document.getElementById(izquierdaId).focus();
+                            break;
+                        case 'ArrowUp':
+                            event.preventDefault();
+                            document.getElementById(arribaId).focus();
+                            break;
+                        case 'ArrowDown':
+                        case 'Enter':
+                            event.preventDefault();
+                            document.getElementById(abajoId).focus();
+                            break;
+                    }
+                }
+                const razasCaninas = [
+    "Ainu", "Airedale terrier", "Akita", "Akita Inu", "Alaskan Malamute",
+    "American Black and Tan Coonhound", "American Bull Terrier", "American Pit Bull Terrier",
+    "American Staffordshire terrier", "American Water Spaniel", "Apso Tibetano", "Barzoi", 
+    "Basenji", "Basset Hound", "Beagle", "Bichon Frise", "Bloodhound", "Bobtail", 
+    "Border Collie", "Boston Terrier", "Bouvier des Flandres", "Boxer", "Bull terrier", 
+    "Bull Terrier Miniatura", "Bulldog Americano", "Bulldog Francés", "Bulldog Inglés", 
+    "Bullmastiff", "Cavalier King Charles Spaniel", "Chihuahua", "Chow Chow", 
+    "Cocker Spaniel Americano", "Cocker Spaniel Inglés", "Collie", "Collie Escocés", 
+    "Dachshund", "Dálmata", "Doberman", "Doberman Pincher", "Dogo Alemán", 
+    "Dogo Argentino", "Dogo de Burdeos", "French Poodle", "Galgo Español", 
+    "Galgo Inglés-español", "Golden Retriever", "Gran Danés", "Greyhound", 
+    "Husky Siberiano", "Jack Russell Terrier", "Labrador Retriever", "Maltés", 
+    "Pastor Alemán", "Pequinés", "Pomerania", "Pug", "Rottweiler", "Samoyedo", 
+    "San Bernardo", "Schnauzer", 
+    "Shih Tzu", "SRD", "Yorkshire Terrier", "Weimaraner", "Fila Brasileiro",
+];
+
+const razasFelinas = [
+    "Abisinio", "American Bobtail", "Angora Turco", "Azul Ruso", "Balinés", 
+    "Bengalí", "Bobtail japonés", "Bombay", "British Shorthair", "Burmés", 
+    "Carey", "Común Europeo", "Exótico", "Himalayo", "Javanés", 
+    "Oriental", "Persa", "Sagrado de Birmania", "Siamés", "Siberiano", 
+    "Silvestre", "SRD"
+];
+// Reemplazar la función de reemplazo de punto por coma
+function reemplazarPuntoPorComa() {
+    // Obtener todos los campos numéricos
+    const camposNumericos = [
+        'Glucosa', 'Colesterol_total', 'amilasa', 'CK', 
+        'nitrogeno_ureico', 'creatinina', 'bun_crea', 'fosforo', 'calcio',
+        'ALT', 'Fosfatasa_Alcalina', 'billirrubina_total', 'Albumina',
+        'proteinas_totales', 'Globulinas', 'alb/glo'
+    ];
+    
+    // Aplicar la funcionalidad a cada campo
+    camposNumericos.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            // Usar keydown en lugar de input
+            campo.addEventListener('keydown', function(event) {
+                // Solo actuar cuando se presiona la tecla punto
+                if (event.key === '.') {
+                    event.preventDefault(); // Prevenir la acción por defecto
+                    
+                    // Obtener la posición actual del cursor
+                    const cursorPos = this.selectionStart;
+                    
+                    // Obtener el valor actual e insertar una coma en lugar del punto
+                    const valorActual = this.value;
+                    const nuevoValor = valorActual.slice(0, cursorPos) + ',' + valorActual.slice(cursorPos);
+                    
+                    // Establecer el nuevo valor
+                    this.value = nuevoValor;
+                    
+                    // Restaurar la posición del cursor justo después de la coma
+                    setTimeout(() => {
+                        this.setSelectionRange(cursorPos + 1, cursorPos + 1);
+                    }, 0);
+                }
+            });
+            
+            // Mover las actualizaciones de color y cálculos al evento blur
+            campo.addEventListener('blur', function() {
+                actualizarColor(id, 'ref' + id.toLowerCase());
+                if (id === 'Albumina' || id === 'proteinas_totales') {
+                    calculateValues();
+                }
+            });
+            
+            // Eliminar cualquier evento input que pueda interferir
+            const oldInputListeners = campo._inputListeners || [];
+            oldInputListeners.forEach(listener => {
+                campo.removeEventListener('input', listener);
+            });
+        }
+    });
+}
+
+// Ejecutar cuando el DOM esté listo
+// Asegura que el datalist de razas esté siempre en el DOM y se actualice correctamente
+function inicializarDatalistRazas() {
+    let datalistRazas = document.getElementById('razas');
+    if (!datalistRazas) {
+        datalistRazas = document.createElement('datalist');
+        datalistRazas.id = 'razas';
+        document.body.appendChild(datalistRazas);
+    }
+    // Asegura que el input apunte al datalist correcto
+    const campoRaza = document.getElementById('mascotaRaza');
+    if (campoRaza) {
+        campoRaza.setAttribute('list', 'razas');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarDatalistRazas();
+    reemplazarPuntoPorComa();
+    // ...resto de código existente...
+});
+
+// Modificar la función existente
+function actualizarEspecieEnPlantilla() {
+    const especie = document.getElementById('especieSelector').value;
+    document.getElementById('especieEnPlantilla').value = especie;
+    // Actualizar las razas disponibles según la especie
+    actualizarRazasPorEspecie();
+    // Asegura que el datalist esté actualizado y el input apunte a él
+    inicializarDatalistRazas();
+}
+// Función para actualizar el datalist de razas según la especie seleccionada
+function actualizarRazasPorEspecie() {
+    const especie = document.getElementById('especieSelector').value;
+    // Crear el datalist si no existe
+    let datalistRazas = document.getElementById('razas');
+    if (!datalistRazas) {
+        datalistRazas = document.createElement('datalist');
+        datalistRazas.id = 'razas';
+        document.body.appendChild(datalistRazas);
+    } else {
+        // Limpiar la lista actual
+        datalistRazas.innerHTML = '';
+    }
+    
+    const campoRaza = document.getElementById('mascotaRaza');
+    
+    // Restablecer el campo de raza si se cambia la especie
+    if (campoRaza.value && campoRaza.value !== "SRD") {
+        campoRaza.value = '';
+    }
+    
+    // Agregar las razas según la especie seleccionada
+    if (especie === "Canino") {
+        razasCaninas.forEach(raza => {
+            const option = document.createElement('option');
+            option.value = raza;
+            datalistRazas.appendChild(option);
+        });
+    } else if (especie === "Felino") {
+        razasFelinas.forEach(raza => {
+            const option = document.createElement('option');
+            option.value = raza;
+            datalistRazas.appendChild(option);
+        });
+    } else if (especie === "Lagomorfo" || especie === "Cuilo") {
+        // Para otras especies, agregar solo opciones genéricas
+        const option = document.createElement('option');
+        option.value = "SRD";
+        datalistRazas.appendChild(option);
+    }
+}
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    // Asegurarse de que existe el selector de especies
+    const especieSelector = document.getElementById('especieSelector');
+    if (especieSelector) {
+        // Si ya hay una especie seleccionada al cargar
+        if (especieSelector.value !== "Seleccionar") {
+            actualizarRazasPorEspecie();
+        }
+        
+        // Agregar un listener adicional para garantizar que se actualicen las razas
+        especieSelector.addEventListener('change', actualizarRazasPorEspecie);
+    }
+    
+    // Crear datalist si no existe
+    if (!document.getElementById('razas')) {
+        const datalist = document.createElement('datalist');
+        datalist.id = 'razas';
+        document.body.appendChild(datalist);
+    }
+});
+
+            
+                    </script>
+                </tbody>
+            </table>
+<!-- Plantilla de 11 parámetros (original) -->
+<div id="urianalisis11" class="urianalisis-plantilla">
+<table class="urianalisis-table">
+  <tr><th colspan="3">Examen Físico</th></tr>
+  <tr><td>Color</td><td><input type="text" id="color"></td><td></td></tr>
+  <tr><td>Apariencia</td><td><input type="text" id="apariencia"></td><td></td></tr>
+  <tr><td>Densidad</td><td><input type="text" id="densidad"></td><td>(1.005–1.040)</td></tr>
+  <tr><td>Método de recolección</td><td><input type="text" id="metodo_recoleccion" list="metodoRecoleccionList"></td><td></td></tr>
+  <datalist id="metodoRecoleccionList">
+    <option value="Cistocentesis">
+    <option value="Cateterismo">
+    <option value="Micción espontánea">
+  </datalist>
+  <tr><th colspan="3">Examen Químico</th></tr>
+  <tr><td>pH urinario</td><td><input type="text" id="ph_urinario"></td><td>(5.0–7.0)</td></tr>
+  <tr><td>Proteínas</td><td>
+  <input type="text" id="proteinas" list="proteinasList">
+  <datalist id="proteinasList">
+    <option value="Negativo">
+    <option value="Positivo 1+">
+    <option value="Positivo 2+">
+    <option value="Positivo 3+">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Cetonas</td><td>
+  <input type="text" id="cetonas" list="cetonasList">
+  <datalist id="cetonasList">
+    <option value="Negativo">
+    <option value="Positivo 1+">
+    <option value="Positivo 2+">
+    <option value="Positivo 3+">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Nitritos</td><td>
+  <input type="text" id="nitritos" list="nitritosList">
+  <datalist id="nitritosList">
+    <option value="Negativo">
+    <option value="Positivo 1+">
+    <option value="Positivo 2+">
+    <option value="Positivo 3+">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Leucocitos</td><td>
+  <input type="text" id="leucocitosQ">
+</td><td></td></tr>
+<tr><td>Glucosa</td><td>
+  <input type="text" id="glucosaQ" list="glucosaQList">
+  <datalist id="glucosaQList">
+    <option value="Negativo">
+    <option value="Positivo 1+">
+    <option value="Positivo 2+">
+    <option value="Positivo 3+">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Bilirrubina</td><td>
+  <input type="text" id="bilirrubina" list="bilirrubinaList">
+  <datalist id="bilirrubinaList">
+    <option value="Negativo">
+    <option value="Positivo 1+">
+    <option value="Positivo 2+">
+    <option value="Positivo 3+">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Urobilinógeno</td><td>
+  <input type="text" id="urobilinogeno" list="urobilinogenoList">
+  <datalist id="urobilinogenoList">
+    <option value="Negativo">
+    <option value="Positivo 1+">
+    <option value="Positivo 2+">
+    <option value="Positivo 3+">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Eritrocitos/hemoglobina</td><td>
+  <input type="text" id="eritrocitos_hemoglobina">
+</td><td></td></tr>
+<tr><td>ASC</td><td>
+  <input type="text" id="asc" list="ascList">
+  <datalist id="ascList">
+    <option value="Negativo">
+    <option value="Positivo 1+">
+    <option value="Positivo 2+">
+    <option value="Positivo 3+">
+  </datalist>
+</td><td></td></tr>
+<tr><th colspan="3">Examen Microscópico</th></tr>
+<tr><td>Células transicionales</td><td>
+  <input type="text" id="celulas_transicionales" list="celulasTransicionalesList">
+  <datalist id="celulasTransicionalesList">
+    <option value="Escasas">
+    <option value="Moderadas">
+    <option value="Abundantes">
+    <option value="No se observa">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Células escamosas</td><td>
+  <input type="text" id="celulas_escamosas" list="celulasEscamosasList">
+  <datalist id="celulasEscamosasList">
+    <option value="Escasas">
+    <option value="Moderadas">
+    <option value="Abundantes">
+    <option value="No se observa">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Células renales</td><td>
+  <input type="text" id="celulas_renales" list="celulasRenalesList">
+  <datalist id="celulasRenalesList">
+    <option value="Escasas">
+    <option value="Moderadas">
+    <option value="Abundantes">
+    <option value="No se observa">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Cilindros</td><td>
+  <input type="text" id="cilindros" list="cilindrosList">
+  <datalist id="cilindrosList">
+    <option value="No se observa">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Filamento mucoso</td><td>
+  <input type="text" id="filamento_mucoso" list="filamentoMucosoList">
+  <datalist id="filamentoMucosoList">
+    <option value="No se observa">
+    <option value="Escaso">
+    <option value="Moderado">
+    <option value="Abundante">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Sedimento amorfo</td><td>
+  <input type="text" id="sedimento_amorfo" list="sedimentoAmorfoList">
+  <datalist id="sedimentoAmorfoList">
+    <option value="No se observa">
+    <option value="Escaso">
+    <option value="Moderado">
+    <option value="Abundante">
+  </datalist>
+</td><td></td></tr>
+<tr><td>Comentario:</td><td colspan="2"><input type="text" id="comentario" style="width:98%"></td></tr>
+</table>
+</div>
+
+<!-- Plantilla de 15 parámetros (nueva, según imagen) -->
+<div id="urianalisis15" class="urianalisis-plantilla" style="display:none;">
+  <table class="urianalisis-table">
+    <tr><th colspan="3">Examen Físico</th></tr>
+    <tr><td>Color</td><td colspan="2"><input type="text" id="color15" style="width:98%"></td></tr>
+    <tr><td>Apariencia</td><td colspan="2"><input type="text" id="apariencia15" style="width:98%"></td></tr>
+    <tr><td>Método Recolección de muestra</td><td colspan="2"><input type="text" id="metodo_recoleccion15" list="metodoRecoleccionList15" style="width:98%"></td></tr>
+    <datalist id="metodoRecoleccionList15">
+      <option value="Cistocentesis">
+      <option value="Cateterismo">
+      <option value="Micción espontánea">
+    </datalist>
+    <tr><th colspan="3">Examen Químico</th></tr>
+    <tr><td>Densidad</td><td><input type="text" id="densidad15" style="width:98%"></td><td>(1.005–1.040)</td></tr>
+    <tr><td>pH urinario</td><td><input type="text" id="ph_urinario15" style="width:98%"></td><td>(5.0–7.0)</td></tr>
+    <tr><td>Proteínas</td><td colspan="2"><input type="text" id="proteinas15" list="proteinasList15" style="width:98%"></td></tr>
+    <datalist id="proteinasList15">
+      <option value="Negativo">
+      <option value="Positivo 1+">
+      <option value="Positivo 2+">
+      <option value="Positivo 3+">
+    </datalist>
+    <tr><td>Cetonas</td><td colspan="2"><input type="text" id="cetonas15" list="cetonasList15" style="width:98%"></td></tr>
+    <datalist id="cetonasList15">
+      <option value="Negativo">
+      <option value="Positivo 1+">
+      <option value="Positivo 2+">
+      <option value="Positivo 3+">
+    </datalist>
+    <tr><td>Nitritos</td><td colspan="2"><input type="text" id="nitritos15" list="nitritosList15" style="width:98%"></td></tr>
+    <datalist id="nitritosList15">
+      <option value="Negativo">
+      <option value="Positivo 1+">
+      <option value="Positivo 2+">
+      <option value="Positivo 3+">
+    </datalist>
+    <tr><td>Leucocitos</td><td colspan="2"><input type="text" id="leucocitosQ15" style="width:98%"></td></tr>
+    <tr><td>Glucosa</td><td colspan="2"><input type="text" id="glucosaQ15" list="glucosaQList15" style="width:98%"></td></tr>
+    <datalist id="glucosaQList15">
+      <option value="Negativo">
+      <option value="Positivo 1+">
+      <option value="Positivo 2+">
+      <option value="Positivo 3+">
+    </datalist>
+    <tr><td>Bilirrubina</td><td colspan="2"><input type="text" id="bilirrubina15" list="bilirrubinaList15" style="width:98%"></td></tr>
+    <datalist id="bilirrubinaList15">
+      <option value="Negativo">
+      <option value="Positivo 1+">
+      <option value="Positivo 2+">
+      <option value="Positivo 3+">
+    </datalist>
+    <tr><td>Urobilinógeno</td><td colspan="2"><input type="text" id="urobilinogeno15" list="urobilinogenoList15" style="width:98%"></td></tr>
+    <datalist id="urobilinogenoList15">
+      <option value="Negativo">
+      <option value="Positivo 1+">
+      <option value="Positivo 2+">
+      <option value="Positivo 3+">
+    </datalist>
+    <tr><td>Eritrocitos/hemoglobina</td><td colspan="2"><input type="text" id="eritrocitos_hemoglobina15" style="width:98%"></td></tr>
+    <tr><td>Albumina</td><td colspan="2"><input type="text" id="albumina15" style="width:98%"></td></tr>
+    <tr><td>ASC</td><td colspan="2"><input type="text" id="asc15" list="ascList15" style="width:98%"></td></tr>
+    <datalist id="ascList15">
+      <option value="Negativo">
+      <option value="Positivo 1+">
+      <option value="Positivo 2+">
+      <option value="Positivo 3+">
+    </datalist>
+    <tr><td>Creatinina</td><td colspan="2"><input type="text" id="creatinina15" style="width:98%"></td></tr>
+    <tr><td>Calcio</td><td colspan="2"><input type="text" id="calcio15" style="width:98%"></td></tr>
+    <tr><th colspan="3">Examen Microscópico</th></tr>
+    <tr><td>Células transicionales</td><td colspan="2"><input type="text" id="celulas_transicionales15" list="celulasTransicionalesList15" style="width:98%"></td></tr>
+    <datalist id="celulasTransicionalesList15">
+      <option value="Escasas">
+      <option value="Moderadas">
+      <option value="Abundantes">
+      <option value="No se observa">
+    </datalist>
+    <tr><td>Células escamosas</td><td colspan="2"><input type="text" id="celulas_escamosas15" list="celulasEscamosasList15" style="width:98%"></td></tr>
+    <datalist id="celulasEscamosasList15">
+      <option value="Escasas">
+      <option value="Moderadas">
+      <option value="Abundantes">
+      <option value="No se observa">
+    </datalist>
+    <tr><td>Células renales</td><td colspan="2"><input type="text" id="celulas_renales15" list="celulasRenalesList15" style="width:98%"></td></tr>
+    <datalist id="celulasRenalesList15">
+      <option value="Escasas">
+      <option value="Moderadas">
+      <option value="Abundantes">
+      <option value="No se observa">
+    </datalist>
+    <tr><td>Cilindros</td><td colspan="2"><input type="text" id="cilindros15" list="cilindrosList15" style="width:98%"></td></tr>
+    <datalist id="cilindrosList15">
+      <option value="No se observa">
+    </datalist>
+    <tr><td>Eritrocitos</td><td colspan="2"><input type="text" id="eritrocitos15" style="width:98%"></td></tr>
+    <tr><td>Leucocitos</td><td colspan="2"><input type="text" id="leucocitos15" style="width:98%"></td></tr>
+    <tr><td>Bacterias</td><td colspan="2"><input type="text" id="bacterias15" style="width:98%"></td></tr>
+    <tr><td>Cristales</td><td colspan="2"><input type="text" id="cristales15" style="width:98%"></td></tr>
+    <tr><td>Filamento mucoso</td><td colspan="2"><input type="text" id="filamento_mucoso15" list="filamentoMucosoList15" style="width:98%"></td></tr>
+    <datalist id="filamentoMucosoList15">
+      <option value="No se observa">
+      <option value="Escaso">
+      <option value="Moderado">
+      <option value="Abundante">
+    </datalist>
+    <tr><td>Sedimento amorfo</td><td colspan="2"><input type="text" id="sedimento_amorfo15" list="sedimentoAmorfoList15" style="width:98%"></td></tr>
+    <datalist id="sedimentoAmorfoList15">
+      <option value="No se observa">
+      <option value="Escaso">
+      <option value="Moderado">
+      <option value="Abundante">
+    </datalist>
+  </table>
+</div>
+
+<script>
+function mostrarPlantillaUrianalisis() {
+  var select = document.getElementById('plantillaUrianalisisSelect');
+  var plantilla11 = document.getElementById('urianalisis11');
+  var plantilla15 = document.getElementById('urianalisis15');
+  if (select.value === '11') {
+    plantilla11.style.display = '';
+    plantilla15.style.display = 'none';
+  } else {
+    plantilla11.style.display = 'none';
+    plantilla15.style.display = '';
+  }
+}
+</script>
+<script>
+// Autoformato para " x campo" en eritrocitos y leucocitos microscopía
+function formatearCampoMicroscopico(input) {
+  if (input.value && !input.value.includes('x campo')) {
+    // Solo si es un número
+    var num = input.value.replace(/\D/g, '');
+    if(num) input.value = num + ' x campo';
+  }
+}
+// Bacterias: mostrar tipos si corresponde y actualizar valor
+function mostrarTiposBacteria(sel) {
+  var container = document.getElementById('tiposBacteriaContainer');
+  var tipos = document.getElementById('tiposBacteria');
+  if(sel.value === 'Escasos' || sel.value === 'Moderados' || sel.value === 'Abundantes') {
+    container.style.display = 'block';
+  } else {
+    container.style.display = 'none';
+    tipos.selectedIndex = -1;
+  }
+}
+// Al exportar o guardar, concatenar tipos de bacteria si corresponde
+function obtenerValorBacterias() {
+  var sel = document.getElementById('bacterias');
+  var tipos = document.getElementById('tiposBacteria');
+  var value = sel.value;
+  if(value === 'Escasos' || value === 'Moderados' || value === 'Abundantes') {
+    var seleccionados = Array.from(tipos.selectedOptions).map(opt => opt.text);
+    if(seleccionados.length > 0) {
+      value += ' (' + seleccionados.join(', ') + ')';
+    }
+  }
+  return value;
+}
+function navegarCeldasUrianalisis(event, abajoId, arribaId, izquierdaId, derechaId) {
+  if (event.key === 'Enter' || event.key === 'ArrowDown') {
+    if (abajoId) {
+      event.preventDefault();
+      document.getElementById(abajoId).focus();
+    }
+  } else if (event.key === 'ArrowUp') {
+    if (arribaId) {
+      event.preventDefault();
+      document.getElementById(arribaId).focus();
+    }
+  } else if (event.key === 'ArrowLeft') {
+    if (izquierdaId) {
+      event.preventDefault();
+      document.getElementById(izquierdaId).focus();
+    }
+  } else if (event.key === 'ArrowRight') {
+    if (derechaId) {
+      event.preventDefault();
+      document.getElementById(derechaId).focus();
+    }
+  }
+}
+// Navegación automática por todos los campos de la tabla de urianálisis con Enter y flechas
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const table = document.querySelector('.urianalisis-table');
+    if (!table) return;
+    // Selecciona todos los inputs y selects editables en orden visual
+    const fields = Array.from(table.querySelectorAll('input[type="text"], input[type="date"], select'));
+    fields.forEach((field, idx) => {
+      field.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === 'ArrowDown') {
+          event.preventDefault();
+          // Buscar el siguiente campo visible y habilitado
+          for (let i = idx + 1; i < fields.length; i++) {
+            if (!fields[i].disabled && fields[i].offsetParent !== null) {
+              fields[i].focus();
+              break;
+            }
+          }
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          for (let i = idx - 1; i >= 0; i--) {
+            if (!fields[i].disabled && fields[i].offsetParent !== null) {
+              fields[i].focus();
+              break;
+            }
+          }
+        }
+      });
+    });
+  });
+})();
+</script>
+  <div class="footer">
+    <p id="mensajeMedico" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
+    <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
+    <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>
+    <p>Correo: laboratorio@vetsanmartin.com</p>
+</div>
+        </div>
+    </body>
+    <div class="controls">
+    <button id="pdfButton" onclick="generatePDF()">Generar PDF</button>
+    <button id="menuButton" onclick="window.location.href='index.html'">Volver al Menú</button>
+    <div id="loadingPdf" class="loading-indicator" style="display:none;">
+        <div class="spinner"></div>
+        <span>Generando PDF...</span>
+    </div>
+</div>
+<script>
+async function generatePDF() {
+    const loadingIndicator = document.getElementById('loadingPdf');
+    const pdfButton = document.getElementById('pdfButton');
+    loadingIndicator.style.display = 'flex';
+    pdfButton.disabled = true;
+    try {
+        const { jsPDF } = window.jspdf;
+        const selectedTemplate = document.getElementById('template1');
+        if (!selectedTemplate) {
+            alert('No se encontró la plantilla.');
+            return;
+        }
+        // Obtener el nombre de la mascota y el apellido del propietario
+        const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
+        const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
+        const propietarioApellido = propietarioNombre.split(' ').pop();
+        // Esperar a que todas las imágenes dentro del elemento se carguen
+        const images = selectedTemplate.getElementsByTagName('img');
+        const loadImages = Array.from(images).map(img => {
+            return new Promise((resolve, reject) => {
+                if (img.complete) {
+                    resolve();
+                } else {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                }
+            });
+        });
+        await Promise.all(loadImages);
+        // Genera el canvas
+        const canvas = await html2canvas(selectedTemplate, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 150;
+        const pageHeight = 297;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        // Calcular la posición para centrar la imagen con márgenes
+        const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+        const y = 5;
+        pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
+        const fileName = `Urianálisis ${mascotaNombre} ${propietarioApellido}.pdf`;
+        pdf.save(fileName);
+    } catch (error) {
+        console.error('Error al generar el PDF:', error);
+        alert('Ocurrió un error al generar el PDF: ' + error.message);
+    } finally {
+        loadingIndicator.style.display = 'none';
+        pdfButton.disabled = false;
+    }
+}
+</script>
+</html>
