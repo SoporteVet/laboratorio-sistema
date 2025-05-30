@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </td><td></td></tr>
 <tr><td>Leucocitos</td><td>
   <input type="text" id="leucocitosQ">
-</td><td></td></tr>
+</td><td></tr>
 <tr><td>Glucosa</td><td>
   <input type="text" id="glucosaQ" list="glucosaQList">
   <datalist id="glucosaQList">
@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </td><td></td></tr>
 <tr><td>Eritrocitos/hemoglobina</td><td>
   <input type="text" id="eritrocitos_hemoglobina">
-</td><td></td></tr>
+</td><td></tr>
 <tr><td>ASC</td><td>
   <input type="text" id="asc" list="ascList">
   <datalist id="ascList">
@@ -516,6 +516,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </td><td></td></tr>
 <tr><td>Comentario:</td><td colspan="2"><input type="text" id="comentario" style="width:98%"></td></tr>
 </table>
+<!-- Imagen de análisis para urianálisis 11 parámetros -->
+<div class="image-container" style="display: flex; justify-content: center; margin: 20px 0;">
+  <div class="image-box analysis-box" style="text-align: center; margin: 0 10px; max-width: 60%;">
+    <h4>Imagen del Análisis</h4>
+    <div style="margin-bottom: 10px;">
+      <label for="imageUploadUrianalisis11">Seleccionar imagen:</label>
+      <input type="file" id="imageUploadUrianalisis11" accept="image/*" onchange="previewImageUrianalisis(event, 'previewUrianalisis11')" style="display: inline-block;">
+    </div>
+    <div style="margin-top: 10px; min-height: 200px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center;">
+      <img id="previewUrianalisis11" alt="Imagen del Análisis" style="max-width: 100%; max-height: 200px; display: none;">
+      <span id="noImageTextUrianalisis11">Sin imagen</span>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- Plantilla de 15 parámetros (nueva, según imagen) -->
@@ -631,10 +645,66 @@ document.addEventListener('DOMContentLoaded', function() {
       <option value="Moderado">
       <option value="Abundante">
     </datalist>
+    <!-- Tinción gram -->
+    <tr><td>Tinción gram</td><td colspan="2"><input type="text" id="tincion_gram15" list="tincionGramList15" style="width:98%"></td></tr>
+    <datalist id="tincionGramList15">
+      <option value="Bacterias Gram Positivas">
+      <option value="Bacterias Gram Negativas">
+    </datalist>
+    <tr><td>Comentario:</td><td colspan="2"><input type="text" id="comentario" style="width:98%"></td></tr>
   </table>
+  <!-- Imagen de análisis para urianálisis 15 parámetros -->
+<div class="image-container" style="display: flex; justify-content: center; margin: 20px 0;">
+  <div class="image-box analysis-box" style="text-align: center; margin: 0 10px; max-width: 60%;">
+    <h4>Imagen del Análisis</h4>
+    <div style="margin-bottom: 10px;">
+      <label for="imageUploadUrianalisis15">Seleccionar imagen:</label>
+      <input type="file" id="imageUploadUrianalisis15" accept="image/*" onchange="previewImageUrianalisis(event, 'previewUrianalisis15')" style="display: inline-block;">
+    </div>
+    <div style="margin-top: 10px; min-height: 200px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center;">
+      <img id="previewUrianalisis15" alt="Imagen del Análisis" style="max-width: 100%; max-height: 200px; display: none;">
+      <span id="noImageTextUrianalisis15">Sin imagen</span>
+    </div>
+  </div>
+</div>
 </div>
 
 <script>
+// Variable global para almacenar la imagen de análisis
+let urianalisisImageDataUrl = '';
+
+function previewImageUrianalisis(event, previewId) {
+  const file = event.target.files[0];
+  const preview11 = document.getElementById('previewUrianalisis11');
+  const preview15 = document.getElementById('previewUrianalisis15');
+  const noImageText11 = document.getElementById('noImageTextUrianalisis11');
+  const noImageText15 = document.getElementById('noImageTextUrianalisis15');
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      urianalisisImageDataUrl = reader.result;
+      if (preview11) {
+        preview11.src = urianalisisImageDataUrl;
+        preview11.style.display = 'block';
+        if (noImageText11) noImageText11.style.display = 'none';
+      }
+      if (preview15) {
+        preview15.src = urianalisisImageDataUrl;
+        preview15.style.display = 'block';
+        if (noImageText15) noImageText15.style.display = 'none';
+      }
+    }
+    reader.readAsDataURL(file);
+  } else {
+    if (preview11) preview11.style.display = 'none';
+    if (preview15) preview15.style.display = 'none';
+    if (noImageText11) noImageText11.style.display = 'block';
+    if (noImageText15) noImageText15.style.display = 'block';
+    urianalisisImageDataUrl = '';
+  }
+}
+
+// Al cambiar de plantilla, mantener la imagen previsualizada
 function mostrarPlantillaUrianalisis() {
   var select = document.getElementById('plantillaUrianalisisSelect');
   var plantilla11 = document.getElementById('urianalisis11');
@@ -646,95 +716,141 @@ function mostrarPlantillaUrianalisis() {
     plantilla11.style.display = 'none';
     plantilla15.style.display = '';
   }
-}
-</script>
-<script>
-// Autoformato para " x campo" en eritrocitos y leucocitos microscopía
-function formatearCampoMicroscopico(input) {
-  if (input.value && !input.value.includes('x campo')) {
-    // Solo si es un número
-    var num = input.value.replace(/\D/g, '');
-    if(num) input.value = num + ' x campo';
-  }
-}
-// Bacterias: mostrar tipos si corresponde y actualizar valor
-function mostrarTiposBacteria(sel) {
-  var container = document.getElementById('tiposBacteriaContainer');
-  var tipos = document.getElementById('tiposBacteria');
-  if(sel.value === 'Escasos' || sel.value === 'Moderados' || sel.value === 'Abundantes') {
-    container.style.display = 'block';
+  // Refrescar la previsualización de imagen al cambiar de plantilla
+  const preview11 = document.getElementById('previewUrianalisis11');
+  const preview15 = document.getElementById('previewUrianalisis15');
+  const noImageText11 = document.getElementById('noImageTextUrianalisis11');
+  const noImageText15 = document.getElementById('noImageTextUrianalisis15');
+  if (urianalisisImageDataUrl) {
+    if (preview11) {
+      preview11.src = urianalisisImageDataUrl;
+      preview11.style.display = 'block';
+      if (noImageText11) noImageText11.style.display = 'none';
+    }
+    if (preview15) {
+      preview15.src = urianalisisImageDataUrl;
+      preview15.style.display = 'block';
+      if (noImageText15) noImageText15.style.display = 'none';
+    }
   } else {
-    container.style.display = 'none';
-    tipos.selectedIndex = -1;
+    if (preview11) preview11.style.display = 'none';
+    if (preview15) preview15.style.display = 'none';
+    if (noImageText11) noImageText11.style.display = 'block';
+    if (noImageText15) noImageText15.style.display = 'block';
   }
 }
-// Al exportar o guardar, concatenar tipos de bacteria si corresponde
-function obtenerValorBacterias() {
-  var sel = document.getElementById('bacterias');
-  var tipos = document.getElementById('tiposBacteria');
-  var value = sel.value;
-  if(value === 'Escasos' || value === 'Moderados' || value === 'Abundantes') {
-    var seleccionados = Array.from(tipos.selectedOptions).map(opt => opt.text);
-    if(seleccionados.length > 0) {
-      value += ' (' + seleccionados.join(', ') + ')';
-    }
-  }
-  return value;
-}
-function navegarCeldasUrianalisis(event, abajoId, arribaId, izquierdaId, derechaId) {
-  if (event.key === 'Enter' || event.key === 'ArrowDown') {
-    if (abajoId) {
-      event.preventDefault();
-      document.getElementById(abajoId).focus();
-    }
-  } else if (event.key === 'ArrowUp') {
-    if (arribaId) {
-      event.preventDefault();
-      document.getElementById(arribaId).focus();
-    }
-  } else if (event.key === 'ArrowLeft') {
-    if (izquierdaId) {
-      event.preventDefault();
-      document.getElementById(izquierdaId).focus();
-    }
-  } else if (event.key === 'ArrowRight') {
-    if (derechaId) {
-      event.preventDefault();
-      document.getElementById(derechaId).focus();
-    }
-  }
-}
-// Navegación automática por todos los campos de la tabla de urianálisis con Enter y flechas
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    const table = document.querySelector('.urianalisis-table');
-    if (!table) return;
-    // Selecciona todos los inputs y selects editables en orden visual
-    const fields = Array.from(table.querySelectorAll('input[type="text"], input[type="date"], select'));
-    fields.forEach((field, idx) => {
-      field.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' || event.key === 'ArrowDown') {
-          event.preventDefault();
-          // Buscar el siguiente campo visible y habilitado
-          for (let i = idx + 1; i < fields.length; i++) {
-            if (!fields[i].disabled && fields[i].offsetParent !== null) {
-              fields[i].focus();
-              break;
+
+// Generar PDF con dos páginas: 1) tabla, 2) imagen de análisis y footer
+async function generatePDF() {
+    const loadingIndicator = document.getElementById('loadingPdf');
+    const pdfButton = document.getElementById('pdfButton');
+    loadingIndicator.style.display = 'flex';
+    pdfButton.disabled = true;
+    try {
+        const { jsPDF } = window.jspdf;
+        // Seleccionar la plantilla activa (11 o 15 parámetros)
+        const select = document.getElementById('plantillaUrianalisisSelect');
+        const plantilla11 = document.getElementById('urianalisis11');
+        const plantilla15 = document.getElementById('urianalisis15');
+        const selectedPlantilla = select.value === '15' ? plantilla15 : plantilla11;
+        // Clonar el contenedor principal para capturar cabecera, datos y tabla
+        const container = document.querySelector('.container');
+        const containerClone = container.cloneNode(true);
+        // Mostrar solo la plantilla seleccionada en el clon
+        containerClone.querySelectorAll('.urianalisis-plantilla').forEach(div => {
+            div.style.display = 'none';
+        });
+        const plantillaClon = containerClone.querySelector(select.value === '15' ? '#urianalisis15' : '#urianalisis11');
+        if (plantillaClon) plantillaClon.style.display = 'block';
+        // Copiar valores de los inputs (excepto file)
+        containerClone.querySelectorAll('input, select, textarea').forEach(function(element) {
+            const original = document.getElementById(element.id);
+            if (!original) return;
+            if (element.tagName === 'INPUT') {
+                if (element.type === 'file') return;
+                if (element.type === 'checkbox' || element.type === 'radio') {
+                    element.checked = original.checked;
+                } else {
+                    element.value = original.value;
+                }
+            } else if (element.tagName === 'SELECT' || element.tagName === 'TEXTAREA') {
+                element.value = original.value;
             }
-          }
-        } else if (event.key === 'ArrowUp') {
-          event.preventDefault();
-          for (let i = idx - 1; i >= 0; i--) {
-            if (!fields[i].disabled && fields[i].offsetParent !== null) {
-              fields[i].focus();
-              break;
-            }
-          }
+        });
+        // Ocultar la imagen y el footer en la primera página
+        containerClone.querySelectorAll('.image-container, .footer').forEach(el => el.style.display = 'none');
+        // Crear contenedor temporal para renderizar
+        const tempDiv1 = document.createElement('div');
+        tempDiv1.style.width = '800px';
+        tempDiv1.style.background = '#fff';
+        tempDiv1.appendChild(containerClone);
+        document.body.appendChild(tempDiv1);
+        const canvas1 = await html2canvas(tempDiv1, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        });
+        document.body.removeChild(tempDiv1);
+        const imgData1 = canvas1.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 150;
+        const imgHeight = (canvas1.height * imgWidth) / canvas1.width;
+        const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+        const y = 5;
+        pdf.addImage(imgData1, 'JPEG', x, y, imgWidth, imgHeight);
+
+        // --- SEGUNDA PÁGINA: imagen de análisis y footer ---
+        pdf.addPage();
+        const tempDiv2 = document.createElement('div');
+        tempDiv2.style.width = '800px';
+        tempDiv2.style.background = '#fff';
+        // Imagen de análisis (solo si existe y es válida)
+        if (typeof urianalisisImageDataUrl === 'string' && urianalisisImageDataUrl.startsWith('data:image')) {
+            const img = document.createElement('img');
+            img.src = urianalisisImageDataUrl;
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '400px';
+            img.style.display = 'block';
+            img.style.margin = '30px auto 20px auto';
+            tempDiv2.appendChild(img);
         }
-      });
-    });
-  });
-})();
+        // Footer
+        const footerClone = document.querySelector('.footer')?.cloneNode(true);
+        if (footerClone) {
+            footerClone.style.marginTop = '40px';
+            tempDiv2.appendChild(footerClone);
+        }
+        document.body.appendChild(tempDiv2);
+        const canvas2 = await html2canvas(tempDiv2, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        });
+        document.body.removeChild(tempDiv2);
+        const imgData2 = canvas2.toDataURL('image/jpeg', 1.0);
+        const imgWidth2 = 150;
+        const imgHeight2 = (canvas2.height * imgWidth2) / canvas2.width;
+        const x2 = (pdf.internal.pageSize.getWidth() - imgWidth2) / 2;
+        const y2 = 10;
+        pdf.addImage(imgData2, 'JPEG', x2, y2, imgWidth2, imgHeight2);
+        // Guardar PDF
+        const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
+        const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
+        const propietarioApellido = propietarioNombre.split(' ').length > 1 ? propietarioNombre.split(' ')[1] : propietarioNombre;
+        const fileName = `Urianálisis ${mascotaNombre} ${propietarioApellido}.pdf`;
+        pdf.save(fileName);
+    } catch (error) {
+        console.error('Error al generar el PDF:', error);
+        alert('Ocurrió un error al generar el PDF: ' + error.message);
+    } finally {
+        loadingIndicator.style.display = 'none';
+        pdfButton.disabled = false;
+    }
+}
 </script>
   <div class="footer">
     <p id="mensajeMedico" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
@@ -760,45 +876,99 @@ async function generatePDF() {
     pdfButton.disabled = true;
     try {
         const { jsPDF } = window.jspdf;
-        const selectedTemplate = document.getElementById('template1');
-        if (!selectedTemplate) {
-            alert('No se encontró la plantilla.');
-            return;
-        }
-        // Obtener el nombre de la mascota y el apellido del propietario
-        const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
-        const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
-        const propietarioApellido = propietarioNombre.split(' ').pop();
-        // Esperar a que todas las imágenes dentro del elemento se carguen
-        const images = selectedTemplate.getElementsByTagName('img');
-        const loadImages = Array.from(images).map(img => {
-            return new Promise((resolve, reject) => {
-                if (img.complete) {
-                    resolve();
-                } else {
-                    img.onload = resolve;
-                    img.onerror = reject;
-                }
-            });
+        // Seleccionar la plantilla activa (11 o 15 parámetros)
+        const select = document.getElementById('plantillaUrianalisisSelect');
+        const plantilla11 = document.getElementById('urianalisis11');
+        const plantilla15 = document.getElementById('urianalisis15');
+        const selectedPlantilla = select.value === '15' ? plantilla15 : plantilla11;
+        // Clonar el contenedor principal para capturar cabecera, datos y tabla
+        const container = document.querySelector('.container');
+        const containerClone = container.cloneNode(true);
+        // Mostrar solo la plantilla seleccionada en el clon
+        containerClone.querySelectorAll('.urianalisis-plantilla').forEach(div => {
+            div.style.display = 'none';
         });
-        await Promise.all(loadImages);
-        // Genera el canvas
-        const canvas = await html2canvas(selectedTemplate, {
+        const plantillaClon = containerClone.querySelector(select.value === '15' ? '#urianalisis15' : '#urianalisis11');
+        if (plantillaClon) plantillaClon.style.display = 'block';
+        // Copiar valores de los inputs (excepto file)
+        containerClone.querySelectorAll('input, select, textarea').forEach(function(element) {
+            const original = document.getElementById(element.id);
+            if (!original) return;
+            if (element.tagName === 'INPUT') {
+                if (element.type === 'file') return;
+                if (element.type === 'checkbox' || element.type === 'radio') {
+                    element.checked = original.checked;
+                } else {
+                    element.value = original.value;
+                }
+            } else if (element.tagName === 'SELECT' || element.tagName === 'TEXTAREA') {
+                element.value = original.value;
+            }
+        });
+        // Ocultar la imagen y el footer en la primera página
+        containerClone.querySelectorAll('.image-container, .footer').forEach(el => el.style.display = 'none');
+        // Crear contenedor temporal para renderizar
+        const tempDiv1 = document.createElement('div');
+        tempDiv1.style.width = '800px';
+        tempDiv1.style.background = '#fff';
+        tempDiv1.appendChild(containerClone);
+        document.body.appendChild(tempDiv1);
+        const canvas1 = await html2canvas(tempDiv1, {
             scale: 2,
             useCORS: true,
             logging: false,
             allowTaint: true,
             backgroundColor: '#ffffff'
         });
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        document.body.removeChild(tempDiv1);
+        const imgData1 = canvas1.toDataURL('image/jpeg', 1.0);
         const pdf = new jsPDF('p', 'mm', 'a4');
         const imgWidth = 150;
-        const pageHeight = 297;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        // Calcular la posición para centrar la imagen con márgenes
+        const imgHeight = (canvas1.height * imgWidth) / canvas1.width;
         const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
         const y = 5;
-        pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
+        pdf.addImage(imgData1, 'JPEG', x, y, imgWidth, imgHeight);
+
+        // --- SEGUNDA PÁGINA: imagen de análisis y footer ---
+        pdf.addPage();
+        const tempDiv2 = document.createElement('div');
+        tempDiv2.style.width = '800px';
+        tempDiv2.style.background = '#fff';
+        // Imagen de análisis (solo si existe y es válida)
+        if (typeof urianalisisImageDataUrl === 'string' && urianalisisImageDataUrl.startsWith('data:image')) {
+          const img = document.createElement('img');
+          img.src = urianalisisImageDataUrl;
+          img.style.maxWidth = '100%';
+          img.style.maxHeight = '400px';
+          img.style.display = 'block';
+          img.style.margin = '30px auto 20px auto';
+          tempDiv2.appendChild(img);
+        }
+        // Footer
+        const footerClone = document.querySelector('.footer')?.cloneNode(true);
+        if (footerClone) {
+          footerClone.style.marginTop = '40px';
+          tempDiv2.appendChild(footerClone);
+        }
+        document.body.appendChild(tempDiv2);
+        const canvas2 = await html2canvas(tempDiv2, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          allowTaint: true,
+          backgroundColor: '#ffffff'
+        });
+        document.body.removeChild(tempDiv2);
+        const imgData2 = canvas2.toDataURL('image/jpeg', 1.0);
+        const imgWidth2 = 150;
+        const imgHeight2 = (canvas2.height * imgWidth2) / canvas2.width;
+        const x2 = (pdf.internal.pageSize.getWidth() - imgWidth2) / 2;
+        const y2 = 10;
+        pdf.addImage(imgData2, 'JPEG', x2, y2, imgWidth2, imgHeight2);
+        // Guardar PDF
+        const mascotaNombre = document.getElementById('mascotaNombre').value || 'Sin_nombre';
+        const propietarioNombre = document.getElementById('propietarioNombre').value || 'Sin_apellido';
+        const propietarioApellido = propietarioNombre.split(' ').length > 1 ? propietarioNombre.split(' ')[1] : propietarioNombre;
         const fileName = `Urianálisis ${mascotaNombre} ${propietarioApellido}.pdf`;
         pdf.save(fileName);
     } catch (error) {
