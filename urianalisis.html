@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </table>
 <!-- Imagen de análisis para urianálisis 11 parámetros -->
 <div class="image-container" style="display: flex; justify-content: center; margin: 20px 0;">
-  <div class="image-box analysis-box" style="text-align: center; margin: 0 10px; max-width: 60%;">
+  <div class="image-box  analysis-box" style="text-align: center; margin: 0 10px; max-width: 60%;">
     <h4>Imagen del Análisis</h4>
     <div style="margin-bottom: 10px;">
       <label for="imageUploadUrianalisis11">Seleccionar imagen:</label>
@@ -654,11 +654,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <option value="Abundante">
     </datalist>
     <!-- Tinción gram -->
-    <tr><td>Tinción gram</td><td colspan="2"><input type="text" id="tincion_gram15" list="tincionGramList15" style="width:98%"></td></tr>
+    <tr id="row_tincion_gram15" class="solo-15"><td>Tinción gram</td><td colspan="2"><input type="text" id="tincion_gram15" list="tincionGramList15" style="width:98%"></td></tr>
     <datalist id="tincionGramList15">
       <option value="Bacterias Gram Positivas">
       <option value="Bacterias Gram Negativas">
     </datalist>
+    <script>
+    function eliminarTincionGram15() {
+      var row = document.getElementById('row_tincion_gram15');
+      if(row) row.remove();
+    }
+    </script>
     <tr><td>Comentario:</td><td colspan="2"><input type="text" id="comentario" style="width:98%"></td></tr>
   </table>
   <!-- Imagen de análisis para urianálisis 15 parámetros -->
@@ -916,7 +922,11 @@ function moverFocoUrianalisis(event, siguienteId, anteriorId) {
         <div class="spinner"></div>
         <span>Generando PDF...</span>
     </div>
+     <div class="pdf-hide solo-15" style="margin-top:10px;">
+  <button type="button" onclick="eliminarTincionGram15()" title="Eliminar tinción gram">Eliminar Tinción Gram 🗑️</button>
 </div>
+</div>
+
 <script>
 async function generatePDF() {
     const loadingIndicator = document.getElementById('loadingPdf');
@@ -1032,7 +1042,7 @@ async function generatePDF() {
 <script>
 function agregarXCampoEritrocitos15(input) {
     let valor = input.value.trim();
-    if (valor.endsWith('x campo')) return;
+    if (valor.endsWith('x campo')) return
     if (/^<?\d+(,\d+)?$/.test(valor) || valor === '<1') {
         input.value = valor + ' x campo';
     }
