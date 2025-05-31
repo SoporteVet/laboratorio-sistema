@@ -516,10 +516,10 @@ function actualizarColor(inputId, refId) {
         const min = parseFloat(coincidencia[1].replace(',', '.'));
         const max = parseFloat(coincidencia[2].replace(',', '.'));
         if (valor < min) {
-            inputElement.style.color = 'red';
+            inputElement.style.color = '#00bfff';
             inputElement.value = valorTexto + ' ↓';
         } else if (valor > max) {
-            inputElement.style.color = '#00bfff';
+            inputElement.style.color = 'red';
             inputElement.value = valorTexto + ' ↑';
         } else {
             inputElement.style.color = 'black';

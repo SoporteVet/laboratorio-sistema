@@ -382,19 +382,25 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="urianalisis11" class="urianalisis-plantilla">
 <table class="urianalisis-table">
   <tr><th colspan="3">Examen Físico</th></tr>
-  <tr><td>Color</td><td><input type="text" id="color"></td><td></td></tr>
-  <tr><td>Apariencia</td><td><input type="text" id="apariencia"></td><td></td></tr>
-  <tr><td>Densidad</td><td><input type="text" id="densidad"></td><td>(1.005–1.040)</td></tr>
-  <tr><td>Método de recolección</td><td><input type="text" id="metodo_recoleccion" list="metodoRecoleccionList"></td><td></td></tr>
+  <!-- Examen Físico 11 parámetros -->
+  <tr><td>Color</td><td><input type="text" id="color" list="colorList" onkeydown="moverFocoUrianalisis(event, 'apariencia')"></td><td></td></tr>
+  <tr><td>Apariencia</td><td><input type="text" id="apariencia" list="aparienciaList" onkeydown="moverFocoUrianalisis(event, 'densidad', 'color')"></td><td></td></tr>
+<datalist id="aparienciaList">
+  <option value="Transparente">
+  <option value="Ligeramente turbia">
+  <option value="Turbia">
+</datalist>
+  <tr><td>Densidad</td><td><input type="text" id="densidad" onkeydown="moverFocoUrianalisis(event, 'metodo_recoleccion', 'apariencia')"></td><td>(1.005–1.040)</td></tr>
+  <tr><td>Método de recolección</td><td><input type="text" id="metodo_recoleccion" list="metodoRecoleccionList" onkeydown="moverFocoUrianalisis(event, 'ph_urinario', 'densidad')"></td><td></td></tr>
   <datalist id="metodoRecoleccionList">
     <option value="Cistocentesis">
     <option value="Cateterismo">
     <option value="Micción espontánea">
   </datalist>
   <tr><th colspan="3">Examen Químico</th></tr>
-  <tr><td>pH urinario</td><td><input type="text" id="ph_urinario"></td><td>(5.0–7.0)</td></tr>
-  <tr><td>Proteínas</td><td>
-  <input type="text" id="proteinas" list="proteinasList">
+  <tr><td>pH urinario</td><td><input type="text" id="ph_urinario" onkeydown="moverFocoUrianalisis(event, 'proteinas')"></td><td>(5.0–7.0)</td></tr>
+<tr><td>Proteínas</td><td>
+  <input type="text" id="proteinas" list="proteinasList" onkeydown="moverFocoUrianalisis(event, 'cetonas', 'ph_urinario')">
   <datalist id="proteinasList">
     <option value="Negativo">
     <option value="Positivo 1+">
@@ -403,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Cetonas</td><td>
-  <input type="text" id="cetonas" list="cetonasList">
+  <input type="text" id="cetonas" list="cetonasList" onkeydown="moverFocoUrianalisis(event, 'nitritos', 'proteinas')">
   <datalist id="cetonasList">
     <option value="Negativo">
     <option value="Positivo 1+">
@@ -412,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Nitritos</td><td>
-  <input type="text" id="nitritos" list="nitritosList">
+  <input type="text" id="nitritos" list="nitritosList" onkeydown="moverFocoUrianalisis(event, 'leucocitosQ', 'cetonas')">
   <datalist id="nitritosList">
     <option value="Negativo">
     <option value="Positivo 1+">
@@ -420,11 +426,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <option value="Positivo 3+">
   </datalist>
 </td><td></td></tr>
-<tr><td>Leucocitos</td><td>
-  <input type="text" id="leucocitosQ">
-</td><td></tr>
+<tr><td>Leucocitos</td><td><input type="text" id="leucocitosQ" onkeydown="moverFocoUrianalisis(event, 'glucosaQ', 'nitritos')"></td><td></td></tr>
 <tr><td>Glucosa</td><td>
-  <input type="text" id="glucosaQ" list="glucosaQList">
+  <input type="text" id="glucosaQ" list="glucosaQList" onkeydown="moverFocoUrianalisis(event, 'bilirrubina', 'leucocitosQ')">
   <datalist id="glucosaQList">
     <option value="Negativo">
     <option value="Positivo 1+">
@@ -433,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Bilirrubina</td><td>
-  <input type="text" id="bilirrubina" list="bilirrubinaList">
+  <input type="text" id="bilirrubina" list="bilirrubinaList" onkeydown="moverFocoUrianalisis(event, 'urobilinogeno', 'glucosaQ')">
   <datalist id="bilirrubinaList">
     <option value="Negativo">
     <option value="Positivo 1+">
@@ -442,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Urobilinógeno</td><td>
-  <input type="text" id="urobilinogeno" list="urobilinogenoList">
+  <input type="text" id="urobilinogeno" list="urobilinogenoList" onkeydown="moverFocoUrianalisis(event, 'eritrocitos_hemoglobina', 'glucosaQ')">
   <datalist id="urobilinogenoList">
     <option value="Negativo">
     <option value="Positivo 1+">
@@ -451,10 +455,10 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Eritrocitos/hemoglobina</td><td>
-  <input type="text" id="eritrocitos_hemoglobina">
-</td><td></tr>
+  <input type="text" id="eritrocitos_hemoglobina" onkeydown="moverFocoUrianalisis(event, 'asc', 'urobilinogeno')">
+</td><td></td></tr>
 <tr><td>ASC</td><td>
-  <input type="text" id="asc" list="ascList">
+  <input type="text" id="asc" list="ascList" onkeydown="moverFocoUrianalisis(event, 'celulas_transicionales', 'eritrocitos_hemoglobina')">
   <datalist id="ascList">
     <option value="Negativo">
     <option value="Positivo 1+">
@@ -464,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </td><td></td></tr>
 <tr><th colspan="3">Examen Microscópico</th></tr>
 <tr><td>Células transicionales</td><td>
-  <input type="text" id="celulas_transicionales" list="celulasTransicionalesList">
+  <input type="text" id="celulas_transicionales" list="celulasTransicionalesList" onkeydown="moverFocoUrianalisis(event, 'celulas_escamosas', 'asc')">
   <datalist id="celulasTransicionalesList">
     <option value="Escasas">
     <option value="Moderadas">
@@ -473,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Células escamosas</td><td>
-  <input type="text" id="celulas_escamosas" list="celulasEscamosasList">
+  <input type="text" id="celulas_escamosas" list="celulasEscamosasList" onkeydown="moverFocoUrianalisis(event, 'celulas_renales', 'celulas_transicionales')">
   <datalist id="celulasEscamosasList">
     <option value="Escasas">
     <option value="Moderadas">
@@ -482,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Células renales</td><td>
-  <input type="text" id="celulas_renales" list="celulasRenalesList">
+  <input type="text" id="celulas_renales" list="celulasRenalesList" onkeydown="moverFocoUrianalisis(event, 'cilindros', 'celulas_escamosas')">
   <datalist id="celulasRenalesList">
     <option value="Escasas">
     <option value="Moderadas">
@@ -491,13 +495,17 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Cilindros</td><td>
-  <input type="text" id="cilindros" list="cilindrosList">
+  <input type="text" id="cilindros" list="cilindrosList" onkeydown="moverFocoUrianalisis(event, 'eritrocitos', 'celulas_renales')">
   <datalist id="cilindrosList">
     <option value="No se observa">
   </datalist>
 </td><td></td></tr>
+<tr><td>Eritrocitos</td><td><input type="text" id="eritrocitos" style="width:98%" oninput="agregarXCampoEritrocitos(this)" onkeydown="moverFocoUrianalisis(event, 'leucocitos', 'cilindros')"></td><td></td></tr>
+<tr><td>Leucocitos</td><td><input type="text" id="leucocitos" style="width:98%" oninput="agregarXCampoLeucocitos(this)" onkeydown="moverFocoUrianalisis(event, 'bacterias', 'eritrocitos')"></td><td></td></tr>
+<tr><td>Bacterias</td><td><input type="text" id="bacterias" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'cristales', 'leucocitos')"></td><td></td></tr>
+<tr><td>Cristales</td><td><input type="text" id="cristales" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'filamento_mucoso', 'bacterias')"></td><td></td></tr>
 <tr><td>Filamento mucoso</td><td>
-  <input type="text" id="filamento_mucoso" list="filamentoMucosoList">
+  <input type="text" id="filamento_mucoso" list="filamentoMucosoList" onkeydown="moverFocoUrianalisis(event, 'sedimento_amorfo', 'cristales')">
   <datalist id="filamentoMucosoList">
     <option value="No se observa">
     <option value="Escaso">
@@ -506,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </datalist>
 </td><td></td></tr>
 <tr><td>Sedimento amorfo</td><td>
-  <input type="text" id="sedimento_amorfo" list="sedimentoAmorfoList">
+  <input type="text" id="sedimento_amorfo" list="sedimentoAmorfoList" onkeydown="moverFocoUrianalisis(event, 'comentario', 'filamento_mucoso')">
   <datalist id="sedimentoAmorfoList">
     <option value="No se observa">
     <option value="Escaso">
@@ -514,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <option value="Abundante">
   </datalist>
 </td><td></td></tr>
-<tr><td>Comentario:</td><td colspan="2"><input type="text" id="comentario" style="width:98%"></td></tr>
+<tr><td>Comentario:</td><td colspan="2"><input type="text" id="comentario" style="width:98%" onkeydown="moverFocoUrianalisis(event, null, 'sedimento_amorfo')"></td></tr>
 </table>
 <!-- Imagen de análisis para urianálisis 11 parámetros -->
 <div class="image-container" style="display: flex; justify-content: center; margin: 20px 0;">
@@ -536,99 +544,99 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="urianalisis15" class="urianalisis-plantilla" style="display:none;">
   <table class="urianalisis-table">
     <tr><th colspan="3">Examen Físico</th></tr>
-    <tr><td>Color</td><td colspan="2"><input type="text" id="color15" style="width:98%"></td></tr>
-    <tr><td>Apariencia</td><td colspan="2"><input type="text" id="apariencia15" style="width:98%"></td></tr>
-    <tr><td>Método Recolección de muestra</td><td colspan="2"><input type="text" id="metodo_recoleccion15" list="metodoRecoleccionList15" style="width:98%"></td></tr>
+    <tr><td>Color</td><td colspan="2"><input type="text" id="color15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'apariencia15')"></td></tr>
+    <tr><td>Apariencia</td><td colspan="2"><input type="text" id="apariencia15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'metodo_recoleccion15', 'color15')"></td></tr>
+    <tr><td>Método Recolección de muestra</td><td colspan="2"><input type="text" id="metodo_recoleccion15" list="metodoRecoleccionList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'densidad15', 'apariencia15')"></td></tr>
     <datalist id="metodoRecoleccionList15">
       <option value="Cistocentesis">
       <option value="Cateterismo">
       <option value="Micción espontánea">
     </datalist>
     <tr><th colspan="3">Examen Químico</th></tr>
-    <tr><td>Densidad</td><td><input type="text" id="densidad15" style="width:98%"></td><td>(1.005–1.040)</td></tr>
-    <tr><td>pH urinario</td><td><input type="text" id="ph_urinario15" style="width:98%"></td><td>(5.0–7.0)</td></tr>
-    <tr><td>Proteínas</td><td colspan="2"><input type="text" id="proteinas15" list="proteinasList15" style="width:98%"></td></tr>
+    <tr><td>Densidad</td><td><input type="text" id="densidad15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'ph_urinario15', 'metodo_recoleccion15')"></td><td>(1.005–1.040)</td></tr>
+    <tr><td>pH urinario</td><td><input type="text" id="ph_urinario15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'proteinas15', 'densidad15')"></td><td>(5.0–7.0)</td></tr>
+    <tr><td>Proteínas</td><td colspan="2"><input type="text" id="proteinas15" list="proteinasList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'cetonas15', 'ph_urinario15')"></td></tr>
     <datalist id="proteinasList15">
       <option value="Negativo">
       <option value="Positivo 1+">
       <option value="Positivo 2+">
       <option value="Positivo 3+">
     </datalist>
-    <tr><td>Cetonas</td><td colspan="2"><input type="text" id="cetonas15" list="cetonasList15" style="width:98%"></td></tr>
+    <tr><td>Cetonas</td><td colspan="2"><input type="text" id="cetonas15" list="cetonasList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'nitritos15', 'proteinas15')"></td></tr>
     <datalist id="cetonasList15">
       <option value="Negativo">
       <option value="Positivo 1+">
       <option value="Positivo 2+">
       <option value="Positivo 3+">
     </datalist>
-    <tr><td>Nitritos</td><td colspan="2"><input type="text" id="nitritos15" list="nitritosList15" style="width:98%"></td></tr>
+    <tr><td>Nitritos</td><td colspan="2"><input type="text" id="nitritos15" list="nitritosList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'leucocitosQ15', 'cetonas15')"></td></tr>
     <datalist id="nitritosList15">
       <option value="Negativo">
       <option value="Positivo 1+">
       <option value="Positivo 2+">
       <option value="Positivo 3+">
     </datalist>
-    <tr><td>Leucocitos</td><td colspan="2"><input type="text" id="leucocitosQ15" style="width:98%"></td></tr>
-    <tr><td>Glucosa</td><td colspan="2"><input type="text" id="glucosaQ15" list="glucosaQList15" style="width:98%"></td></tr>
+    <tr><td>Leucocitos</td><td colspan="2"><input type="text" id="leucocitosQ15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'glucosaQ15', 'nitritos15')"></td></tr>
+    <tr><td>Glucosa</td><td colspan="2"><input type="text" id="glucosaQ15" list="glucosaQList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'bilirrubina15', 'leucocitosQ15')"></td></tr>
     <datalist id="glucosaQList15">
       <option value="Negativo">
       <option value="Positivo 1+">
       <option value="Positivo 2+">
       <option value="Positivo 3+">
     </datalist>
-    <tr><td>Bilirrubina</td><td colspan="2"><input type="text" id="bilirrubina15" list="bilirrubinaList15" style="width:98%"></td></tr>
+    <tr><td>Bilirrubina</td><td colspan="2"><input type="text" id="bilirrubina15" list="bilirrubinaList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'urobilinogeno15', 'glucosaQ15')"></td></tr>
     <datalist id="bilirrubinaList15">
       <option value="Negativo">
       <option value="Positivo 1+">
       <option value="Positivo 2+">
       <option value="Positivo 3+">
     </datalist>
-    <tr><td>Urobilinógeno</td><td colspan="2"><input type="text" id="urobilinogeno15" list="urobilinogenoList15" style="width:98%"></td></tr>
+    <tr><td>Urobilinógeno</td><td colspan="2"><input type="text" id="urobilinogeno15" list="urobilinogenoList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'eritrocitos_hemoglobina15', 'bilirrubina15')"></td></tr>
     <datalist id="urobilinogenoList15">
       <option value="Negativo">
       <option value="Positivo 1+">
       <option value="Positivo 2+">
       <option value="Positivo 3+">
     </datalist>
-    <tr><td>Eritrocitos/hemoglobina</td><td colspan="2"><input type="text" id="eritrocitos_hemoglobina15" style="width:98%"></td></tr>
-    <tr><td>Albumina</td><td colspan="2"><input type="text" id="albumina15" style="width:98%"></td></tr>
-    <tr><td>ASC</td><td colspan="2"><input type="text" id="asc15" list="ascList15" style="width:98%"></td></tr>
+    <tr><td>Eritrocitos/hemoglobina</td><td colspan="2"><input type="text" id="eritrocitos_hemoglobina15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'albumina15', 'urobilinogeno15')"></td></tr>
+    <tr><td>Albumina</td><td colspan="2"><input type="text" id="albumina15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'asc15', 'eritrocitos_hemoglobina15')"></td></tr>
+    <tr><td>ASC</td><td colspan="2"><input type="text" id="asc15" list="ascList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'creatinina15', 'albumina15')"></td></tr>
     <datalist id="ascList15">
       <option value="Negativo">
       <option value="Positivo 1+">
       <option value="Positivo 2+">
       <option value="Positivo 3+">
     </datalist>
-    <tr><td>Creatinina</td><td colspan="2"><input type="text" id="creatinina15" style="width:98%"></td></tr>
-    <tr><td>Calcio</td><td colspan="2"><input type="text" id="calcio15" style="width:98%"></td></tr>
+    <tr><td>Creatinina</td><td colspan="2"><input type="text" id="creatinina15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'calcio15', 'asc15')"></td></tr>
+    <tr><td>Calcio</td><td colspan="2"><input type="text" id="calcio15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'celulas_transicionales15', 'creatinina15')"></td></tr>
     <tr><th colspan="3">Examen Microscópico</th></tr>
-    <tr><td>Células transicionales</td><td colspan="2"><input type="text" id="celulas_transicionales15" list="celulasTransicionalesList15" style="width:98%"></td></tr>
+    <tr><td>Células transicionales</td><td colspan="2"><input type="text" id="celulas_transicionales15" list="celulasTransicionalesList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'celulas_escamosas15', 'calcio15')"></td></tr>
     <datalist id="celulasTransicionalesList15">
       <option value="Escasas">
       <option value="Moderadas">
       <option value="Abundantes">
       <option value="No se observa">
     </datalist>
-    <tr><td>Células escamosas</td><td colspan="2"><input type="text" id="celulas_escamosas15" list="celulasEscamosasList15" style="width:98%"></td></tr>
+    <tr><td>Células escamosas</td><td colspan="2"><input type="text" id="celulas_escamosas15" list="celulasEscamosasList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'celulas_renales15', 'celulas_transicionales15')"></td></tr>
     <datalist id="celulasEscamosasList15">
       <option value="Escasas">
       <option value="Moderadas">
       <option value="Abundantes">
       <option value="No se observa">
     </datalist>
-    <tr><td>Células renales</td><td colspan="2"><input type="text" id="celulas_renales15" list="celulasRenalesList15" style="width:98%"></td></tr>
+    <tr><td>Células renales</td><td colspan="2"><input type="text" id="celulas_renales15" list="celulasRenalesList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'cilindros15', 'celulas_escamosas15')"></td></tr>
     <datalist id="celulasRenalesList15">
       <option value="Escasas">
       <option value="Moderadas">
       <option value="Abundantes">
       <option value="No se observa">
     </datalist>
-    <tr><td>Cilindros</td><td colspan="2"><input type="text" id="cilindros15" list="cilindrosList15" style="width:98%"></td></tr>
+    <tr><td>Cilindros</td><td colspan="2"><input type="text" id="cilindros15" list="cilindrosList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'eritrocitos15', 'celulas_renales15')"></td></tr>
     <datalist id="cilindrosList15">
       <option value="No se observa">
     </datalist>
-    <tr><td>Eritrocitos</td><td colspan="2"><input type="text" id="eritrocitos15" style="width:98%"></td></tr>
-    <tr><td>Leucocitos</td><td colspan="2"><input type="text" id="leucocitos15" style="width:98%"></td></tr>
+    <tr><td>Eritrocitos</td><td colspan="2"><input type="text" id="eritrocitos15" style="width:98%" oninput="agregarXCampoEritrocitos15(this)" onkeydown="moverFocoUrianalisis(event, 'leucocitos15', 'cilindros15')"></td></tr>
+    <tr><td>Leucocitos</td><td colspan="2"><input type="text" id="leucocitos15" style="width:98%" oninput="agregarXCampoLeucocitos15(this)" onkeydown="moverFocoUrianalisis(event, 'bacterias15', 'eritrocitos15')"></td></tr>
     <tr><td>Bacterias</td><td colspan="2"><input type="text" id="bacterias15" style="width:98%"></td></tr>
     <tr><td>Cristales</td><td colspan="2"><input type="text" id="cristales15" style="width:98%"></td></tr>
     <tr><td>Filamento mucoso</td><td colspan="2"><input type="text" id="filamento_mucoso15" list="filamentoMucosoList15" style="width:98%"></td></tr>
@@ -638,7 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <option value="Moderado">
       <option value="Abundante">
     </datalist>
-    <tr><td>Sedimento amorfo</td><td colspan="2"><input type="text" id="sedimento_amorfo15" list="sedimentoAmorfoList15" style="width:98%"></td></tr>
+    <tr><td>Sedimento amorfo</td><td colspan="2"><input type="text" id="sedimento_amorfo15" list="sedimentoAmorfoList15" style="width:98%" onkeydown="moverFocoUrianalisis(event, 'comentario15', 'filamento_mucoso15')"></td></tr>
     <datalist id="sedimentoAmorfoList15">
       <option value="No se observa">
       <option value="Escaso">
@@ -852,6 +860,47 @@ async function generatePDF() {
     }
 }
 </script>
+<script>
+function agregarXCampoEritrocitos(input) {
+    let valor = input.value.trim();
+    // Si ya tiene 'x campo', no hacer nada
+    if (valor.endsWith('x campo')) return;
+    // Si es número o <1, agregar ' x campo'
+    if (/^<?\d+(,\d+)?$/.test(valor) || valor === '<1') {
+        input.value = valor + ' x campo';
+    }
+    // Si el usuario borra todo, dejar vacío
+    if (valor === '') {
+        input.value = '';
+    }
+}
+
+function agregarXCampoLeucocitos(input) {
+    let valor = input.value.trim();
+    if (valor.endsWith('x campo')) return;
+    if (/^<?\d+(,\d+)?$/.test(valor) || valor === '<1') {
+        input.value = valor + ' x campo';
+    }
+    if (valor === '') {
+        input.value = '';
+    }
+}
+function moverFocoUrianalisis(event, siguienteId, anteriorId) {
+    if (event.key === 'Enter' || event.key === 'ArrowDown') {
+        if (siguienteId) {
+            event.preventDefault();
+            const siguiente = document.getElementById(siguienteId);
+            if (siguiente) siguiente.focus();
+        }
+    } else if (event.key === 'ArrowUp') {
+        if (anteriorId) {
+            event.preventDefault();
+            const anterior = document.getElementById(anteriorId);
+            if (anterior) anterior.focus();
+        }
+    }
+}
+</script>
   <div class="footer">
     <p id="mensajeMedico" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
     <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
@@ -977,6 +1026,28 @@ async function generatePDF() {
     } finally {
         loadingIndicator.style.display = 'none';
         pdfButton.disabled = false;
+    }
+}
+</script>
+<script>
+function agregarXCampoEritrocitos15(input) {
+    let valor = input.value.trim();
+    if (valor.endsWith('x campo')) return;
+    if (/^<?\d+(,\d+)?$/.test(valor) || valor === '<1') {
+        input.value = valor + ' x campo';
+    }
+    if (valor === '') {
+        input.value = '';
+    }
+}
+function agregarXCampoLeucocitos15(input) {
+    let valor = input.value.trim();
+    if (valor.endsWith('x campo')) return;
+    if (/^<?\d+(,\d+)?$/.test(valor) || valor === '<1') {
+        input.value = valor + ' x campo';
+    }
+    if (valor === '') {
+        input.value = '';
     }
 }
 </script>
