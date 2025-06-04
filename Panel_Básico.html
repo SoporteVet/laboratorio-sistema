@@ -102,7 +102,6 @@
                             <option value="N.A">
                             <option value="Dr. Randall Azofeifa">
                             <option value="Dr. Luis Coto">
-                            <option value="Dr. Gustavo Gónzalez">
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
@@ -1247,9 +1246,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nitro) {
         // Clonar para eliminar event listeners existentes y evitar duplicación
         const nitroClone = nitro.cloneNode(true);
-        if (nitro.parentNode) {
-            nitro.parentNode.replaceChild(nitroClone, nitro);
-        }
+        nitro.parentNode.replaceChild(nitroClone, nitro);
         
         // Agregar nuevos event listeners
         nitroClone.addEventListener('input', calculateBunCreatinine);
@@ -1267,9 +1264,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (crea) {
         // Clonar para eliminar event listeners existentes
         const creaClone = crea.cloneNode(true);
-        if (crea.parentNode) {
-            crea.parentNode.replaceChild(creaClone, crea);
-        }
+        crea.parentNode.replaceChild(creaClone, crea);
         
         // Agregar nuevos event listeners
         creaClone.addEventListener('input', calculateBunCreatinine);
@@ -1311,33 +1306,28 @@ function cargarAnalisisDesdeHistorial(index) {
                 <tr>
                     <td>SUERO HEMOLITICO</td>
                     <td>
-                        <select id="suero_hemolitico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_hemolitico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
                 <tr>
                     <td>SUERO LIPEMICO</td>
                     <td>
-                        <select id="suero_lipemico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_lipemico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
                 <tr>
                     <td>SUERO ICTERICO</td>
                     <td>
-                        <select id="suero_icterico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_icterico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="footer">
+        <datalist id="opcionesInterferencia">
+    <option value="No se observa">
+    <option value="Se observa">
+</datalist>
+<div class="footer">
             <p id="mensajeMedico" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
             <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
             <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>
@@ -1453,7 +1443,7 @@ function cargarListaDeParametros() {
     const parametrosEspecificos = [
         "GLUCOSA", "COLESTEROL TOTAL", "AMILASA", "CK",
         "NITROGENO UREICO",  "UREA","CREATININA", "RELACIÓN BUN/CREA", "FOSFORO", "CALCIO",
-        "ALT", "FOSFATASA ALCALINA", "BILLIRUBINA TOTAL",
+        "ALT", "FOSFATASA ALCALINA", "BILLIRRUBINA TOTAL",
         "ALBUMINA", "PROTEINAS TOTALES", "GLOBULINAS TOTALES", "RELACIÓN ALBUMINA/GLOBULINAS"
     ];
     
