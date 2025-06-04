@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 Urea: "20 - 50",
                                 Creatinina: "0,6 - 1,2",
                                 Relación_BUN_Crea:	" 4,2 - 32,8 ",
-                                Acido_Urico: "0,5 - 1,4",
+                                Acido_Urico: "1,0 - 3,0",
                                 Calcio: "9,0 - 11,4",
                                 Fosforo: "3,3 - 6,4",
                                 Magnesio: "1,8 - 3,0",
@@ -1190,7 +1190,7 @@ function calculateValues() {
 document.addEventListener('DOMContentLoaded', function() {
     // Asignar event listeners para los campos de interés
     const albuminaInput = document.getElementById('Albumina');
-    const proteinasInput = document.getElementById('proteinas_totales');
+       const proteinasInput = document.getElementById('proteinas_totales');
     
     if (albuminaInput) {
         albuminaInput.addEventListener('input', calculateValues);
@@ -1215,33 +1215,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>SUERO HEMOLITICO</td>
                     <td>
-                        <select id="suero_hemolitico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_hemolitico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
                 <tr>
                     <td>SUERO LIPEMICO</td>
                     <td>
-                        <select id="suero_lipemico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_lipemico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
                 <tr>
                     <td>SUERO ICTERICO</td>
                     <td>
-                        <select id="suero_icterico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_icterico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="footer">
+        <datalist id="opcionesInterferencia">
+    <option value="No se observa">
+    <option value="Se observa">
+</datalist>
+<div class="footer">
             <p id="mensajeMedico" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
             <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
             <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>

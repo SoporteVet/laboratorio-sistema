@@ -103,7 +103,6 @@
                             <option value="N.A">
                             <option value="Dr. Randall Azofeifa">
                             <option value="Dr. Luis Coto">
-                            <option value="Dr. Gustavo Gónzalez">
                             <option value="Dra. Daniela Sancho">
                             <option value="Dra. Sofia Carrillo">
                             <option value="Dra. Franciny Nuñez">
@@ -1188,33 +1187,28 @@ function calculateValues() {
                 <tr>
                     <td>SUERO HEMOLITICO</td>
                     <td>
-                        <select id="suero_hemolitico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_hemolitico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
                 <tr>
                     <td>SUERO LIPEMICO</td>
                     <td>
-                        <select id="suero_lipemico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_lipemico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
                 <tr>
                     <td>SUERO ICTERICO</td>
                     <td>
-                        <select id="suero_icterico2">
-                            <option value="No se observa">No se observa</option>
-                            <option value="Se observa">Se observa</option>
-                        </select>
+                        <input type="text" id="suero_icterico2" list="opcionesInterferencia" style="width:140px;">
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="footer">
+        <datalist id="opcionesInterferencia">
+    <option value="No se observa">
+    <option value="Se observa">
+</datalist>
+<div class="footer">
             <p id="mensajeMedico" style="display: none;">El personal médico cuenta con un plazo de 24 a 48 horas para interpretar el reporte de los resultados.</p>
             <p>Facebook: Veterinaria San Martin de Porres | Teléfono: 4000 - 1365 | Ext: 106</p>
             <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>
