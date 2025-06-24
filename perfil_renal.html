@@ -13,7 +13,7 @@
 </head>
 <body>
     <body>
-        <div class="controls">
+        <div class="controls no-print">
             <label for="sexoSelector">Selecciona el sexo:</label>
             <select id="sexoSelector" onchange="actualizarSexoEnPlantilla(),actualizarValoresReferencia2()">
                 <option value="Seleccionar" selected>-- Seleccionar --</option>
@@ -451,6 +451,13 @@ document.addEventListener('DOMContentLoaded', function() {
     .remove-param-btn:hover {
         background-color: #c82333;
     }
+    
+    /* Clase para ocultar elementos al generar PDF */
+    @media print, screen and (max-width: 0) {
+        .no-print {
+            display: none !important;
+        }
+    }
 </style>
 <h3 class="subheader">FUNCIONAMIENTO RENAL</h3>
 <table class="tabla-renal" style="width:100%;text-align:center;">
@@ -561,6 +568,12 @@ document.addEventListener('DOMContentLoaded', function() {
         </td>
     </tr>
 </table>
+
+<div class="restore-controls no-print" id="restoreControls" style="display: none;">
+    <h4>Campos eliminados - Haga clic para restaurar:</h4>
+    <div id="deletedFields"></div>
+    <button onclick="restoreAllFields()" class="restore-btn" style="margin-top: 10px; background-color: #007bff;">Restaurar todos los campos</button>
+</div>
 
 <script>
 // Lógica de colores y flechas igual que en el panel básico
@@ -924,7 +937,8 @@ function actualizarValoresReferencia2() {
             <p>WhatsApp: 8839 - 2214 | San Rafael Abajo de Desamparados, 50 metros Norte del Mall Zona Centro</p>
             <p>Correo: laboratorio@vetsanmartin.com</p>
         </div>
-        <div class="controls">
+        </div> 
+        <div class="controls no-print">
             <button id="pdfButton" onclick="generatePDF()">Generar PDF</button>
             <button id="menuButton" onclick="window.location.href='index.html'">Volver al Menú</button>
             <div id="loadingPdf" class="loading-indicator" style="display:none;">
@@ -933,7 +947,7 @@ function actualizarValoresReferencia2() {
             </div>
         </div>
         
-        <div class="parameter-selector-panel">
+        <div class="parameter-selector-panel no-print">
             <h3>Eliminar parámetros</h3>
             <div class="selector-container">
                 <select id="parameterSelector" class="parameter-dropdown">
