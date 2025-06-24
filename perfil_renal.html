@@ -381,6 +381,76 @@ document.addEventListener('DOMContentLoaded', function() {
     .tabla-renal {
         margin-bottom: 32px;
     }
+    
+    .field-row.deleted {
+        display: none;
+    }
+    
+    .restore-controls {
+        text-align: center;
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+    
+    .restore-btn {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: 12px;
+        margin: 2px;
+    }
+    
+    .restore-btn:hover {
+        background-color: #218838;
+    }
+    
+    /* Estilos para el panel de eliminación de parámetros */
+    .parameter-selector-panel {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 20px auto;
+        max-width: 600px;
+        text-align: center;
+    }
+    
+    .selector-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .parameter-dropdown {
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: white;
+        font-size: 14px;
+        min-width: 250px;
+    }
+    
+    .remove-param-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+    
+    .remove-param-btn:hover {
+        background-color: #c82333;
+    }
 </style>
 <h3 class="subheader">FUNCIONAMIENTO RENAL</h3>
 <table class="tabla-renal" style="width:100%;text-align:center;">
@@ -393,72 +463,72 @@ document.addEventListener('DOMContentLoaded', function() {
         </tr>
     </thead>
     <tbody>
-        <tr><td>Glucosa</td>
+        <tr class="field-row" id="row-glucosa"><td>Glucosa</td>
             <td><input type="text" id="Glucosa" onblur="actualizarColor('Glucosa','refglucosa')" onkeydown="moverFocoConFlechas(event, 'nitrogeno_ureico', 'NA', 'NA', 'nitrogeno_ureico')"></td>
             <td id="refglucosa">77 - 126</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Nitrógeno Ureico</td>
+        <tr class="field-row" id="row-nitrogeno_ureico"><td>Nitrógeno Ureico</td>
             <td><input type="text" id="nitrogeno_ureico" onblur="actualizarColor('nitrogeno_ureico','refnitrogeno_ureico')" onkeydown="moverFocoConFlechas(event, 'urea', 'Glucosa', 'Glucosa', 'urea')"></td>
             <td id="refnitrogeno_ureico">10 - 24</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Urea</td>
+        <tr class="field-row" id="row-urea"><td>Urea</td>
             <td><input type="text" id="urea" onblur="actualizarColor('urea','refurea')" onkeydown="moverFocoConFlechas(event, 'creatinina', 'nitrogeno_ureico', 'nitrogeno_ureico', 'creatinina')"></td>
             <td id="refurea">20 - 50</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Creatinina</td>
+        <tr class="field-row" id="row-creatinina"><td>Creatinina</td>
             <td><input type="text" id="creatinina" onblur="actualizarColor('creatinina','refcreatinina')" onkeydown="moverFocoConFlechas(event, 'bun_crea', 'urea', 'urea', 'bun_crea')"></td>
             <td id="refcreatinina">0,7 - 1,2</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Relación BUN/Crea</td>
+        <tr class="field-row" id="row-bun_crea"><td>Relación BUN/Crea</td>
             <td><input type="text" id="bun_crea" onblur="actualizarColor('bun_crea','refbun_crea')" onkeydown="moverFocoConFlechas(event, 'acido_urico', 'creatinina', 'creatinina', 'acido_urico')"></td>
             <td id="refbun_crea">4,2 - 32,8</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Ácido Úrico</td>
+        <tr class="field-row" id="row-acido_urico"><td>Ácido Úrico</td>
             <td><input type="text" id="acido_urico" onblur="actualizarColor('acido_urico','refacido_urico')" onkeydown="moverFocoConFlechas(event, 'fosforo', 'bun_crea', 'bun_crea', 'fosforo')"></td>
             <td id="refacido_urico">0,6 - 1,3</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Fósforo</td>
+        <tr class="field-row" id="row-fosforo"><td>Fósforo</td>
             <td><input type="text" id="fosforo" onblur="actualizarColor('fosforo','reffosforo')" onkeydown="moverFocoConFlechas(event, 'calcio', 'acido_urico', 'acido_urico', 'calcio')"></td>
             <td id="reffosforo">3,3 - 5,7</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Calcio</td>
+        <tr class="field-row" id="row-calcio"><td>Calcio</td>
             <td><input type="text" id="calcio" onblur="actualizarColor('calcio','refcalcio')" onkeydown="moverFocoConFlechas(event, 'magnesio', 'fosforo', 'fosforo', 'magnesio')"></td>
             <td id="refcalcio">9,1 - 10,8</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Magnesio</td>
+        <tr class="field-row" id="row-magnesio"><td>Magnesio</td>
             <td><input type="text" id="magnesio" onblur="actualizarColor('magnesio','refmagnesio')" onkeydown="moverFocoConFlechas(event, 'sodio', 'calcio', 'calcio', 'sodio')"></td>
             <td id="refmagnesio">1,8 - 3,0</td>
             <td>mg/dl</td>
         </tr>
-        <tr><td>Sodio</td>
+        <tr class="field-row" id="row-sodio"><td>Sodio</td>
             <td><input type="text" id="sodio" onblur="actualizarColor('sodio','refsodio')" onkeydown="moverFocoConFlechas(event, 'potasio', 'magnesio', 'magnesio', 'potasio')"></td>
             <td id="refsodio">140 - 161</td>
             <td>mmol/l</td>
         </tr>
-        <tr><td>Potasio</td>
+        <tr class="field-row" id="row-potasio"><td>Potasio</td>
             <td><input type="text" id="potasio" onblur="actualizarColor('potasio','refpotasio')" onkeydown="moverFocoConFlechas(event, 'cloro', 'sodio', 'sodio', 'cloro')"></td>
             <td id="refpotasio">4,4 - 5,7</td>
             <td>mmol/l</td>
         </tr>
-        <tr><td>Cloro</td>
+        <tr class="field-row" id="row-cloro"><td>Cloro</td>
             <td><input type="text" id="cloro" onblur="actualizarColor('cloro','refcloro')" onkeydown="moverFocoConFlechas(event, 'dioxido_carbono', 'potasio', 'potasio', 'dioxido_carbono')"></td>
             <td id="refcloro">105 - 125</td>
             <td>mmol/l</td>
         </tr>
-        <tr><td>Dióxido de Carbono</td>
+        <tr class="field-row" id="row-dioxido_carbono"><td>Dióxido de Carbono</td>
             <td><input type="text" id="dioxido_carbono" onblur="actualizarColor('dioxido_carbono','refdioxido_carbono')" onkeydown="moverFocoConFlechas(event, 'na_k', 'cloro', 'cloro', 'na_k')"></td>
             <td id="refdioxido_carbono">12 - 27</td>
             <td>mmol/l</td>
         </tr>
-        <tr><td>NA+/K+</td>
+        <tr class="field-row" id="row-na_k"><td>NA+/K+</td>
             <td><input type="text" id="na_k" onblur="actualizarColor('na_k','refna_k')" onkeydown="moverFocoConFlechas(event, 'NA', 'dioxido_carbono', 'dioxido_carbono', 'NA')"></td>
             <td id="refna_k">27 - 38</td>
             <td></td>
@@ -516,10 +586,10 @@ function actualizarColor(inputId, refId) {
         const min = parseFloat(coincidencia[1].replace(',', '.'));
         const max = parseFloat(coincidencia[2].replace(',', '.'));
         if (valor < min) {
-            inputElement.style.color = '#00bfff';
+            inputElement.style.color = 'red';
             inputElement.value = valorTexto + ' ↓';
         } else if (valor > max) {
-            inputElement.style.color = 'red';
+            inputElement.style.color = '#00bfff';
             inputElement.value = valorTexto + ' ↑';
         } else {
             inputElement.style.color = 'black';
@@ -536,13 +606,13 @@ const valoresReferenciaRenal = {
     'Macho': {
         'De 1 año a 20 años': {
             glucosa: {valor: '77 - 126', unidad: 'mg/dl'},
-            nitrogeno_ureico: {valor: '7 - 23', unidad: 'mg/dl'},
+            nitrogeno_ureico: {valor: '10 - 24', unidad: 'mg/dl'},
             urea: {valor: '20 - 50', unidad: 'mg/dl'},
-            creatinina: {valor: '0,6 - 1,2', unidad: 'mg/dl'},
+            creatinina: {valor: '0,7 - 1,2', unidad: 'mg/dl'},
             bun_crea: {valor: '4,2 - 32,8', unidad: 'mg/dl'},
-            acido_urico: {valor: '0,5 - 1,4', unidad: 'mg/dl'},
-            fosforo: {valor: '3,3 - 6,4', unidad: 'mg/dl'},
-            calcio: {valor: '9,0 - 11,4', unidad: 'mg/dl'},
+            acido_urico: {valor: '0,6 - 1,3', unidad: 'mg/dl'},
+            fosforo: {valor: '3,3 - 5,7', unidad: 'mg/dl'},
+            calcio: {valor: '9,1 - 10,8', unidad: 'mg/dl'},
             magnesio: {valor: '1,8 - 3,0', unidad: 'mg/dl'},
             sodio: {valor: '140 - 161', unidad: 'mmol/l'},
             potasio: {valor: '4,4 - 5,7', unidad: 'mmol/l'},
@@ -567,10 +637,10 @@ const valoresReferenciaRenal = {
             na_k: {valor: '27 - 38', unidad: ''}
         },
         'De 3 meses a 6 meses': {
-            glucosa: {valor: '89 - 133', unidad: 'mg/dl'},
+            glucosa: {valor: '88 - 133', unidad: 'mg/dl'},
             nitrogeno_ureico: {valor: '7 - 19', unidad: 'mg/dl'},
             urea: {valor: '20 - 50', unidad: 'mg/dl'},
-            creatinina: {valor: '0,3 - 0,9', unidad: 'mg/dl'},
+            creatinina: {valor: '0,3 - 0,7', unidad: 'mg/dl'},
             bun_crea: {valor: '4,2 - 32,8', unidad: 'mg/dl'},
             acido_urico: {valor: '0,3 - 0,9', unidad: 'mg/dl'},
             fosforo: {valor: '7,2 - 10,1', unidad: 'mg/dl'},
@@ -667,7 +737,7 @@ const valoresReferenciaRenal = {
     },
     'Felino Macho': {
         'De 1 año a 20 años': {
-            glucosa: {valor: '65 - 112', unidad: 'mg/dl'},
+            glucosa: {valor: '65 - 111', unidad: 'mg/dl'},
             nitrogeno_ureico: {valor: '20 - 42', unidad: 'mg/dl'},
             urea: {valor: '30 - 60', unidad: 'mg/dl'},
             creatinina: {valor: '0,5 - 1,8', unidad: 'mg/dl'},
@@ -683,14 +753,14 @@ const valoresReferenciaRenal = {
             na_k: {valor: '32 - 41', unidad: ''}
         },
         'De 6 meses a 1 año': {
-            glucosa: {valor: '67 - 101', unidad: 'mg/dl'},
-            nitrogeno_ureico: {valor: '14 - 36', unidad: 'mg/dl'},
+            glucosa: {valor: '67 - 102', unidad: 'mg/dl'},
+            nitrogeno_ureico: {valor: '19 - 37', unidad: 'mg/dl'},
             urea: {valor: '30 - 60', unidad: 'mg/dl'},
-            creatinina: {valor: '0,4 - 1,2', unidad: 'mg/dl'},
+            creatinina: {valor: '0,3 - 1,2', unidad: 'mg/dl'},
             bun_crea: {valor: '4,2 - 32,8', unidad: 'mg/dl'},
-            acido_urico: {valor: '0,4 - 1,3', unidad: 'mg/dl'},
-            fosforo: {valor: '6,2 - 9,1', unidad: 'mg/dl'},
-            calcio: {valor: '8,9 - 10,1', unidad: 'mg/dl'},
+            acido_urico: {valor: '0,3 - 1,3', unidad: 'mg/dl'},
+            fosforo: {valor: '4,9 - 8,3', unidad: 'mg/dl'},
+            calcio: {valor: '8,5 - 10,3', unidad: 'mg/dl'},
             magnesio: {valor: '1,9 - 2,28', unidad: 'mg/dl'},
             sodio: {valor: '152 - 162', unidad: 'mmol/l'},
             potasio: {valor: '4,1 - 5,7', unidad: 'mmol/l'},
@@ -702,11 +772,11 @@ const valoresReferenciaRenal = {
             glucosa: {valor: '61 - 102', unidad: 'mg/dl'},
             nitrogeno_ureico: {valor: '19 - 34', unidad: 'mg/dl'},
             urea: {valor: '30 - 60', unidad: 'mg/dl'},
-            creatinina: {valor: '0,4 - 0,9', unidad: 'mg/dl'},
+            creatinina: {valor: '0,3 - 1,2', unidad: 'mg/dl'},
             bun_crea: {valor: '4,2 - 32,8', unidad: 'mg/dl'},
-            acido_urico: {valor: '0,4 - 1,1', unidad: 'mg/dl'},
-            fosforo: {valor: '7,1 - 9,5', unidad: 'mg/dl'},
-            calcio: {valor: '9,1 - 10,9', unidad: 'mg/dl'},
+            acido_urico: {valor: '0,3 - 1,3', unidad: 'mg/dl'},
+            fosforo: {valor: '4,9 - 8,3', unidad: 'mg/dl'},
+            calcio: {valor: '8,5 - 10,3', unidad: 'mg/dl'},
             magnesio: {valor: '1,9 - 2,28', unidad: 'mg/dl'},
             sodio: {valor: '147 - 163', unidad: 'mmol/l'},
             potasio: {valor: '4,1 - 5,6', unidad: 'mmol/l'},
@@ -717,7 +787,7 @@ const valoresReferenciaRenal = {
     },
     'Felino Hembra': {
         'De 1 año a 20 años': {
-            glucosa: {valor: '65 - 112', unidad: 'mg/dl'},
+            glucosa: {valor: '65 - 111', unidad: 'mg/dl'},
             nitrogeno_ureico: {valor: '19 - 30', unidad: 'mg/dl'},
             urea: {valor: '30 - 60', unidad: 'mg/dl'},
             creatinina: {valor: '0,6 - 1,7', unidad: 'mg/dl'},
@@ -733,14 +803,13 @@ const valoresReferenciaRenal = {
             na_k: {valor: '32 - 41', unidad: ''}
         },
         'De 6 meses a 1 año': {
-            glucosa: {valor: '67 - 102', unidad: 'mg/dl'},
-            nitrogeno_ureico: {valor: '19 - 37', unidad: 'mg/dl'},
+            nitrogeno_ureico: {valor: '19 - 34', unidad: 'mg/dl'},
             urea: {valor: '30 - 60', unidad: 'mg/dl'},
-            creatinina: {valor: '0,3 - 1,2', unidad: 'mg/dl'},
+            creatinina: {valor: '0,4 - 0,9', unidad: 'mg/dl'},
             bun_crea: {valor: '4,2 - 32,8', unidad: 'mg/dl'},
-            acido_urico: {valor: '0,3 - 1,3', unidad: 'mg/dl'},
-            fosforo: {valor: '4,9 - 8,3', unidad: 'mg/dl'},
-            calcio: {valor: '8,5 - 10,3', unidad: 'mg/dl'},
+            acido_urico: {valor: '0,4 - 1,1', unidad: 'mg/dl'},
+            fosforo: {valor: '7,1 - 9,5', unidad: 'mg/dl'},
+            calcio: {valor: '9,1 - 10,9', unidad: 'mg/dl'},
             magnesio: {valor: '1,9 - 2,28', unidad: 'mg/dl'},
             sodio: {valor: '143 - 159', unidad: 'mmol/l'},
             potasio: {valor: '4,4 - 5,9', unidad: 'mmol/l'},
@@ -863,7 +932,154 @@ function actualizarValoresReferencia2() {
                 <span>Generando PDF...</span>
             </div>
         </div>
+        
+        <div class="parameter-selector-panel">
+            <h3>Eliminar parámetros</h3>
+            <div class="selector-container">
+                <select id="parameterSelector" class="parameter-dropdown">
+                    <option value="" selected disabled>-- Seleccionar parámetro --</option>
+                </select>
+                <button onclick="eliminarParametroSeleccionado()" class="remove-param-btn">Eliminar</button>
+            </div>
+        </div>
         <script>
+        // Funciones para eliminar y restaurar campos
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarListaDeParametros();
+            console.log("Cargando lista de parámetros del perfil renal..."); // Para debugear
+        });
+
+        function cargarListaDeParametros() {
+            const selector = document.getElementById('parameterSelector');
+            if (!selector) {
+                console.error("No se encontró el selector de parámetros");
+                return;
+            }
+            
+            selector.innerHTML = '<option value="" selected disabled>-- Seleccionar parámetro --</option>';
+            
+            // Lista de parámetros específicos del perfil renal
+            const parametrosEspecificos = [
+                "Glucosa", "Nitrógeno Ureico", "Urea", "Creatinina", "Relación BUN/Crea",
+                "Ácido Úrico", "Fósforo", "Calcio", "Magnesio", "Sodio", "Potasio", 
+                "Cloro", "Dióxido de Carbono", "NA+/K+"
+            ];
+            
+            const tablas = document.querySelectorAll('#template1 table');
+            console.log(`Encontradas ${tablas.length} tablas`); // Para debugear
+            
+            tablas.forEach((tabla, tablaIndex) => {
+                const filas = tabla.querySelectorAll('tbody tr.field-row');
+                console.log(`Tabla ${tablaIndex}: ${filas.length} filas`); // Para debugear
+                
+                filas.forEach((fila, filaIndex) => {
+                    if (!fila.cells || fila.cells.length === 0) return;
+                    
+                    // Obtener el nombre del parámetro (primera celda, sin el botón)
+                    const primeraCelda = fila.cells[0];
+                    const paramName = primeraCelda.textContent.replace('×', '').trim();
+                    console.log(`Fila ${filaIndex}: "${paramName}"`); // Para debugear
+                    
+                    // Solo agregar los parámetros específicos que queremos
+                    if (parametrosEspecificos.includes(paramName)) {
+                        const option = document.createElement('option');
+                        option.value = fila.id;
+                        option.textContent = paramName;
+                        selector.appendChild(option);
+                    }
+                });
+            });
+            
+            console.log(`Total de opciones cargadas: ${selector.options.length - 1}`); // Para debugear
+        }
+
+        function eliminarParametroSeleccionado() {
+            const selector = document.getElementById('parameterSelector');
+            const filaId = selector.value;
+            
+            if (!filaId) {
+                alert('Por favor, selecciona un parámetro para eliminar.');
+                return;
+            }
+            
+            const fila = document.getElementById(filaId);
+            if (fila) {
+                fila.remove();
+                
+                // Actualizar el selector después de eliminar
+                cargarListaDeParametros();
+            }
+        }
+
+        // Funciones para eliminar y restaurar campos individuales (solo desde el selector)
+        function deleteField(rowId, fieldName) {
+            const row = document.getElementById(rowId);
+            if (row) {
+                row.style.display = 'none';
+                row.classList.add('deleted');
+                
+                // Agregar al área de restauración
+                const restoreArea = document.getElementById('deletedFields');
+                const restoreControls = document.getElementById('restoreControls');
+                
+                if (restoreArea && restoreControls) {
+                    const button = document.createElement('button');
+                    button.className = 'restore-btn';
+                    button.textContent = fieldName;
+                    button.onclick = () => restoreField(rowId, button);
+                    restoreArea.appendChild(button);
+                    
+                    restoreControls.style.display = 'block';
+                }
+                
+                // Actualizar la lista del selector
+                cargarListaDeParametros();
+            }
+        }
+
+        function restoreField(rowId, button) {
+            const row = document.getElementById(rowId);
+            if (row) {
+                row.style.display = '';
+                row.classList.remove('deleted');
+                button.remove();
+                
+                // Ocultar controles de restauración si no hay más campos eliminados
+                const restoreArea = document.getElementById('deletedFields');
+                const restoreControls = document.getElementById('restoreControls');
+                
+                if (restoreArea && restoreArea.children.length === 0 && restoreControls) {
+                    restoreControls.style.display = 'none';
+                }
+                
+                // Actualizar la lista del selector
+                cargarListaDeParametros();
+            }
+        }
+
+        function restoreAllFields() {
+            const deletedRows = document.querySelectorAll('.field-row.deleted');
+            deletedRows.forEach(row => {
+                row.style.display = '';
+                row.classList.remove('deleted');
+            });
+            
+            // Limpiar área de restauración
+            const restoreArea = document.getElementById('deletedFields');
+            const restoreControls = document.getElementById('restoreControls');
+            
+            if (restoreArea) {
+                restoreArea.innerHTML = '';
+            }
+            
+            if (restoreControls) {
+                restoreControls.style.display = 'none';
+            }
+            
+            // Actualizar la lista del selector
+            cargarListaDeParametros();
+        }
+        
         async function generatePDF() {
     const loadingIndicator = document.getElementById('loadingPdf');
     const pdfButton = document.getElementById('pdfButton');
