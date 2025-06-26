@@ -588,28 +588,59 @@ function actualizarColor(inputId, refId) {
         inputElement.value = '';
         return;
     }
-    const valor = parseFloat(valorTexto.replace(',', '.'));
+    let valor = parseFloat(valorTexto.replace(',', '.'));
     if (isNaN(valor)) {
         inputElement.style.color = 'black';
         return;
     }
+    
+    // Redondear a 1 decimal con lógica personalizada
+    const valorRedondeado = redondearPersonalizado(valor);
+    const valorTextoRedondeado = valorRedondeado.toString().replace('.', ',');
+    
     const rangoTexto = refElement.textContent;
     const coincidencia = rangoTexto.match(/([\d,.]+)\s*-\s*([\d,.]+)/);
     if (coincidencia) {
         const min = parseFloat(coincidencia[1].replace(',', '.'));
         const max = parseFloat(coincidencia[2].replace(',', '.'));
-        if (valor < min) {
-            inputElement.style.color = 'red';
-            inputElement.value = valorTexto + ' ↓';
-        } else if (valor > max) {
+        if (valorRedondeado < min) {
             inputElement.style.color = '#00bfff';
-            inputElement.value = valorTexto + ' ↑';
+            inputElement.value = valorTextoRedondeado + ' ↓';
+        } else if (valorRedondeado > max) {
+            inputElement.style.color = 'red';
+            inputElement.value = valorTextoRedondeado + ' ↑';
         } else {
             inputElement.style.color = 'black';
-            inputElement.value = valorTexto;
+            inputElement.value = valorTextoRedondeado;
         }
     } else {
         inputElement.style.color = 'black';
+        inputElement.value = valorTextoRedondeado;
+    }
+}
+
+// Función de redondeo personalizado
+function redondearPersonalizado(numero) {
+    // Si ya tiene 1 decimal o menos, no hacer nada
+    const numeroStr = numero.toString();
+    const parteDecimal = numeroStr.split('.')[1];
+    
+    if (!parteDecimal || parteDecimal.length <= 1) {
+        return numero;
+    }
+    
+    // Si tiene más de 1 decimal, aplicar redondeo personalizado
+    const multiplicado = numero * 10;
+    const parteEntera = Math.floor(multiplicado);
+    const decimal = multiplicado - parteEntera;
+    
+    // Si el segundo decimal es 5, redondear hacia abajo
+    // Si es mayor que 5, redondear hacia arriba
+    // Si es menor que 5, redondear hacia abajo
+    if (decimal >= 0.6) {
+        return (parteEntera + 1) / 10;
+    } else {
+        return parteEntera / 10;
     }
 }
 </script>
