@@ -461,11 +461,125 @@ function actualizarValoresReferenciaPQ() {
   if (sel) sel.addEventListener('change', actualizarValoresReferenciaPQ);
 });
 
+function actualizarColor(inputId, refId, event) {
+    const inputElement = document.getElementById(inputId);
+    const refElement = document.getElementById(refId);
+    if (!inputElement || !refElement || !refElement.textContent) return;
+    let valorTexto = inputElement.value.trim();
+    valorTexto = valorTexto.replace(/\s*[↑↓]$/, '');
+    if (!valorTexto) {
+        inputElement.style.color = 'black';
+        return;
+    }
+    const valor = parseFloat(valorTexto.replace(',', '.'));
+    if (isNaN(valor)) return;
+    const rangoTexto = refElement.textContent;
+    const coincidencia = rangoTexto.match(/([\d,]+)\s*-\s*([\d,]+)/);
+    if (coincidencia) {
+        const min = parseFloat(coincidencia[1].replace(',', '.'));
+        const max = parseFloat(coincidencia[2].replace(',', '.'));
+        if (valor < min) {
+            inputElement.style.color = '#0096d2'; // Celeste
+            if (event && (event.type === 'blur' || (event.type === 'keydown' && event.key === 'Enter'))) {
+                inputElement.value = valorTexto + ' ↓';
+            }
+        } else if (valor > max) {
+            inputElement.style.color = 'red';
+            if (event && (event.type === 'blur' || (event.type === 'keydown' && event.key === 'Enter'))) {
+                inputElement.value = valorTexto + ' ↑';
+            }
+        } else {
+            inputElement.style.color = 'black';
+            inputElement.value = valorTexto;
+        }
+    }
+}
+// Asignar eventos a todos los campos de resultado relevantes
+const parametrosColor = [
+    { campo: 'Glucosa', ref: 'refGlucosa' },
+    { campo: 'AST', ref: 'refAST' },
+    { campo: 'ALT', ref: 'refALT' },
+    { campo: 'nitrogeno_ureico', ref: 'refnitrogeno_ureico' },
+    { campo: 'urea', ref: 'refurea' },
+    { campo: 'creatinina', ref: 'refcreatinina' },
+    { campo: 'bun_crea', ref: 'refbun_crea' },
+    { campo: 'acido_urico', ref: 'refacido_urico' },
+    { campo: 'fosforo', ref: 'reffosforo' },
+    { campo: 'calcio', ref: 'refcalcio' },
+    { campo: 'magnesio', ref: 'refmagnesio' },
+    { campo: 'albumina', ref: 'refalbumina' },
+    { campo: 'proteinas_totales', ref: 'refproteinas_totales' },
+    { campo: 'globulinas_totales', ref: 'refglobulinas_totales' },
+    { campo: 'relacion_alb_glo', ref: 'refrelacion_alb_glo' },
+    { campo: 'pt', ref: 'refpt' },
+    { campo: 'aptt', ref: 'refaptt' }
+];
+document.addEventListener('DOMContentLoaded', function() {
+    parametrosColor.forEach(param => {
+        const input = document.getElementById(param.campo);
+        if (input) {
+            input.addEventListener('blur', function(event) {
+                actualizarColor(param.campo, param.ref, event);
+            });
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    actualizarColor(param.campo, param.ref, event);
+                }
+            });
+        }
+    });
+});
+const camposParametros = [
+    'Glucosa', 'AST', 'ALT',
+    'nitrogeno_ureico', 'urea', 'creatinina', 'bun_crea', 'acido_urico', 'fosforo', 'calcio', 'magnesio',
+    'albumina', 'proteinas_totales', 'globulinas_totales', 'relacion_alb_glo',
+    'pt', 'aptt'
+];
+function moverFocoParametros(event) {
+    const actual = event.target.id;
+    const idx = camposParametros.indexOf(actual);
+    if (event.key === 'Enter' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (idx !== -1 && idx < camposParametros.length - 1) {
+            document.getElementById(camposParametros[idx + 1]).focus();
+        }
+    } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (idx > 0) {
+            document.getElementById(camposParametros[idx - 1]).focus();
+        }
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    camposParametros.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            // Elimina otros keydown previos para evitar conflictos
+            input.onkeydown = null;
+            input.addEventListener('keydown', function(event) {
+                // Reemplazo de punto por coma
+                if (event.key === '.') {
+                    event.preventDefault();
+                    const cursorPos = this.selectionStart;
+                    const valorActual = this.value;
+                    const nuevoValor = valorActual.slice(0, cursorPos) + ',' + valorActual.slice(cursorPos);
+                    this.value = nuevoValor;
+                    setTimeout(() => {
+                        this.setSelectionRange(cursorPos + 1, cursorPos + 1);
+                    }, 0);
+                    return;
+                }
+                // Navegación
+                moverFocoParametros(event);
+            });
+        }
+    });
+});
             
                     </script>
                 </tbody>
             </table>
-        <h3 class="titulos">FUNCIONAMIENTO</h3>
+        <h3 class="titulos">Funcionamiento</h3>
         <table>
             <thead>
                 <tr>
@@ -544,7 +658,7 @@ function actualizarValoresReferenciaPQ() {
                 </tr>
             </tbody>
         </table>
-        <h3 class="titulos">QUÍMICA SANGUÍNEA</h3>
+        <h3 class="titulos">Química Sanguínea</h3>
         <table>
             <thead>
                 <tr>
@@ -581,7 +695,7 @@ function actualizarValoresReferenciaPQ() {
                 </tr>
             </tbody>
         </table>
-        <h3 class="titulos">TIEMPOS DE COAGULACIÓN</h3>
+        <h3 class="titulos">Tiempos de Coagulación</h3>
         <table>
             <thead>
                 <tr>
@@ -606,7 +720,7 @@ function actualizarValoresReferenciaPQ() {
                 </tr>
             </tbody>
         </table>
-        <h3 class="titulos">ÍNDICES DE INTERFERENCIA</h3>
+        <h3 class="titulos">Índices de Interferencia</h3>
         <table>
             <tbody>
                 <tr>
